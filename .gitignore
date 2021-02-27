@@ -1,0 +1,6 @@
+!.gitignore
+*.pro.*
+*.autosave
+*.pro.user
+tools/binutil_src/*.pro.user
+genfiles/*.*
