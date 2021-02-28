@@ -10,6 +10,8 @@
 #include <arpa/inet.h>
 #include <string.h>
 
+#include <iostream>
+
 namespace rtp {
 
     RtpRFC::RtpRFC()
@@ -43,11 +45,11 @@ namespace rtp {
                 char tmp[128]={0};
                 memcpy(tmp, res.data+offset, sizeof(rtp_t));
                 parse(*rtp);
-
             }
         }
         return *this;
     }
+
 
     template<typename T>
     void RtpRFC::parse(T data)
@@ -56,11 +58,11 @@ namespace rtp {
         memcpy(tmp, &data, sizeof(rtp_t));
 #if 1
         //data.uv.val = SWAP4(data.uv.val);
-        int cut = (data.meta[0] >> 4);
-        int v = (cut >> 2);
-        int p = (cut >> 1) & (cut << 1);
-        int x = (cut << 1) & (cut >> 0);
+
         int cc = (data.meta[0] << 4) & 0xf0;
+        int v = (data.meta[0] >> 6);
+        int p = (data.meta[0] >> 5) & 0x1;
+        int x = (data.meta[0] >> 4) & 0x1;
 
         data.timestamp = SWAP4(data.timestamp);
         data.SSRC = SWAP4(data.SSRC);
