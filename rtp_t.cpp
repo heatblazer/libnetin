@@ -59,7 +59,7 @@ namespace rtp {
         m_fields.p = (data.meta[0] >> 5) & 0x1;
         m_fields.x = (data.meta[0] >> 4) & 0x1;
         m_fields.m = (data.meta[1] >> 7);
-        m_fields.pt = (data.meta[1] >> 1) & 0x7F;
+        m_fields.pt = (data.meta[1]) & 0x7F;
         m_fields.timestamp = SWAP4(data.timestamp);
         m_fields.ssrc= SWAP4(data.SSRC);
         m_fields.ssrc= SWAP4(data.CSRC);

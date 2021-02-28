@@ -44,15 +44,15 @@ namespace rtp {
         template<typename T>
         void parse(T data);
         struct {
-            int cc;
-            int v;
-            int p;
-            int x;
-            int m;
-            int pt;
-            int timestamp;
-            int ssrc;
-            int csrc;
+            unsigned int cc;
+            unsigned int v;
+            unsigned int p;
+            unsigned int x;
+            unsigned int m;
+            unsigned int pt;
+            unsigned int timestamp;
+            unsigned int ssrc;
+            unsigned int csrc;
         } m_fields;
 
     };
