@@ -63,6 +63,9 @@ void Pcap::loop()
     {
         //auto resstun = packetHandlerT<StunRFC, StunRFC>(NULL, res, StunRFC{});
         auto resrtp = packetHandlerT<RtpRFC, RtpRFC>(NULL, res, RtpRFC{});
+        if (resrtp.valid()) {
+            //TODO:
+        }
        // if (resstun.valid()) {
         //    totalStun += resstun.count();
 

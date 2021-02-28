@@ -42,8 +42,6 @@ namespace rtp {
                 udpHeader = (struct udphdr*)(res.data + sizeof(struct ether_header) + sizeof(struct ip));
                 int offset = sizeof(struct ether_header) + sizeof(struct ip)+ sizeof(udphdr);
                 struct rtp_t* rtp = (struct rtp_t*)(res.data + offset);
-                char tmp[128]={0};
-                memcpy(tmp, res.data+offset, sizeof(rtp_t));
                 parse(*rtp);
             }
         }
@@ -56,20 +54,15 @@ namespace rtp {
     {
         char tmp[sizeof(rtp_t)] = {0};
         memcpy(tmp, &data, sizeof(rtp_t));
-#if 1
-        //data.uv.val = SWAP4(data.uv.val);
-
-        int cc = (data.meta[0] << 4) & 0xf0;
-        int v = (data.meta[0] >> 6);
-        int p = (data.meta[0] >> 5) & 0x1;
-        int x = (data.meta[0] >> 4) & 0x1;
-
-        data.timestamp = SWAP4(data.timestamp);
-        data.SSRC = SWAP4(data.SSRC);
-        data.CSRC = SWAP4(data.CSRC);
-
-
-#endif
+        m_fields.cc = (data.meta[0] << 4) & 0xf0;
+        m_fields.v = (data.meta[0] >> 6);
+        m_fields.p = (data.meta[0] >> 5) & 0x1;
+        m_fields.x = (data.meta[0] >> 4) & 0x1;
+        m_fields.m = (data.meta[1] >> 7);
+        m_fields.pt = (data.meta[1] >> 1) & 0x7F;
+        m_fields.timestamp = SWAP4(data.timestamp);
+        m_fields.ssrc= SWAP4(data.SSRC);
+        m_fields.ssrc= SWAP4(data.CSRC);
         return;
     }
 

@@ -7,6 +7,7 @@ CONFIG -= qt
 INCLUDEPATH += $$PWD/External/include
 
 win32 {
+#TODO: implement
     message("Win32")
 } else {
     message("Unix")

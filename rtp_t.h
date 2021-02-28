@@ -7,6 +7,22 @@
 
 namespace rtp {
 
+    /*
+    The RTP header has the following format:
+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |V=2|P|X|  CC   |M|     PT      |       sequence number         |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                           timestamp                           |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |           synchronization source (SSRC) identifier            |
+    +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+    |            contributing source (CSRC) identifiers             |
+    |                             ....                              |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    */
     struct rtp_t
     {
         unsigned char meta[4];
@@ -27,6 +43,18 @@ namespace rtp {
     private:
         template<typename T>
         void parse(T data);
+        struct {
+            int cc;
+            int v;
+            int p;
+            int x;
+            int m;
+            int pt;
+            int timestamp;
+            int ssrc;
+            int csrc;
+        } m_fields;
+
     };
 
 } // rtp
