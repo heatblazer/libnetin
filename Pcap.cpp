@@ -61,7 +61,7 @@ void Pcap::loop()
     ;
     for(Pcap::Result_t& res =  next(); hasNext(); operator++())
     {
-        //auto resstun = packetHandlerT<StunRFC, StunRFC>(NULL, res, StunRFC{});
+        auto resstun = packetHandlerT<StunRFC, StunRFC>(NULL, res, StunRFC{});
         auto resrtp = packetHandlerT<RtpRFC, RtpRFC>(NULL, res, RtpRFC{});
         if (resrtp.valid()) {
             //TODO:
