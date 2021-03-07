@@ -24,7 +24,8 @@ SOURCES += \
 HEADERS += \
     Pcap.h \
     defs.h \
-    parse.h \
     rtp_t.h \
     stun_t.h \
+    tjson.hpp \
+    types.h \
     utils.h

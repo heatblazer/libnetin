@@ -9,7 +9,7 @@
 
 
 
-namespace stun {
+//namespace stun {
 
     enum AppName
     {
@@ -114,11 +114,17 @@ namespace stun {
     /**
      * @brief The StunRFC construction of the whole stun RFC callable
      */
-    struct StunRFC
+    struct StunRFC: public IParseable<Result_t>
     {
         StunRFC();
 
-        StunRFC& operator()(const Pcap::Result_t&);
+        StunRFC(const IParseable::type& ref);
+
+        StunRFC& operator()(const IParseable::type&);
+
+        StunRFC& operator()();
+
+        Result_t::TypeRFC type() const { return Result_t::TypeRFC::STUN;}
 
         bool valid() const;
 
@@ -126,8 +132,9 @@ namespace stun {
 
         AppName app();
 
-    private:
+        tjson::JsonBuilder jsonb;
 
+    private:
 
         void parsemessage(const char* data);
 
@@ -143,10 +150,12 @@ namespace stun {
             unsigned short dstPort;
             unsigned int tokens;        //count tokens here
             unsigned int priority;
+            bool nested;
         } m_properties;
+
     };
 
-}//stun
+//}//stun
 
 
 #endif // STUN_T_H

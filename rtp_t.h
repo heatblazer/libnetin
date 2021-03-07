@@ -1,11 +1,11 @@
 #ifndef RTP_T_H
 #define RTP_T_H
 #include "defs.h"
-#include "parse.h"
 #include "Pcap.h"
+#include "tjson.hpp"
 #include <pcap/pcap.h>
 
-namespace rtp {
+//namespace rtp {
 
     /*
     The RTP header has the following format:
@@ -31,18 +31,30 @@ namespace rtp {
         unsigned int CSRC;
     };
 
-    class RtpRFC
+    struct RtpRFC : public IParseable<Result_t>
     {
     public:
         RtpRFC();
 
+        RtpRFC(const IParseable::type& res);
+
         bool valid() const;
 
-        RtpRFC& operator()(const Pcap::Result_t&res);
+        RtpRFC& operator()(const IParseable::type &res);
+
+        RtpRFC& operator()();
+
+        Result_t::TypeRFC type() const { return Result_t::TypeRFC::RTP;}
+
+        tjson::JsonBuilder jsonb;
 
     private:
+
         template<typename T>
         void parse(T data);
+
+        bool m_valid;
+
         struct {
             unsigned int cc;
             unsigned int v;
@@ -55,9 +67,10 @@ namespace rtp {
             unsigned int csrc;
         } m_fields;
 
+
     };
 
-} // rtp
+//} // rtp
 
 
 #endif // RTP_T_H

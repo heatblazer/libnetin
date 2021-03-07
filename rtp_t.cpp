@@ -12,19 +12,31 @@
 
 #include <iostream>
 
-namespace rtp {
+//namespace rtp {
 
-    RtpRFC::RtpRFC()
+    RtpRFC::RtpRFC() : m_valid{false}
+    {
+
+    }
+
+    RtpRFC::RtpRFC(const IParseable::type &res) : IParseable<Result_t>{res},
+        m_valid{false}
     {
 
     }
 
     bool RtpRFC::valid() const
     {
-        return true;
+        return m_valid;
     }
 
-    RtpRFC &RtpRFC::operator()(const Pcap::Result_t &res)
+    RtpRFC& RtpRFC::operator()()
+    {
+        return this->operator()(this->value);
+    }
+
+
+    RtpRFC &RtpRFC::operator()(const IParseable::type &res)
     {
         const struct ether_header* ethernetHeader;
         const struct ip* ipHeader;
@@ -43,6 +55,7 @@ namespace rtp {
                 int offset = sizeof(struct ether_header) + sizeof(struct ip)+ sizeof(udphdr);
                 struct rtp_t* rtp = (struct rtp_t*)(res.data + offset);
                 parse(*rtp);
+                m_valid = true;
             }
         }
         return *this;
@@ -52,8 +65,6 @@ namespace rtp {
     template<typename T>
     void RtpRFC::parse(T data)
     {
-        char tmp[sizeof(rtp_t)] = {0};
-        memcpy(tmp, &data, sizeof(rtp_t));
         m_fields.cc = (data.meta[0] << 4) & 0xf0;
         m_fields.v = (data.meta[0] >> 6);
         m_fields.p = (data.meta[0] >> 5) & 0x1;
@@ -63,8 +74,11 @@ namespace rtp {
         m_fields.timestamp = SWAP4(data.timestamp);
         m_fields.ssrc= SWAP4(data.SSRC);
         m_fields.ssrc= SWAP4(data.CSRC);
-        return;
+        jsonb.add(tjson::JsonField{"protocol", "RTP"});
+        jsonb.add(tjson::JsonField{"CC", m_fields.cc});
+        jsonb.add(tjson::JsonField{"ssrc", m_fields.ssrc});
+        return; //just brek here
     }
 
 
-}//rtp
+//}//rtp

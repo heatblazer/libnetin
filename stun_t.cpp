@@ -17,7 +17,7 @@
 
 #define STUN_MAGIC_COOKIE 0x2112A442
 
-namespace stun {
+//namespace stun {
 
     StunRFC::StunRFC() : m_isValid{false},
     m_stunCnt{0},
@@ -26,7 +26,21 @@ namespace stun {
         memset(&m_properties, 0, sizeof(m_properties));
     }
 
-    StunRFC &StunRFC::operator ()(const Pcap::Result_t & res)
+    StunRFC::StunRFC(const IParseable::type &ref)
+        : IParseable<Result_t>{ref},
+        m_isValid{false},
+        m_stunCnt{0}, m_attribdata{0}
+    {
+        memset(&m_properties, 0, sizeof(m_properties));
+    }
+
+    StunRFC &StunRFC::operator ()()
+    {
+        return this->operator()(this->value);
+    }
+
+
+    StunRFC &StunRFC::operator ()(const IParseable::type & res)
     {
         const struct ether_header* ethernetHeader;
         const struct ip* ipHeader;
@@ -44,13 +58,14 @@ namespace stun {
                 udpHeader = (struct udphdr*)(res.data + sizeof(struct ether_header) + sizeof(struct ip));
                 struct stun_t* pStun = (struct stun_t*)(res.data + sizeof(struct ether_header) + sizeof(struct ip) + sizeof(udphdr));
                 if (pStun)
-                {
+                {                    
                     parsemessage((const char*)pStun);
                 }
                 m_properties.sourcePort = ntohs(udpHeader->source);
                 m_properties.dstPort = ntohs(udpHeader->dest);
             }
         }
+        auto a = app();
         return  *this;
     }
 
@@ -66,9 +81,12 @@ namespace stun {
 
     AppName StunRFC::app()
     {
+        jsonb.add(tjson::JsonField{"tokens", m_properties.tokens});
+
         AppName n = Unknown;
         if (m_properties.tokens >= 2) {
             n = AppName::WhatsApp;
+            jsonb.add(tjson::JsonField{"app", "WhatsApp"});
             return n;
         } else {
             switch (m_properties.priority) {
@@ -76,23 +94,29 @@ namespace stun {
             case 1862269438:
             case 1862270462: {
                 n = AppName::Skype;
+                jsonb.add(tjson::JsonField{"app", "Skype"});
                 break;
             }
             case 1845501695: {
                 n = AppName::Facebook;
+                jsonb.add(tjson::JsonField{"app", "Facebook"});
                 break;
             }
             case 1853824768: {
                 n = AppName::Telegram;
+                jsonb.add(tjson::JsonField{"app", "Telegram"});
                 break;
             }
             case 1853824767: {
                 n = AppName::GoogleMeet;
+                jsonb.add(tjson::JsonField{"app", "GoogleMeet"});
                 break;
             }
-            default://zoom and other
+            default: {
+                jsonb.add(tjson::JsonField{"app", "Unknown"});
                 break;
-            }
+                }
+            }            
         }
         return n;
     }
@@ -107,6 +131,10 @@ namespace stun {
             if (cookie != STUN_MAGIC_COOKIE) {
                 return;
             }
+            if (!m_properties.nested)
+                jsonb.add(tjson::JsonField{"protocol", "STUN"});
+            else
+                jsonb.add(tjson::JsonField{"protocol-nested", "STUN"});
             m_isValid = true;
             m_type = (MessageTypes) messagetype;
             if (messagelen > 0) {
@@ -128,7 +156,6 @@ namespace stun {
             i+=4;
             // pad by 4 since stun specifies so
             i+= utils::padcalc<4>(attrlen);
-
             switch (attr) {
                 case UNKNOWN_ATTRIBUTES: {
                     break;
@@ -157,6 +184,7 @@ namespace stun {
                     stun_t* pstn = (stun_t*)(m_attribdata+i);
                     unsigned int cookie = SWAP4(pstn->magic_cookie);
                     if (cookie == STUN_MAGIC_COOKIE) {
+                        m_properties.nested =true;
                         parsemessage((const char*)pstn);
                     }
                     break;
@@ -188,4 +216,4 @@ namespace stun {
             this->data.push_back(data[i]);
     }
 
-} // stun
+//} // stun
