@@ -3,7 +3,7 @@ CONFIG += console c++17
 CONFIG -= app_bundle
 CONFIG -= qt
 
-
+#DEFINES += MINJSON
 INCLUDEPATH += $$PWD/External/include
 
 win32 {
