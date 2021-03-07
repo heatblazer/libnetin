@@ -5,7 +5,7 @@
 #include "tjson.hpp"
 #include <pcap/pcap.h>
 
-//namespace rtp {
+namespace rtp {
 
     /*
     The RTP header has the following format:
@@ -70,7 +70,7 @@
 
     };
 
-//} // rtp
+} // rtp
 
 
 #endif // RTP_T_H

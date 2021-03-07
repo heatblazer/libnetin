@@ -3,6 +3,13 @@
 #include <string>
 #include <vector>
 #include <iostream>
+
+#ifdef MINJSON
+    #define NL
+#else
+    #define NL "\r\n"
+#endif
+
 namespace tjson {
 
 /**
@@ -98,14 +105,14 @@ struct JsonBuilder
     {
         std::string ret;
         size_t i=0;
-        ret += "{\r\n";
+        ret += "{" NL;
         for(i=0; i < fields.size()-1; i++)
         {
             ret += fields[i].full;
             ret+=",";
         }
         ret += fields[i++].full;
-        ret += "\r\n}";
+        ret += NL"}";
         return ret;
     }
 };
@@ -116,7 +123,7 @@ struct JsonSerializer
     std::string arrname;
     std::vector<JsonBuilder> builders;
 
-    JsonSerializer() : arrname{"{\r\n\"default\":"}{}
+    JsonSerializer() : arrname{"{" NL "\"default\":"}{}
     JsonSerializer(const std::string& arr) : arrname{"{\""+arr+"\":"} {}
 
     void add(const JsonBuilder& bld)
@@ -130,14 +137,14 @@ struct JsonSerializer
         std::string final;
         size_t i;
         final += arrname;
-        final += "[\r\n";
+        final += "[" NL;
         for (i=0; i < builders.size()-1; i++)
         {
             final += builders[i].build();
             final += ",";
         }
         final += builders[i++].build();
-        final += "\r\n]\r\n}";
+        final += NL "]}";
         return final;
     }
 };

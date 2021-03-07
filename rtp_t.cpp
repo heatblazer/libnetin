@@ -12,7 +12,7 @@
 
 #include <iostream>
 
-//namespace rtp {
+namespace rtp {
 
     RtpRFC::RtpRFC() : m_valid{false}
     {
@@ -81,4 +81,4 @@
     }
 
 
-//}//rtp
+}//rtp

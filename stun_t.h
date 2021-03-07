@@ -9,7 +9,7 @@
 
 
 
-//namespace stun {
+namespace stun {
 
     enum AppName
     {
@@ -155,7 +155,7 @@
 
     };
 
-//}//stun
+}//stun
 
 
 #endif // STUN_T_H

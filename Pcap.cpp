@@ -7,6 +7,9 @@
 #include <iostream>
 #include <fstream>
 
+using namespace stun;
+using namespace rtp;
+
 Pcap::Pcap()
 {
     memset(&m_nextRes, 0, sizeof(m_nextRes));
@@ -44,23 +47,12 @@ bool Pcap::hasNext() const
  */
 void Pcap::loop()
 {
-#if 1
-    std::map<AppName, std::string> appnames;
-    appnames[AppName::Facebook] = "Facebook";
-    appnames[AppName::WhatsApp] = "Whatsapp";
-    appnames[AppName::Telegram] = "Telegram";
-    appnames[AppName::Zoom] = "Zoom";
-    appnames[AppName::GoogleMeet] = "GoogleMeet";
-    appnames[AppName::Skype] = "Skype";
-    appnames[AppName::Unknown] = "Unknown";
-#endif
     for(Result_t& res =  next(); hasNext(); operator++())
     {
         auto resultNwork = VParse(StunRFC{res},
                                   RtpRFC{res});
-
+        (void)resultNwork;
     }
-
     std::ofstream jsonfile;
     jsonfile.open ("out.json");
     jsonfile<< serializer.serialize();

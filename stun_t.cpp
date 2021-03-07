@@ -17,7 +17,7 @@
 
 #define STUN_MAGIC_COOKIE 0x2112A442
 
-//namespace stun {
+namespace stun {
 
     StunRFC::StunRFC() : m_isValid{false},
     m_stunCnt{0},
@@ -216,4 +216,4 @@
             this->data.push_back(data[i]);
     }
 
-//} // stun
+} // stun
