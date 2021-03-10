@@ -7,11 +7,14 @@ template <typename T>
 struct IParseable
 {
     typedef  T type;
+
     type value;
 
     IParseable() {};
 
     IParseable(const T& ref) : value{ref} { }
+
+    tjson::JsonBuilder jsonb;
 
 };
 
