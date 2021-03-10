@@ -5,7 +5,6 @@
 #include "tjson.hpp"
 #include <memory>
 #include <pcap/pcap.h>
-#include <optional>
 
 class Pcap
 {
@@ -50,7 +49,6 @@ protected:
     bool m_offline;
 
     Result_t m_nextRes;
-
 
 private:
 

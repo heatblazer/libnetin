@@ -132,8 +132,6 @@ namespace stun {
 
         AppName app();
 
-        tjson::JsonBuilder jsonb;
-
     private:
 
         void parsemessage(const char* data);

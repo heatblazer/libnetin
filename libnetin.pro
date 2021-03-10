@@ -17,6 +17,7 @@ win32 {
 SOURCES += \
         Pcap.cpp \
         main.cpp \
+        nill_t.cpp \
         rtp_t.cpp \
         stun_t.cpp \
         utils.cpp
@@ -24,6 +25,7 @@ SOURCES += \
 HEADERS += \
     Pcap.h \
     defs.h \
+    nill_t.h \
     rtp_t.h \
     stun_t.h \
     tjson.hpp \

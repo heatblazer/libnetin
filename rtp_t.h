@@ -1,7 +1,7 @@
 #ifndef RTP_T_H
 #define RTP_T_H
 #include "defs.h"
-#include "Pcap.h"
+#include "types.h"
 #include "tjson.hpp"
 #include <pcap/pcap.h>
 
@@ -46,7 +46,6 @@ namespace rtp {
 
         Result_t::TypeRFC type() const { return Result_t::TypeRFC::RTP;}
 
-        tjson::JsonBuilder jsonb;
 
     private:
 
@@ -66,8 +65,6 @@ namespace rtp {
             unsigned int ssrc;
             unsigned int csrc;
         } m_fields;
-
-
     };
 
 } // rtp
