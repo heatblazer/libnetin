@@ -12,7 +12,6 @@ class Pcap
 
 public:
 
-
     Pcap();
 
     ~Pcap();
@@ -28,7 +27,9 @@ public:
     void loop();
 
 protected:
-
+    /**
+     *@deprecated
+     */
     template<typename T, typename Return_T>
     Return_T packetHandlerT(u_char *userData, const Result_t& res, T protocol)
     {
@@ -46,7 +47,10 @@ protected:
 
     char errbuf[PCAP_ERRBUF_SIZE];
 
+    bool m_offline;
+
     Result_t m_nextRes;
+
 
 private:
 

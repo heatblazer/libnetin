@@ -10,7 +10,7 @@
 using namespace stun;
 using namespace rtp;
 
-Pcap::Pcap()
+Pcap::Pcap() : m_offline{true} /* default mode is offline */
 {
     memset(&m_nextRes, 0, sizeof(m_nextRes));
 }
@@ -21,8 +21,16 @@ Pcap::~Pcap()
 
 bool Pcap::init(const char *fname)
 {
-    p_Cap = pcap_open_offline(fname, errbuf);
+    if (m_offline) {
+        p_Cap = pcap_open_offline(fname, errbuf);
+    } else {
+        char errbuf[0xffff] = {0};
+        pcap_if_t* ifaces;
+        int n = pcap_findalldevs(&ifaces, errbuf);
+        p_Cap = pcap_open_live(ifaces[0].name,PCAP_BUF_SIZE,0,-1,errbuf);
+    }
     if (!p_Cap) return false;
+
     return true;
 }
 
