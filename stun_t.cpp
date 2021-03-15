@@ -42,30 +42,19 @@ namespace stun {
 
     StunRFC &StunRFC::operator ()(const IParseable::type & res)
     {
-        const struct ether_header* ethernetHeader;
-        const struct ip* ipHeader;
-        const struct udphdr* udpHeader;
-        char sourceIP[INET_ADDRSTRLEN];
-        char destIP[INET_ADDRSTRLEN];
-        if (!res.data)
-            return *this;
-        ethernetHeader = (struct ether_header*)res.data;
-        if (ntohs(ethernetHeader->ether_type) == ETHERTYPE_IP) {
-            ipHeader = (struct ip*)(res.data + sizeof(struct ether_header));
-            inet_ntop(AF_INET, &(ipHeader->ip_src), sourceIP, INET_ADDRSTRLEN);
-            inet_ntop(AF_INET, &(ipHeader->ip_dst), destIP, INET_ADDRSTRLEN);
-            if (ipHeader->ip_p == IPPROTO_UDP) {
-                udpHeader = (struct udphdr*)(res.data + sizeof(struct ether_header) + sizeof(struct ip));
-                struct stun_t* pStun = (struct stun_t*)(res.data + sizeof(struct ether_header) + sizeof(struct ip) + sizeof(udphdr));
-                if (pStun)
-                {                    
-                    parsemessage((const char*)pStun);
-                }
-                m_properties.sourcePort = ntohs(udpHeader->source);
-                m_properties.dstPort = ntohs(udpHeader->dest);
-            }
+        struct EthL4 eth = utils::GetEthL4(res.data);
+        switch (eth.type) {
+        case EthL4::UDP: {
+            struct stun_t* pStun = (struct stun_t*)(res.data + sizeof(struct ether_header) + sizeof(struct ip) + sizeof(udphdr));
+            parsemessage((const char*)pStun);
+            m_properties.sourcePort = ntohs(eth.udpHeader->source);
+            m_properties.dstPort = ntohs(eth.udpHeader->dest);
+            auto a = app();
+            (void)a;
         }
-        auto a = app();
+        default:
+            break;
+        }
         return  *this;
     }
 

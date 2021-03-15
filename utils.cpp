@@ -19,7 +19,6 @@ namespace utils {
     }
 
 
-
     struct EthL4 GetEthL4(const u_char* data)
     {
         struct EthL4 eth;
