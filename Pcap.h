@@ -6,10 +6,8 @@
 #include <memory>
 #include <pcap/pcap.h>
 
-class Pcap
+struct Pcap
 {
-
-public:
 
     Pcap();
 
@@ -25,7 +23,7 @@ public:
 
     void loop();
 
-protected:
+private:
     /**
      *@deprecated
      */
@@ -50,7 +48,6 @@ protected:
 
     Result_t m_nextRes;
 
-private:
 
     tjson::JsonSerializer serializer;
 
@@ -73,8 +70,6 @@ private:
             return VParse(std::forward<Args>(FArgs)...);
         }
     }
-
-
 };
 
 #endif // PCAP_H
