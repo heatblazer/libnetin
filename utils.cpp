@@ -23,6 +23,7 @@ namespace utils {
     struct EthL4 GetEthL4(const u_char* data)
     {
         struct EthL4 eth;
+        eth.type = EthL4::UNKNOWN; // default
         if (!data)
             return eth;
         eth.ethernetHeader = (struct ether_header*)data;
@@ -35,7 +36,7 @@ namespace utils {
                 eth.udpHeader = (struct udphdr*)(data + sizeof(struct ether_header) + sizeof(struct ip));
                 eth.type = EthL4::UDP;
             } else if (eth.ipHeader->ip_p == IPPROTO_TCP) {
-                //todo;
+                eth.type = EthL4::TCP;
             } else {
                 //
             }
