@@ -19,4 +19,27 @@ namespace utils {
     }
 
 
+
+    struct EthL4 GetEthL4(const u_char* data)
+    {
+        struct EthL4 eth;
+        if (!data)
+            return eth;
+        eth.ethernetHeader = (struct ether_header*)data;
+        eth.ethernetHeader = (struct ether_header*)data;
+        if (ntohs(eth.ethernetHeader->ether_type) == ETHERTYPE_IP) {
+            eth.ipHeader = (struct ip*)(data + sizeof(struct ether_header));
+            inet_ntop(AF_INET, &(eth.ipHeader->ip_src), eth.sourceIP, INET_ADDRSTRLEN);
+            inet_ntop(AF_INET, &(eth.ipHeader->ip_dst), eth.destIP, INET_ADDRSTRLEN);
+            if (eth.ipHeader->ip_p == IPPROTO_UDP) {
+                eth.udpHeader = (struct udphdr*)(data + sizeof(struct ether_header) + sizeof(struct ip));
+                eth.type = EthL4::UDP;
+            } else if (eth.ipHeader->ip_p == IPPROTO_TCP) {
+                //todo;
+            } else {
+                //
+            }
+        }
+        return eth;
+    }
 }

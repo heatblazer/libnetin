@@ -1,12 +1,16 @@
 #ifndef UTILS_H
 #define UTILS_H
 #include "defs.h"
+#include "types.h"
+
 #include <vector>
 #include <string>
 
 namespace utils {
 
     void split(const char *str, const char *delim, std::vector<std::string>& out);
+
+    struct EthL4 GetEthL4(const u_char* data);
 
     template <size_t CVAL>
     size_t  padcalc(size_t val)
@@ -27,6 +31,7 @@ namespace utils {
         }
         return val;
     }
+
 
 }
 
