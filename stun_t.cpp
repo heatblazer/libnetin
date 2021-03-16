@@ -47,6 +47,8 @@ namespace stun {
         case EthL4::UDP: {
             struct stun_t* pStun = (struct stun_t*)(res.data + sizeof(struct ether_header) + sizeof(struct ip) + sizeof(udphdr));
             parsemessage((const char*)pStun);
+            jsonb.add(tjson::JsonField{"srcip", eth.sourceIP});
+            jsonb.add(tjson::JsonField{"dstip", eth.destIP});
             m_properties.sourcePort = ntohs(eth.udpHeader->source);
             m_properties.dstPort = ntohs(eth.udpHeader->dest);
             auto a = app();

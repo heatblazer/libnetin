@@ -35,6 +35,8 @@ namespace rtp {
             case EthL4::UDP: {
                 int offset = sizeof(struct ether_header) + sizeof(struct ip)+ sizeof(udphdr);
                 struct rtp_t* rtp = (struct rtp_t*)(res.data + offset);
+                jsonb.add(tjson::JsonField{"srcip", eth.sourceIP});
+                jsonb.add(tjson::JsonField{"dstip", eth.destIP});
                 parse(*rtp);
                 m_valid = true;
             }
