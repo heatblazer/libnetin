@@ -4,4 +4,6 @@
 *.pro.user
 *.qmake.stash
 tools/binutil_src/*.pro.user
+Dest/*
+obj/*
 genfiles/*.*
