@@ -5,8 +5,6 @@
 
 struct NullRFC : public IParseable<Result_t>
 {
-    bool valid() const { return false; }
-
     NullRFC& operator()();
 
     Result_t::TypeRFC type() const { return Result_t::TypeRFC::RTP;}

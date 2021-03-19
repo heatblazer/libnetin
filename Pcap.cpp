@@ -1,6 +1,7 @@
 #include "Pcap.h"
 #include "stun_t.h"
 #include "rtp_t.h"
+#include "turn_t.h"
 #include "nill_t.h" // test variardity
 #include <string.h>
 #include <map>
@@ -10,6 +11,7 @@
 
 using namespace stun;
 using namespace rtp;
+using namespace turn;
 
 Pcap::Pcap() : m_offline{true} /* default mode is offline */
 {
@@ -58,7 +60,7 @@ void Pcap::loop()
 {
     for(Result_t& res =  next(); hasNext(); operator++())
     {
-        auto resultNwork = VParse(NullRFC{},
+        auto resultNwork = VParse(TurnRFC{res},
                                   StunRFC{res},
                                   RtpRFC{res});
         (void)resultNwork;//do something if needed

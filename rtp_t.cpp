@@ -18,11 +18,6 @@ namespace rtp {
 
     }
 
-    bool RtpRFC::valid() const
-    {
-        return m_valid;
-    }
-
     RtpRFC& RtpRFC::operator()()
     {
         return this->operator()(this->value);
@@ -38,7 +33,7 @@ namespace rtp {
                 jsonb.add(tjson::JsonField{"srcip", eth.sourceIP});
                 jsonb.add(tjson::JsonField{"dstip", eth.destIP});
                 parse(*rtp);
-                m_valid = true;
+                Valid = true;
             }
             default:
                 break;

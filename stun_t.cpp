@@ -19,7 +19,7 @@
 
 namespace stun {
 
-    StunRFC::StunRFC() : m_isValid{false},
+    StunRFC::StunRFC() :
     m_stunCnt{0},
     m_attribdata{0}
     {
@@ -28,7 +28,6 @@ namespace stun {
 
     StunRFC::StunRFC(const IParseable::type &ref)
         : IParseable<Result_t>{ref},
-        m_isValid{false},
         m_stunCnt{0}, m_attribdata{0}
     {
         memset(&m_properties, 0, sizeof(m_properties));
@@ -45,7 +44,7 @@ namespace stun {
         struct EthL4 eth = utils::GetEthL4(res.data);
         switch (eth.type) {
         case EthL4::UDP: {
-            struct stun_t* pStun = (struct stun_t*)(res.data + sizeof(struct ether_header) + sizeof(struct ip) + sizeof(udphdr));
+            struct stun_t* pStun = (struct stun_t*)(res.data + sizeof(struct ether_header) + sizeof(struct ip) + sizeof(udphdr));            
             parsemessage((const char*)pStun);
             jsonb.add(tjson::JsonField{"srcip", eth.sourceIP});
             jsonb.add(tjson::JsonField{"dstip", eth.destIP});
@@ -58,11 +57,6 @@ namespace stun {
             break;
         }
         return  *this;
-    }
-
-    bool StunRFC::valid() const
-    {
-        return  m_isValid;
     }
 
     size_t StunRFC::count() const
@@ -126,7 +120,7 @@ namespace stun {
                 jsonb.add(tjson::JsonField{"protocol", "STUN"});
             else
                 jsonb.add(tjson::JsonField{"protocol-nested", "STUN"});
-            m_isValid = true;
+            Valid = true;
             m_type = (MessageTypes) messagetype;
             if (messagelen > 0) {
                 pStun++;
@@ -140,6 +134,7 @@ namespace stun {
 
     void StunRFC::parseattribs(const size_t len)
     {
+
         for(size_t i=0; i < len;) {
             MessageAttribs attr  = (MessageAttribs) ((m_attribdata[i] << 8) | (m_attribdata[i+1]));
             unsigned short attrlen = (m_attribdata[i+2] << 8) | (m_attribdata[i+3]);            
@@ -156,6 +151,19 @@ namespace stun {
                 case CHANGE_REQUEST:
                 case SOURCE_ADDRESS:
                 case CHANGED_ADDRESS:
+                case XOR_PEER_ADDRESS: // todo xor peer address
+                {
+                    /*
+                     * xport = int ((a[1][2] << 8) | a[1][3])
+                    xport = (MAGIC_COOKIE >> 16) ^ xport
+                    ip_orig = a[1][4] << 24 | a[1][5] << 16 | a[1][6] << 8 | a[1][7]
+                    ip_orig ^= MAGIC_COOKIE
+                    ip_xtype = [(ip_orig >> 24) & 0xFF, (ip_orig >> 16) & 0xFF, (ip_orig >> 8) & 0xFF, ip_orig & 0xFF]
+                     * */
+                    //0000   00 12 00 08 00 01 d4 d8 2b da c8 b6               ........+...
+                    unsigned long long  xorpeer = utils::tobin<unsigned long long>((const char*)(&m_attribdata[i]));
+                    break;
+                }
                 case SOFTWARE:
                     break;
                 case ICE_CONTROLED:

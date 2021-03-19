@@ -38,8 +38,6 @@ namespace rtp {
 
         RtpRFC(const IParseable::type& res);
 
-        bool valid() const;
-
         RtpRFC& operator()(const IParseable::type &res);
 
         RtpRFC& operator()();

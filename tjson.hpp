@@ -51,6 +51,11 @@ private:
         return std::to_string(ref);
     }
 
+    static std::string toString(unsigned short ref)
+    {
+        return std::to_string(ref);
+    }
+
     static std::string toString(const std::string& ref)
     {
         return std::string{"\""+ ref + "\""};

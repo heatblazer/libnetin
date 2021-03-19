@@ -14,12 +14,18 @@ win32 {
     LIBS += -L$$PWD/External/lib/libpcap.a -lpcap
 }
 
+DESTDIR = $$PWD/Dest
+OBJECTS_DIR = $$PWD/obj
+MOC_DIR = $$PWD/obj
+
+
 SOURCES += \
         Pcap.cpp \
         main.cpp \
         nill_t.cpp \
         rtp_t.cpp \
         stun_t.cpp \
+        turn_t.cpp \
         utils.cpp
 
 HEADERS += \
@@ -29,5 +35,6 @@ HEADERS += \
     rtp_t.h \
     stun_t.h \
     tjson.hpp \
+    turn_t.h \
     types.h \
     utils.h

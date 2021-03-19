@@ -37,11 +37,14 @@ struct IParseable
 
     type value;
 
+    bool Valid;
+
     IParseable() {};
 
-    IParseable(const T& ref) : value{ref} { }
+    IParseable(const T& ref) : value{ref}, Valid{false} { }
 
     tjson::JsonBuilder jsonb;
+
 
 };
 
@@ -52,6 +55,7 @@ struct Result_t
         STUN,
         RTP,
         RTSP,
+        TURN,
         UNKNOWN
     };
 

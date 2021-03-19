@@ -60,7 +60,7 @@ private:
     auto VParse(T value, Args&&...FArgs)// -> decltype (value)
     {
         T resultready = packetHandlerT(value);
-        if (resultready.valid()) {
+        if (resultready.Valid) {
             value.value.type = resultready.type();
             serializer.add(resultready.jsonb);
             return value.value;

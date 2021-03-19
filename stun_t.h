@@ -126,19 +126,16 @@ namespace stun {
 
         Result_t::TypeRFC type() const { return Result_t::TypeRFC::STUN;}
 
-        bool valid() const;
-
         size_t count() const;
 
         AppName app();
 
-    private:
+//    private:
 
         void parsemessage(const char* data);
 
         void parseattribs(const size_t len);
 
-        bool m_isValid;
         size_t m_stunCnt;
         MessageTypes m_type;
         StunAttribute m_attributes;
