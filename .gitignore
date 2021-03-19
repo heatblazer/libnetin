@@ -3,7 +3,9 @@
 *.autosave
 *.pro.user
 *.qmake.stash
-tools/binutil_src/*.pro.user
+!Dest/.gitkeep
+!obj/.gitkeep
 Dest/*
 obj/*
+tools/binutil_src/*.pro.user
 genfiles/*.*
