@@ -2,5 +2,6 @@
 *.pro.*
 *.autosave
 *.pro.user
+*.qmake.stash
 tools/binutil_src/*.pro.user
 genfiles/*.*
