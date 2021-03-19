@@ -5,7 +5,5 @@
 *.qmake.stash
 !Dest/.gitkeep
 !obj/.gitkeep
-Dest/*
-obj/*
 tools/binutil_src/*.pro.user
 genfiles/*.*
