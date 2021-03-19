@@ -130,7 +130,7 @@ namespace stun {
 
         AppName app();
 
-//    private:
+    private:
 
         void parsemessage(const char* data);
 
