@@ -50,8 +50,6 @@ namespace rtp {
         template<typename T>
         void parse(T data);
 
-        bool m_valid;
-
         struct {
             unsigned int cc;
             unsigned int v;

@@ -7,13 +7,12 @@
 
 namespace rtp {
 
-    RtpRFC::RtpRFC() : m_valid{false}
+    RtpRFC::RtpRFC()
     {
 
     }
 
-    RtpRFC::RtpRFC(const IParseable::type &res) : IParseable<Result_t>{res},
-        m_valid{false}
+    RtpRFC::RtpRFC(const IParseable::type &res) : IParseable<Result_t>{res}
     {
 
     }
@@ -54,9 +53,13 @@ namespace rtp {
         m_fields.pt = (data.meta[1]) & 0x7F;
         m_fields.timestamp = SWAP4(data.timestamp);
         m_fields.ssrc= SWAP4(data.SSRC);
-        m_fields.ssrc= SWAP4(data.CSRC);
+        m_fields.csrc= SWAP4(data.CSRC);
         jsonb.add(tjson::JsonField{"CC", m_fields.cc});
         jsonb.add(tjson::JsonField{"ssrc", m_fields.ssrc});
+        jsonb.add(tjson::JsonField{"csrc", m_fields.csrc});
+        jsonb.add(tjson::JsonField{"timestamp", m_fields.timestamp});
+        jsonb.add(tjson::JsonField{"extension", m_fields.x});
+
         return; //just brek here
     }
 
