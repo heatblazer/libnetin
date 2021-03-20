@@ -23,7 +23,7 @@ namespace utils {
     T tobin(const char* data)
     {
         T val=0;
-        for(int i=0; i < sizeof(T); i++) {
+        for(size_t i=0; i < sizeof(T); i++) {
             val |= (data[i]) << (i * 8);
         }
         if (BE) {

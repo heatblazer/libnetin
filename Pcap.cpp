@@ -29,6 +29,7 @@ bool Pcap::init(const char *fname)
     } else {
         pcap_if_t* ifaces;
         int n = pcap_findalldevs(&ifaces, errbuf);
+        (void)n;
         // loop to all devs or capture on a specific one
         p_Cap = pcap_open_live(ifaces[0].name,PCAP_BUF_SIZE,0,-1,errbuf);
     }
@@ -60,12 +61,13 @@ void Pcap::loop()
 {
     for(Result_t& res =  next(); hasNext(); operator++())
     {
-        auto resultNwork = VParse(NullRFC{res}, //dummy null parser type
+        auto resultNwork = VParse(//NullRFC{}, //dummy null parser type
                                   TurnRFC{res},
                                   StunRFC{res},
                                   RtpRFC{res});
         (void)resultNwork;//do something if needed
     }
+    //TODO: either finalize here or move to other place
     std::ofstream jsonfile;
     jsonfile.open ("out.json");
     jsonfile<< serializer.serialize();
