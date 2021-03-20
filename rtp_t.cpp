@@ -30,6 +30,7 @@ namespace rtp {
             case EthL4::UDP: {
                 int offset = sizeof(struct ether_header) + sizeof(struct ip)+ sizeof(udphdr);
                 struct rtp_t* rtp = (struct rtp_t*)(res.data + offset);
+                jsonb.add(tjson::JsonField{"protocol", "RTP"});
                 jsonb.add(tjson::JsonField{"srcip", eth.sourceIP});
                 jsonb.add(tjson::JsonField{"dstip", eth.destIP});
                 parse(*rtp);
@@ -54,7 +55,6 @@ namespace rtp {
         m_fields.timestamp = SWAP4(data.timestamp);
         m_fields.ssrc= SWAP4(data.SSRC);
         m_fields.ssrc= SWAP4(data.CSRC);
-        jsonb.add(tjson::JsonField{"protocol", "RTP"});
         jsonb.add(tjson::JsonField{"CC", m_fields.cc});
         jsonb.add(tjson::JsonField{"ssrc", m_fields.ssrc});
         return; //just brek here

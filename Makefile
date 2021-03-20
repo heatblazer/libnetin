@@ -18,7 +18,7 @@ DEFINES       =
 CFLAGS        = -pipe -O2 -Wall -Wextra -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O2 -std=gnu++1z -Wall -Wextra -fPIC $(DEFINES)
 INCPATH       = -I. -IExternal/include -I/../lib64/qt5/mkspecs/linux-g++
-QMAKE         = /usr/bin/qmake-qt5
+#QMAKE         = /usr/bin/qmake-qt5
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
 MKDIR         = mkdir -p
