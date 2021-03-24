@@ -7,14 +7,10 @@
 
 namespace rtp {
 
-    RtpRFC::RtpRFC()
-    {
-
-    }
 
     RtpRFC::RtpRFC(const IParseable::type &res) : IParseable<Result_t>{res}
     {
-
+        memset(&m_fields, 0, sizeof(m_fields));
     }
 
     RtpRFC& RtpRFC::operator()()
@@ -33,7 +29,6 @@ namespace rtp {
                 jsonb.add(tjson::JsonField{"srcip", eth.sourceIP});
                 jsonb.add(tjson::JsonField{"dstip", eth.destIP});
                 parse(*rtp);
-                Valid = true;
             }
             default:
                 break;
@@ -45,6 +40,7 @@ namespace rtp {
     template<typename T>
     void RtpRFC::parse(T data)
     {
+        Valid = true;
         m_fields.cc = (data.meta[0] << 4) & 0xf0;
         m_fields.v =  (data.meta[0] >> 6);
         m_fields.p =  (data.meta[0] >> 5) & 0x1;
@@ -54,11 +50,16 @@ namespace rtp {
         m_fields.timestamp = SWAP4(data.timestamp);
         m_fields.ssrc= SWAP4(data.SSRC);
         m_fields.csrc= SWAP4(data.CSRC);
+        if (m_fields.v < 0 || m_fields.v > 2)
+            Valid |= false;
+        if (m_fields.pt < 0 || m_fields.pt > 126)
+            Valid |= false;
+        jsonb.add(tjson::JsonField{"PT", m_fields.pt});
         jsonb.add(tjson::JsonField{"CC", m_fields.cc});
         jsonb.add(tjson::JsonField{"ssrc", m_fields.ssrc});
         jsonb.add(tjson::JsonField{"csrc", m_fields.csrc});
-        jsonb.add(tjson::JsonField{"timestamp", m_fields.timestamp});
-        jsonb.add(tjson::JsonField{"extension", m_fields.x});
+        jsonb.add(tjson::JsonField{"TS", m_fields.timestamp});
+        jsonb.add(tjson::JsonField{"EX", m_fields.x});
 
         return; //just brek here
     }
