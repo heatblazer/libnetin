@@ -6,7 +6,7 @@
     #define SWAP4(x) (((x) << 24) & 0xFF000000) | (((x) >> 24) & 0x000000FF) | (((x) << 8) & 0x00FF0000) | (((x) >> 8) & 0x0000FF00)
     #define SWAP2(x) ((x) << 8) | ((x) >> 8)
 
-    #ifdef __UNIX__
+    #ifdef __unix__
         #include <pcap/pcap.h>
         #include <netinet/in.h>
         #include <netinet/ip.h>

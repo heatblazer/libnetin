@@ -7,18 +7,12 @@ CONFIG -= qt
 
 win32 {
     #TODO: implement
-        message("Win32")
-    HEADERS +=    \
-                    winpcap_t.h
-
+    message("Win32")
+    HEADERS +=  winpcap_t.h
+    SOURCES +=  winpcap_t.cpp
 
     INCLUDEPATH += $$PWD/External/Include
-#    LIBS += -L$$PWD\\External\\win32\\Lib\\wpcap.lib
-
- #   LIBS += -L$$PWD/External/win32/Lib/packet.lib
-
     LIBS += -L$$PWD/External/win32/Lib/ -lwpcap -lws2_32
-
 } else {
     message("Unix")
     INCLUDEPATH += $$PWD/External/include
@@ -39,8 +33,7 @@ SOURCES += \
         rtp_t.cpp \
         stun_t.cpp \
         turn_t.cpp \
-        utils.cpp \
-        winpcap_t.cpp
+        utils.cpp
 
 HEADERS += \
     Pcap.h \
