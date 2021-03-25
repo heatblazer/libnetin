@@ -46,3 +46,6 @@ HEADERS += \
     turn_t.h \
     types.h \
     utils.h
+
+DISTFILES += \
+    README.md
