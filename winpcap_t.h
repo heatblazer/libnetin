@@ -17,14 +17,16 @@
 //struct in_addr
 //{
  //   in_addr_t s_addr;
-///};
-#pragma pack(1)
+//};
+#define L1_CACHE
+#pragma pack(L1_CACHE)
 struct ether_header
 {
     uint8_t ether_dhost[6];
     uint8_t ether_shost[6];
     uint16_t ether_type;
-};// __attribute__((__packed__));
+};// __attribute__((__packed__)); //if gcc
+#pragma pack()
 
 //Ip header (v4)
 struct ip
