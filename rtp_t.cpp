@@ -1,8 +1,6 @@
 #include "rtp_t.h"
 #include "utils.h"
-
 #include <string.h>
-
 #include <iostream>
 
 namespace rtp {

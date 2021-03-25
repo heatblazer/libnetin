@@ -131,7 +131,7 @@ struct JsonSerializer
     JsonSerializer() : arrname{"{" NL "\"default\":"}{}
     JsonSerializer(const std::string& arr) : arrname{"{\""+arr+"\":"} {}
 
-    void add(const JsonBuilder& bld)
+    void Add(JsonBuilder bld)
     {
         builders.push_back(bld);
     }
@@ -148,7 +148,8 @@ struct JsonSerializer
             final += builders[i].build();
             final += ",";
         }
-        final += builders[i++].build();
+        final += builders[i].build();
+        i++;
         final += NL "]}";
         return final;
     }

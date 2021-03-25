@@ -4,13 +4,24 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 #DEFINES += MINJSON
-INCLUDEPATH += $$PWD/External/include
 
 win32 {
-#TODO: implement
-    message("Win32")
+    #TODO: implement
+        message("Win32")
+    HEADERS +=    \
+                    winpcap_t.h
+
+
+    INCLUDEPATH += $$PWD/External/Include
+#    LIBS += -L$$PWD\\External\\win32\\Lib\\wpcap.lib
+
+ #   LIBS += -L$$PWD/External/win32/Lib/packet.lib
+
+    LIBS += -L$$PWD/External/win32/Lib/ -lwpcap -lws2_32
+
 } else {
     message("Unix")
+    INCLUDEPATH += $$PWD/External/include
     LIBS += -L$$PWD/External/lib/libpcap.a -lpcap
 }
 
@@ -21,13 +32,15 @@ MOC_DIR = $$PWD/obj
 
 SOURCES += \
         Pcap.cpp \
+        defs.cpp \
         main.cpp \
         nill_t.cpp \
         rtcp_t.cpp \
         rtp_t.cpp \
         stun_t.cpp \
         turn_t.cpp \
-        utils.cpp
+        utils.cpp \
+        winpcap_t.cpp
 
 HEADERS += \
     Pcap.h \

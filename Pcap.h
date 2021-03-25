@@ -62,7 +62,7 @@ private:
         T resultready = packetHandlerT(value);
         if (resultready.Valid) {
             value.value.type = resultready.type();
-            serializer.add(resultready.jsonb);
+            serializer.Add(resultready.jsonb);
             return value.value;
         }
         // how to not pass the result ready here?
