@@ -110,11 +110,12 @@ struct JsonBuilder
     {
         std::string ret;
         size_t i=0;
+        if (!fields.size()) return {};
         ret += "{" NL;
         for(i=0; i < fields.size()-1; i++)
         {
             ret += fields[i].full;
-            ret+=",";
+            ret+=std::string{","};
         }
         ret += fields[i++].full;
         ret += NL"}";
@@ -141,6 +142,7 @@ struct JsonSerializer
     {
         std::string final;
         size_t i;
+        if (!builders.size()) return {};
         final += arrname;
         final += "[" NL;
         for (i=0; i < builders.size()-1; i++)
