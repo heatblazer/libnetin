@@ -18,17 +18,17 @@
 //{
  //   in_addr_t s_addr;
 //};
-#define L1_CACHE
-#pragma pack(L1_CACHE)
+
+#pragma pack(1)
 struct ether_header
 {
     uint8_t ether_dhost[6];
     uint8_t ether_shost[6];
     uint16_t ether_type;
 };// __attribute__((__packed__)); //if gcc
-#pragma pack()
-
 //Ip header (v4)
+
+#pragma pack(1)
 struct ip
 {
     // if LE
@@ -51,6 +51,7 @@ struct ip
 };
 
 //UDP header
+#pragma pack(1)
 struct udphdr
 {
     union {
@@ -70,6 +71,7 @@ struct udphdr
 };
 
 // TCP header
+#pragma pack(1)
 struct tcphdr
 {
     unsigned short source_port; // source port
@@ -101,6 +103,7 @@ struct tcphdr
     unsigned short urgent_pointer; // urgent pointer
 };
 
+#pragma pack(1)
 struct icmp_hdr
 {
     uint8_t type; // ICMP Error type
