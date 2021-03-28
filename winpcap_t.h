@@ -39,12 +39,10 @@ struct ip
     unsigned int ip_v:4;		/* version */
     unsigned int ip_hl:4;		/* header length */
 #endif
-
-    uint8_t ip_tos;
-    unsigned short ip_len;
-    unsigned short ip_id;
-    unsigned short ip_off;
-
+//    uint8_t ip_tos;			/* commented out for Win32*/
+    unsigned short ip_len;		/* total length */
+    unsigned short ip_id;		/* identification */
+//    unsigned short ip_off;		/* Commented out for Win32 */
 #define IP_RF 0x8000
 #define IP_DF 0x4000
 #define IP_MF 0x2000
