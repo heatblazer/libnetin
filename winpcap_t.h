@@ -31,10 +31,15 @@ struct ether_header
 #pragma pack(1)
 struct ip
 {
-    // if LE
-    unsigned int ip_hl : 4;
-    unsigned int ip_v: 4;
-    // else - inverse
+#if __BYTE_ORDER == __LITTLE_ENDIAN
+    unsigned int ip_hl:4;		/* header length */
+    unsigned int ip_v:4;		/* version */
+#else
+
+    unsigned int ip_v:4;		/* version */
+    unsigned int ip_hl:4;		/* header length */
+#endif
+
     uint8_t ip_tos;
     unsigned short ip_len;
     unsigned short ip_id;
