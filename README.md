@@ -12,6 +12,8 @@ please read the license agreement of `PCAP`.
 
 3.For `Win32` install follow the guide to install `NCAP` from here: https://nmap.org/npcap/#download
 
+#### Bugs:
+1.Win32 build can't resolve StunRFC, possible `pragma pack(x)` needed. 
 
 
 -------------
