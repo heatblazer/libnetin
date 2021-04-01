@@ -134,12 +134,12 @@ namespace stun {
 
         void parsemessage(const char* data);
 
-        void parseattribs(const size_t len);
+        void parseattribs(const unsigned char* data, const size_t len);
 
         size_t m_stunCnt;
         MessageTypes m_type;
         StunAttribute m_attributes;
-        unsigned char m_attribdata[MAX_BUFF_SIZE];
+        //unsigned char m_attribdata[MAX_BUFF_SIZE];
         struct {
             unsigned short sourcePort;
             unsigned short dstPort;

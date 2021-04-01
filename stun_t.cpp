@@ -4,6 +4,7 @@
 
 #include <string.h>
 #include <iostream>
+#include <alloca.h>
 
 
 #define STUN_MAGIC_COOKIE 0x2112A442
@@ -11,15 +12,14 @@
 namespace stun {
 
     StunRFC::StunRFC() :
-    m_stunCnt{0},
-    m_attribdata{0}
+    m_stunCnt{0}
     {
         memset(&m_properties, 0, sizeof(m_properties));
     }
 
     StunRFC::StunRFC(const IParseable::type &ref)
         : IParseable<Result_t>{ref},
-        m_stunCnt{0}, m_attribdata{0}
+        m_stunCnt{0}
     {
         memset(&m_properties, 0, sizeof(m_properties));
     }
@@ -99,6 +99,7 @@ namespace stun {
 
     void StunRFC::parsemessage(const char *data)
     {
+        unsigned char* pAttribData=nullptr;
         struct stun_t* pStun = (struct stun_t*)(data);
         if (pStun) {
             unsigned int cookie = SWAP4(pStun->magic_cookie);
@@ -115,20 +116,21 @@ namespace stun {
             m_type = (MessageTypes) messagetype;
             if (messagelen > 0) {
                 pStun++;
-                memcpy(m_attribdata, pStun,messagelen);
-                parseattribs(messagelen);
+                pAttribData = (unsigned char*)alloca(messagelen);
+                memcpy(pAttribData, pStun,messagelen);
+                parseattribs(pAttribData, messagelen);
             }
             m_stunCnt++;
         }
     }
 
 
-    void StunRFC::parseattribs(const size_t len)
+    void StunRFC::parseattribs(const unsigned char *data, const size_t len)
     {
 
         for(size_t i=0; i < len;) {
-            MessageAttribs attr  = (MessageAttribs) ((m_attribdata[i] << 8) | (m_attribdata[i+1]));
-            unsigned short attrlen = (m_attribdata[i+2] << 8) | (m_attribdata[i+3]);            
+            MessageAttribs attr  = (MessageAttribs) ((data[i] << 8) | (data[i+1]));
+            unsigned short attrlen = (data[i+2] << 8) | (data[i+3]);
              //reserved 4 bytes, move to the actual data
             i+=4;
             // pad by 4 since stun specifies so
@@ -152,7 +154,7 @@ namespace stun {
                     ip_xtype = [(ip_orig >> 24) & 0xFF, (ip_orig >> 16) & 0xFF, (ip_orig >> 8) & 0xFF, ip_orig & 0xFF]
                      * */
                     //0000   00 12 00 08 00 01 d4 d8 2b da c8 b6               ........+...
-                    unsigned long long  xorpeer = utils::tobin<unsigned long long>((const char*)(&m_attribdata[i]));
+                    unsigned long long  xorpeer = utils::tobin<unsigned long long>((const char*)(&data[i]));
                     break;
                 }
                 case SOFTWARE:
@@ -163,7 +165,7 @@ namespace stun {
                     break;
                 case PRIORITY:
                 {
-                    m_properties.priority =utils::tobin<unsigned int>((const char*)(&m_attribdata[i]));
+                    m_properties.priority =utils::tobin<unsigned int>((const char*)(&data[i]));
                     break;
                 }
                 case RESERVATION_TOKEN: {
@@ -171,7 +173,7 @@ namespace stun {
                     break;
                 }
                 case DATA:{
-                    stun_t* pstn = (stun_t*)(m_attribdata+i);
+                    stun_t* pstn = (stun_t*)(data+i);
                     unsigned int cookie = SWAP4(pstn->magic_cookie);
                     if (cookie == STUN_MAGIC_COOKIE) {
                         m_properties.nested =true;
@@ -180,7 +182,7 @@ namespace stun {
                     break;
                 }
                 case USERNAME: {
-                    m_attributes.m_attribs.push_back(AttribDataPair((MessageAttribs)attr, m_attribdata+i, attrlen));
+                    m_attributes.m_attribs.push_back(AttribDataPair((MessageAttribs)attr, data+i, attrlen));
                     break;
                     }
                 default:
