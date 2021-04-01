@@ -41,10 +41,6 @@ private:
         return std::to_string(ref);
     }
 
-    static std::string toString(const int& ref)
-    {
-        return std::to_string(ref);
-    }
 
     static std::string toString(unsigned int ref)
     {
