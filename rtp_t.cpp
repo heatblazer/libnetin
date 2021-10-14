@@ -6,9 +6,10 @@
 namespace rtp {
 
 
-    RtpRFC::RtpRFC(const IParseable::type &res) : IParseable<Result_t>{res}
+RtpRFC::RtpRFC(const IParseable::type &res) : IParseable<Result_t,RtpRFC>{res}
     {
         memset(&m_fields, 0, sizeof(m_fields));
+        memset(m_Payload, 0, sizeof(m_Payload)/sizeof(m_Payload[0]));
     }
 
     RtpRFC& RtpRFC::operator()()
@@ -19,9 +20,12 @@ namespace rtp {
     RtpRFC &RtpRFC::operator()(const IParseable::type &res)
     {
         struct EthL4 eth = utils::GetEthL4(res.data);
+        size_t total = res.out.len;
+
         switch (eth.type) {
             case EthL4::UDP: {
                 int offset = sizeof(struct ether_header) + sizeof(struct ip)+ sizeof(udphdr);
+                memcpy(m_Payload, res.data+offset,total-offset);
                 struct rtp_t* rtp = (struct rtp_t*)(res.data + offset);
                 jsonb.add(tjson::JsonField{"protocol", "RTP"});
                 jsonb.add(tjson::JsonField{"srcip", eth.sourceIP});

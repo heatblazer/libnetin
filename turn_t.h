@@ -7,7 +7,7 @@
 
 namespace turn {
 
-    struct TurnRFC: public IParseable<Result_t>
+    struct TurnRFC: public IParseable<Result_t,TurnRFC>
     {
         TurnRFC();
 

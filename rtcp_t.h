@@ -51,7 +51,7 @@ block  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
         uint32_t senders_octec_count;
     };
 
-    struct RtcpRFC : public IParseable<Result_t>
+    struct RtcpRFC : public IParseable<Result_t, RtcpRFC>
     {
     public:
 

@@ -63,7 +63,7 @@ void Pcap::loop()
 {
     for(Result_t& res =  next(); hasNext(); operator++())
     {
-        auto resultNwork = VParse(//RtcpRFC{res}, //dummy null parser type
+        auto resultNwork = VParse(RtcpRFC{res},
                                   TurnRFC{res},
                                   StunRFC{res},
                                   RtpRFC{res});

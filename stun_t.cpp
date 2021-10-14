@@ -11,6 +11,9 @@
 
 namespace stun {
 
+    std::unordered_map<std::string, int> StunRFC::s_UsernamesHist;
+
+
     StunRFC::StunRFC() :
     m_stunCnt{0}
     {
@@ -18,7 +21,7 @@ namespace stun {
     }
 
     StunRFC::StunRFC(const IParseable::type &ref)
-        : IParseable<Result_t>{ref},
+        : IParseable<Result_t,StunRFC>{ref},
         m_stunCnt{0}
     {
         memset(&m_properties, 0, sizeof(m_properties));
@@ -128,6 +131,8 @@ namespace stun {
     void StunRFC::parseattribs(const unsigned char *data, const size_t len)
     {
 
+        char d[4000] = {0};
+        memcpy(d, data, len);
         for(size_t i=0; i < len;) {
             MessageAttribs attr  = (MessageAttribs) ((data[i] << 8) | (data[i+1]));
             unsigned short attrlen = (data[i+2] << 8) | (data[i+3]);

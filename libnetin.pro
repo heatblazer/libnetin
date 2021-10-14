@@ -19,9 +19,9 @@ win32 {
     LIBS += -L$$PWD/External/lib/libpcap.a -lpcap
 }
 
-DESTDIR = $$PWD/Dest
-OBJECTS_DIR = $$PWD/obj
-MOC_DIR = $$PWD/obj
+#DESTDIR = $$PWD/Dest
+#OBJECTS_DIR = $$PWD/obj
+#MOC_DIR = $$PWD/obj
 
 
 SOURCES += \

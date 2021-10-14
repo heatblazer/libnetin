@@ -32,7 +32,6 @@ namespace utils {
         return val;
     }
 
-
 }
 
 #endif // UTILS_H

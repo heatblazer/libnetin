@@ -15,7 +15,7 @@ namespace turn {
     }
 
     TurnRFC::TurnRFC(const IParseable::type &ref)
-        : IParseable<Result_t>{ref}
+        : IParseable<Result_t,TurnRFC>{ref}
     {
     }
 

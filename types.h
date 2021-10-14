@@ -21,7 +21,7 @@ struct EthL4
 };
 
 
-template <typename T>
+template <typename T, typename CrtpBase>
 struct IParseable
 {
     typedef  T type;
@@ -33,6 +33,11 @@ struct IParseable
     IParseable() {};
 
     IParseable(const T& ref) : value{ref}, Valid{false} { }
+
+    CrtpBase& impl()
+    {
+        return static_cast<CrtpBase&>(*this);
+    }
 
     tjson::JsonBuilder jsonb;
 

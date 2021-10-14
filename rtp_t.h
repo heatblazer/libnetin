@@ -31,7 +31,7 @@ namespace rtp {
         unsigned int CSRC;
     };
 
-    struct RtpRFC : public IParseable<Result_t>
+    struct RtpRFC : public IParseable<Result_t, RtpRFC>
     {
     public:
         RtpRFC() = default;
@@ -61,6 +61,7 @@ namespace rtp {
             unsigned int ssrc;
             unsigned int csrc;
         } m_fields;
+        uint8_t m_Payload[1500]; //mtu
     };
 
 } // rtp

@@ -4,7 +4,7 @@
 namespace rtcp {
 
     RtcpRFC::RtcpRFC(const IParseable::type &res)
-        : IParseable<Result_t>{res}
+        : IParseable<Result_t,RtcpRFC>{res}
     {
         memset(&m_fields, 0, sizeof(m_fields));
     }
