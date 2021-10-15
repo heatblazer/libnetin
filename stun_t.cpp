@@ -4,8 +4,11 @@
 
 #include <string.h>
 #include <iostream>
-#include <alloca.h>
-
+#ifdef __unix__
+    #include <alloca.h>
+#else
+    #include <malloc.h>
+#endif
 
 #define STUN_MAGIC_COOKIE 0x2112A442
 
