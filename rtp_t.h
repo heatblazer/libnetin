@@ -47,8 +47,7 @@ namespace rtp {
 
     private:
 
-        template<typename T>
-        void parse(T data);
+        void parse(rtp_t data);
 
         struct {
             unsigned int cc;

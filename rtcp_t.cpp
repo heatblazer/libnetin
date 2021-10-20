@@ -9,7 +9,7 @@ namespace rtcp {
         memset(&m_fields, 0, sizeof(m_fields));
     }
 
-    RtcpRFC &RtcpRFC::operator()(const IParseable::type &res)
+    RtcpRFC &RtcpRFC::operator()(MAYBEUNUSED const IParseable::type &res)
     {
         return *this;
     }

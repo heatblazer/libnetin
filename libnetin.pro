@@ -32,6 +32,7 @@ SOURCES += \
         rtcp_t.cpp \
         rtp_t.cpp \
         stun_t.cpp \
+        t38_t.cpp \
         turn_t.cpp \
         utils.cpp
 
@@ -42,6 +43,7 @@ HEADERS += \
     rtcp_t.h \
     rtp_t.h \
     stun_t.h \
+    t38_t.h \
     tjson.hpp \
     turn_t.h \
     types.h \

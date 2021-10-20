@@ -39,6 +39,13 @@ struct IParseable
         return static_cast<CrtpBase&>(*this);
     }
 
+    /**
+    template<typename U>
+    bool Parse(U&& uref)
+    {
+        impl().parse(uref);
+    }*/
+
     tjson::JsonBuilder jsonb;
 
 
@@ -53,6 +60,7 @@ struct Result_t
         RTCP,
         RTSP,
         TURN,
+        T38,
         UNKNOWN
     };
 

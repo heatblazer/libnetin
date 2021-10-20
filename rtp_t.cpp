@@ -39,8 +39,7 @@ RtpRFC::RtpRFC(const IParseable::type &res) : IParseable<Result_t,RtpRFC>{res}
     }
 
 
-    template<typename T>
-    void RtpRFC::parse(T data)
+    void RtpRFC::parse(rtp_t data)
     {
         Valid = true;
         m_fields.cc = (data.meta[0] << 4) & 0xf0;
