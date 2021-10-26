@@ -14,8 +14,14 @@ namespace t38
     {
     };
 
+
     class T38Rfc :  public IParseable<Result_t, T38Rfc>
     {
+        unsigned char m_Payload[1500];
+
+        int state(const EthL4 &e4hdr, size_t len);
+
+
     public:
         T38Rfc() = default;
 
@@ -27,6 +33,8 @@ namespace t38
 
         Result_t::TypeRFC type() const { return Result_t::TypeRFC::T38;}
 
+
+        static void dbg();
     };
 
 

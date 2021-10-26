@@ -32,6 +32,13 @@ namespace utils {
         return val;
     }
 
+    template <typename T, size_t n>
+    size_t arrsize(const T (&)[n])
+    {
+        return n;
+    }
+
+
 }
 
 #endif // UTILS_H

@@ -50,4 +50,5 @@ HEADERS += \
     utils.h
 
 DISTFILES += \
+    Data/out.txt \
     README.md
