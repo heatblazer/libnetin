@@ -5,9 +5,29 @@
 #include <vector>
 #include <unordered_map>
 
+#include <cstdio>
+
+namespace  {
+
+
+    int wrbin(const char* f, const unsigned char* data, size_t dsize)
+    {
+
+        FILE* fp = fopen(f, "wb+");
+        if (!fp) {
+            return -1;
+        }
+
+        size_t ret = fwrite(data, sizeof(char), dsize, fp);
+        fclose(fp);
+        return  ret;
+    }
+
+}
+
 struct MPair{
-    std::vector <unsigned int> hdlcdata;
-    std::vector <unsigned int> sigdata;
+    std::vector <unsigned char> hdlcdata;
+    std::vector <unsigned char> sigdata;
 };
 
 using Map2D = std::unordered_map<std::string, MPair>;
@@ -41,7 +61,8 @@ int T38Rfc::state(MAYBEUNUSED const struct EthL4 &e4hdr, size_t len)
             //sig end
             break;
         }
-        case 0x4dd0: {
+        case 0x0ed0:
+        case 0x4dd0: { // data trans
             for(size_t i=4; i < len; i++) {
                 s_T38Flows[e4hdr.sourceIP].sigdata.push_back(m_Payload[i]);
             }
@@ -96,23 +117,22 @@ T38Rfc::T38Rfc(const IParseable::type &res) : IParseable<Result_t,T38Rfc>{res}
 
     void T38Rfc::dbg()
     {
+
+
+
         for (const auto &kv : s_T38Flows) {
             std::cout << kv.first << std::endl;
-            for(auto it: kv.second.hdlcdata){
-                std::cout << "[" << it << "]";
-            }
-            puts("..");
-            puts("..");
-            puts("..");
+            size_t hdsize = wrbin(kv.first.c_str(), kv.second.hdlcdata.cbegin().base(), kv.second.sigdata.size());
+            size_t faxdatas = wrbin(kv.first.c_str(), kv.second.sigdata.cbegin().base(), kv.second.sigdata.size());
+
+            std::cout << "Written:" << hdsize
+                <<" : " << faxdatas << std::endl;
 
 
-            for (auto iit : kv.second.sigdata) {
-                std::cout << "[" << iit << "]";
-            }
-            puts("..");
-            puts("..");
-            puts("..");
+ //           for (auto iit : kv.second.sigdata) {
 
+//                std::cout << "[" << iit << "]";
+ //           }
         }
     }
 
