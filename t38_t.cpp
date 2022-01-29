@@ -54,7 +54,7 @@ int T38Rfc::state(MAYBEUNUSED const struct EthL4 &e4hdr, size_t len)
         }
         case 0x06c0: {
             // begin collect data
-            s_T38Flows[e4hdr.sourceIP].hdlcdata.push_back(m_Payload[8]);
+            s_T38Flows[e4hdr.sourceIP].sigdata.push_back(m_Payload[8]);
             break;
         }
         case 0x03c0: {
@@ -122,11 +122,9 @@ T38Rfc::T38Rfc(const IParseable::type &res) : IParseable<Result_t,T38Rfc>{res}
 
         for (const auto &kv : s_T38Flows) {
             std::cout << kv.first << std::endl;
-            size_t hdsize = wrbin(kv.first.c_str(), kv.second.hdlcdata.cbegin().base(), kv.second.sigdata.size());
-            size_t faxdatas = wrbin(kv.first.c_str(), kv.second.sigdata.cbegin().base(), kv.second.sigdata.size());
+            size_t faxdatas = wrbin(kv.first.c_str(), &kv.second.sigdata[0], kv.second.sigdata.size());
 
-            std::cout << "Written:" << hdsize
-                <<" : " << faxdatas << std::endl;
+            std::cout << "Written:" << faxdatas << std::endl;
 
 
  //           for (auto iit : kv.second.sigdata) {
