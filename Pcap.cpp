@@ -24,7 +24,10 @@ struct is_validator<T38Rfc>
 {
     static const bool value = true;
 };
-
+/**
+ * @brief if you need your class to be parsed by VParse,
+ * please specialize it below
+ */
 template<>
 struct is_validator<RtcpRFC>
 {
