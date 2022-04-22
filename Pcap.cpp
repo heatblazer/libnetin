@@ -17,6 +17,41 @@ using namespace rtcp;
 using namespace turn;
 using namespace t38;
 
+
+
+template<>
+struct is_validator<T38Rfc>
+{
+    static const bool value = true;
+};
+
+template<>
+struct is_validator<RtcpRFC>
+{
+    static const bool value = true;
+};
+
+template<>
+struct is_validator<TurnRFC>
+{
+    static const bool value = true;
+};
+
+template<>
+struct is_validator<StunRFC>
+{
+    static const bool value = true;
+};
+
+template<>
+struct is_validator<RtpRFC>
+{
+    static const bool value = true;
+};
+
+
+
+
 Pcap::Pcap() : m_offline{true} /* default mode is offline */
 {
     memset(&m_nextRes, 0, sizeof(m_nextRes));
@@ -65,7 +100,7 @@ void Pcap::loop()
 {
     for(Result_t& res =  next(); hasNext(); operator++())
     {
-        auto resultNwork = VParse(T38Rfc{res}, //added t38
+        auto resultNwork = VParse(T38Rfc{res},
                                   RtcpRFC{res},
                                   TurnRFC{res},
                                   StunRFC{res},

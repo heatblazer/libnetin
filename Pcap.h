@@ -6,6 +6,14 @@
 #include <memory>
 #include <pcap/pcap.h>
 
+
+template<typename T>
+struct is_validator
+{
+    static const bool value = false;
+};
+
+
 struct Pcap
 {
 
@@ -57,16 +65,20 @@ private:
     }
 
     template <typename T, class...Args>
-    auto VParse(T value, Args&&...FArgs)// -> decltype (value)
+    auto VParse(T value, Args&&...FArgs)
     {
-        T resultready = packetHandlerT(value);
-        if (resultready.Valid) {
-            value.value.type = resultready.type();
-            serializer.Add(resultready.jsonb);
-            return value.value;
-        }
-        // how to not pass the result ready here?
-        else {
+        if constexpr (is_validator<T>::value){
+            T resultready = packetHandlerT(value);
+            if (resultready.Valid) {
+                value.value.type = resultready.type();
+                serializer.Add(resultready.jsonb);
+                return value.value;
+            }
+            // how to not pass the result ready here?
+            else {
+                return VParse(std::forward<Args>(FArgs)...);
+            }
+        } else {
             return VParse(std::forward<Args>(FArgs)...);
         }
     }
