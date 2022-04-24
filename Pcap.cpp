@@ -52,7 +52,7 @@ struct is_validator<RtpRFC>
     static const bool value = true;
 };
 
-
+namespace libnetin {
 void Pcap::showAll()
 {
     static char errbuf[PCAP_ERRBUF_SIZE];
@@ -129,6 +129,6 @@ void Pcap::loop()
 
 
 
-
+}//libnetin
 
 

@@ -8,9 +8,9 @@ App::App(int& argc, char **argv)
 {
 }
 
-bool App::exec()
+int App::exec()
 {
-
+    return 0;
 }
 
 }//ns libnetin

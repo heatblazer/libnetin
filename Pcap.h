@@ -16,7 +16,7 @@ struct is_validator
     static const bool value = false;
 };
 
-
+namespace libnetin {
 struct Pcap
 {
 
@@ -91,5 +91,5 @@ private:
         }
     }
 };
-
+}//libnetin
 #endif // PCAP_H
