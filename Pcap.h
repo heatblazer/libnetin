@@ -6,7 +6,10 @@
 #include <memory>
 #include <pcap/pcap.h>
 
-
+/**
+ * @brief The is_validator specialize that template for all supported types
+ * in VParse(...)
+ */
 template<typename T>
 struct is_validator
 {
@@ -30,6 +33,8 @@ struct Pcap
     bool hasNext() const;
 
     void loop();
+
+    static void showAll();
 
 private:
     /**
@@ -59,6 +64,10 @@ private:
 
     tjson::JsonSerializer serializer;
 
+    /**
+     * @brief VParse - variardic terminator
+     * @return {}
+     */
     Result_t VParse()
     {
         return {};
@@ -74,7 +83,6 @@ private:
                 serializer.Add(resultready.jsonb);
                 return value.value;
             }
-            // how to not pass the result ready here?
             else {
                 return VParse(std::forward<Args>(FArgs)...);
             }

@@ -3,6 +3,10 @@
 #include "types.h"
 #include "tjson.hpp"
 
+/**
+ * @brief The NullRFC test device class - does nothing
+ * but can be used for mockups and custom tests
+ */
 struct NullRFC : public IParseable<Result_t, NullRFC>
 {
 
@@ -10,7 +14,7 @@ struct NullRFC : public IParseable<Result_t, NullRFC>
 
     NullRFC& operator()();
 
-    Result_t::TypeRFC type() const { return Result_t::TypeRFC::RTP;}
+    Result_t::TypeRFC type() const { return Result_t::TypeRFC::UNKNOWN;}
 
     NullRFC() : IParseable<Result_t, NullRFC>{}
     {

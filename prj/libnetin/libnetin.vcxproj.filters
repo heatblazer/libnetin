@@ -23,6 +23,7 @@
     <ClInclude Include="..\..\utils.h" />
     <ClInclude Include="..\..\winpcap_t.h" />
     <ClInclude Include="..\..\t38_t.h" />
+    <ClInclude Include="..\..\App.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\main.cpp">
@@ -53,6 +54,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\t38_t.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\App.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

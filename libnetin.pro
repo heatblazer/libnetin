@@ -25,6 +25,7 @@ win32 {
 
 
 SOURCES += \
+        App.cpp \
         Pcap.cpp \
         defs.cpp \
         main.cpp \
@@ -37,6 +38,7 @@ SOURCES += \
         utils.cpp
 
 HEADERS += \
+    App.h \
     Pcap.h \
     defs.h \
     nill_t.h \
@@ -51,4 +53,7 @@ HEADERS += \
 
 DISTFILES += \
     Data/out.txt \
-    README.md
+    README.md \
+    prj/libnetin.sln \
+    prj/libnetin/libnetin.vcxproj \
+    prj/libnetin/libnetin.vcxproj.filters

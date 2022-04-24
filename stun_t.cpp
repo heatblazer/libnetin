@@ -14,9 +14,6 @@
 
 namespace stun {
 
-    std::unordered_map<std::string, int> StunRFC::s_UsernamesHist;
-
-
     StunRFC::StunRFC() :
     m_stunCnt{0}
     {
@@ -162,7 +159,7 @@ namespace stun {
                     ip_xtype = [(ip_orig >> 24) & 0xFF, (ip_orig >> 16) & 0xFF, (ip_orig >> 8) & 0xFF, ip_orig & 0xFF]
                      * */
                     //0000   00 12 00 08 00 01 d4 d8 2b da c8 b6               ........+...
-                    unsigned long long  xorpeer = utils::tobin<unsigned long long>((const char*)(&data[i]));
+                    unsigned long long  xorpeer MAYBEUNUSED = utils::tobin<unsigned long long>((const char*)(&data[i]));
                     break;
                 }
                 case SOFTWARE:

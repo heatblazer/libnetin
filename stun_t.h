@@ -4,7 +4,7 @@
 #include "Pcap.h"
 #include <pcap/pcap.h>
 #include <vector>
-#include <unordered_map>
+
 #define MAX_BUFF_SIZE 1500
 
 
@@ -131,7 +131,6 @@ namespace stun {
         AppName app();
 
 
-        static std::unordered_map<std::string, int> s_UsernamesHist;
     private:
 
         void parsemessage(const char* data);

@@ -53,7 +53,17 @@ struct is_validator<RtpRFC>
 };
 
 
-
+void Pcap::showAll()
+{
+    static char errbuf[PCAP_ERRBUF_SIZE];
+    pcap_if_t* ifaces;
+    int n MAYBEUNUSED = pcap_findalldevs(&ifaces, errbuf);
+    for(pcap_if_t* curr = ifaces; curr != nullptr; curr = curr->next) {
+        std::cout << curr->name << "\r\n";
+        curr = curr->next;
+    }
+    // loop to all devs or capture on a specific one
+}
 
 Pcap::Pcap() : m_offline{true} /* default mode is offline */
 {
@@ -70,8 +80,7 @@ bool Pcap::init(const char *fname)
         p_Cap = pcap_open_offline(fname, errbuf);
     } else {
         pcap_if_t* ifaces;
-        int n = pcap_findalldevs(&ifaces, errbuf);
-        (void)n;
+        int n MAYBEUNUSED = pcap_findalldevs(&ifaces, errbuf);
         // loop to all devs or capture on a specific one
         p_Cap = pcap_open_live(ifaces[0].name,PCAP_BUF_SIZE,0,-1,errbuf);
     }
