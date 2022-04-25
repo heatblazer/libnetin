@@ -33,6 +33,8 @@ please read the license agreement of `PCAP`.
 
 ~~1.Win32 build can't resolve StunRFC, possible `pragma pack(x)` needed.~~ 
 
+#### TODO:
+1. Resolve `TCP` parsing
 
 -------------
 

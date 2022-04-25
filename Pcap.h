@@ -5,6 +5,7 @@
 #include "tjson.hpp"
 #include <memory>
 #include <pcap/pcap.h>
+#include <atomic>
 
 /**
  * @brief The is_validator specialize that template for all supported types
@@ -24,7 +25,9 @@ struct Pcap
 
     ~Pcap();
 
-    bool init(const char* fname);
+    bool offline(const char* fname);
+
+    bool live(const char* dev);
 
     void operator++();
 
@@ -37,15 +40,6 @@ struct Pcap
     static void showAll();
 
 private:
-    /**
-     *@deprecated
-     */
-    template<typename T, typename Return_T>
-    Return_T packetHandlerT(u_char *userData, const Result_t& res, T protocol)
-    {
-        (void)userData; //reserved userdata...
-        return protocol(res);
-    }
 
     template<typename T>
     T packetHandlerT(T protocol)
@@ -53,14 +47,18 @@ private:
         return protocol();
     }
 
+    struct {
+        bool live;
+        bool running;
+    } m_options;
+
+    std::atomic<int> m_stop;
+
     pcap_t* p_Cap;
 
     char errbuf[PCAP_ERRBUF_SIZE];
 
-    bool m_offline;
-
     Result_t m_nextRes;
-
 
     tjson::JsonSerializer serializer;
 

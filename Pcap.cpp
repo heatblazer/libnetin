@@ -10,6 +10,8 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <thread>
+#include <atomic>
 
 using namespace stun;
 using namespace rtp;
@@ -62,31 +64,49 @@ void Pcap::showAll()
         std::cout << curr->name << "\r\n";
         curr = curr->next;
     }
+    for(pcap_if_t* curr = ifaces; curr != nullptr; curr = curr->next) {
+        pcap_if_t* t = curr;
+        curr = curr->next;
+        free(t);
+    }
     // loop to all devs or capture on a specific one
 }
 
-Pcap::Pcap() : m_offline{true} /* default mode is offline */
+
+Pcap::Pcap() /* default mode is offline */
 {
+    memset(&m_options, 0, sizeof(m_options));
     memset(&m_nextRes, 0, sizeof(m_nextRes));
+    m_stop = 1;
 }
 
 Pcap::~Pcap()
 {
+    if (p_Cap) {
+        pcap_close(p_Cap);
+    }
 }
 
-bool Pcap::init(const char *fname)
+bool Pcap::offline(const char *fname)
 {
-    if (m_offline) {
-        p_Cap = pcap_open_offline(fname, errbuf);
-    } else {
-        pcap_if_t* ifaces;
-        int n MAYBEUNUSED = pcap_findalldevs(&ifaces, errbuf);
-        // loop to all devs or capture on a specific one
-        p_Cap = pcap_open_live(ifaces[0].name,PCAP_BUF_SIZE,0,-1,errbuf);
-    }
-    if (!p_Cap) return false;
+    p_Cap = pcap_open_offline(fname, errbuf);
+    if (!p_Cap)
+        return false;
 
     return true;
+}
+
+bool Pcap::live(const char *dev)
+{
+    p_Cap = pcap_open_live(dev,PCAP_BUF_SIZE,0,-1,errbuf);
+    if (p_Cap) {
+        m_options.live = true;
+        std::cout << "Opened " << dev << " in live mode" << std::endl;
+        return true;
+    } else {
+        std::cerr << "Error: " << errbuf << std::endl;
+        return false;
+    }
 }
 
 void Pcap::operator ++()
@@ -107,27 +127,56 @@ bool Pcap::hasNext() const
 
 /**
  * @brief Pcap::loop - example loop of packets...
+ * @todo: Add a file appender to the threaded loop
  */
 void Pcap::loop()
 {
-    for(Result_t& res =  next(); hasNext(); operator++())
-    {
-        auto resultNwork = VParse(T38Rfc{res},
-                                  RtcpRFC{res},
-                                  TurnRFC{res},
-                                  StunRFC{res},
-                                  RtpRFC{res});
-        (void)resultNwork;//do something if needed
-    }
+
+    if (m_options.live) {
+        std::thread t{[&]() {
+
+                for(Result_t& res =  next(); m_stop.load(); operator++())
+                {
+                    auto resultNwork = VParse(T38Rfc{res},
+                                              RtcpRFC{res},
+                                              TurnRFC{res},
+                                              StunRFC{res},
+                                              RtpRFC{res});
+                    (void)resultNwork;//do something if needed
+
+                }
+            }
+        };
+        t.detach();
+        std::cout << "Press Q or q to stop..." << std::endl;
+        char q='a';
+        std::cin >> q;
+        switch (q) {
+        case 'q':
+        case 'Q':
+            m_stop.store(0);
+        default:
+            break;
+        }
+    } else {
+        for(Result_t& res =  next(); hasNext(); operator++())
+        {
+            auto resultNwork = VParse(T38Rfc{res},
+                                      RtcpRFC{res},
+                                      TurnRFC{res},
+                                      StunRFC{res},
+                                      RtpRFC{res});
+            (void)resultNwork;//do something if needed
+        }
     //TODO: either finalize here or move to other place
+    }
+    std::cout << "Finished capturing... writing out...\r\n";
     std::ofstream jsonfile;
     jsonfile.open ("out.json");
     jsonfile<< serializer.serialize();
     jsonfile.close();
     T38Rfc::dbg();
 }
-
-
 
 }//libnetin
 

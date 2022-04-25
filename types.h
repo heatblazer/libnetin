@@ -47,8 +47,6 @@ struct IParseable
     }*/
 
     tjson::JsonBuilder jsonb;
-
-
 };
 
 struct Result_t

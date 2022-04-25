@@ -36,7 +36,6 @@ namespace utils {
         return n;
     }
 
-
-}
+}//utils
 
 #endif // UTILS_H

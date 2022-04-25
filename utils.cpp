@@ -36,9 +36,11 @@ namespace utils {
                 eth.udpHeader = (struct udphdr*)(data + sizeof(struct ether_header) + sizeof(struct ip));
                 eth.type = EthL4::UDP;
             } else if (eth.ipHeader->ip_p == IPPROTO_TCP) {
+                //TODO: resolve the tcp parsing also
                 eth.type = EthL4::TCP;
             } else {
                 //
+                eth.type = EthL4::UNKNOWN;
             }
         }
         return eth;
