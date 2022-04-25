@@ -14,6 +14,12 @@ please read the license agreement of `PCAP`.
 
 3.For `Win32` install follow the guide to install `NCAP` from here: https://nmap.org/npcap/#download
 
+#### Usage:
+1. Show devices: `libnetin -l`
+2. Analyze a capture `libnetin -p mycapture.pcap`
+3. Live mode `sudo libnetin -l <Mydevice>`
+
+* Note: when in live mode, press `q` or `Q` to stop capturing.
 
 #### Protocols:
 1. `STUN` 
@@ -27,7 +33,8 @@ please read the license agreement of `PCAP`.
 3. `Facebook`
 4. `Skype`
 
-#### Live support (TODO)
+#### Live support
+1. In order to use live mode you need administrator rules for windows or `sudo` for Linux
 
 #### Bugs:
 
