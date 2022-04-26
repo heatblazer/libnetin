@@ -24,7 +24,7 @@ using namespace t38;
 template<>
 struct is_validator<T38Rfc>
 {
-    static const bool value = true;
+    static constexpr bool value = true;
 };
 /**
  * @brief if you need your class to be parsed by VParse,
@@ -33,25 +33,25 @@ struct is_validator<T38Rfc>
 template<>
 struct is_validator<RtcpRFC>
 {
-    static const bool value = true;
+    static constexpr bool value = true;
 };
 
 template<>
 struct is_validator<TurnRFC>
 {
-    static const bool value = true;
+    static constexpr bool value = true;
 };
 
 template<>
 struct is_validator<StunRFC>
 {
-    static const bool value = true;
+    static constexpr bool value = true;
 };
 
 template<>
 struct is_validator<RtpRFC>
 {
-    static const bool value = true;
+    static constexpr bool value = true;
 };
 
 namespace libnetin {
@@ -73,11 +73,10 @@ void Pcap::showAll()
 }
 
 
-Pcap::Pcap() /* default mode is offline */
+Pcap::Pcap() : m_stop{1}, p_Cap{nullptr},errbuf{0}/* default mode is offline */
 {
     memset(&m_options, 0, sizeof(m_options));
     memset(&m_nextRes, 0, sizeof(m_nextRes));
-    m_stop = 1;
 }
 
 Pcap::~Pcap()

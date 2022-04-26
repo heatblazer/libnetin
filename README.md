@@ -43,5 +43,12 @@ please read the license agreement of `PCAP`.
 #### TODO:
 1. Resolve `TCP` parsing
 
+
+#### PVS-STUDIO report:
+```
+pvs-studio.com/en/docs/warnings/	1	err	Help: The documentation for all analyzer warnings is available here: https://pvs-studio.com/en/docs/warnings/.
+/home/ilian/gitprojects/libnetin/types.h	33	warn	V730 Not all members of a class are initialized inside the constructor. Consider inspecting: value.
+```
+
 -------------
 

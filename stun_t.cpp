@@ -15,14 +15,14 @@
 namespace stun {
 
     StunRFC::StunRFC() :
-    m_stunCnt{0}
+    m_stunCnt{0},m_type{FILLIN}
     {
         memset(&m_properties, 0, sizeof(m_properties));
     }
 
     StunRFC::StunRFC(const IParseable::type &ref)
         : IParseable<Result_t,StunRFC>{ref},
-        m_stunCnt{0}
+        m_stunCnt{0}, m_type{FILLIN}
     {
         memset(&m_properties, 0, sizeof(m_properties));
     }

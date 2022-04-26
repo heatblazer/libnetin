@@ -30,7 +30,7 @@ struct IParseable
 
     bool Valid;
 
-    IParseable() {};
+    IParseable() : Valid{false} {};
 
     IParseable(const T& ref) : value{ref}, Valid{false} { }
 

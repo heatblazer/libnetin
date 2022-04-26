@@ -1,5 +1,6 @@
 #ifndef WINPCAP_T_H
 #define WINPCAP_T_H
+#ifndef __unix__
 #include <winsock2.h>
 #include <ws2ipdef.h>
 #include <ws2tcpip.h>
@@ -119,6 +120,6 @@ struct icmp_hdr
 
 
 const char *inet_ntop(int af, const void *a0, char *s, socklen_t l);
-
+#endif
 
 #endif // WINPCAP_T_H

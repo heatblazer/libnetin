@@ -26,7 +26,6 @@ namespace utils {
         if (!data)
             return eth;
         eth.ethernetHeader = (struct ether_header*)data;
-        eth.ethernetHeader = (struct ether_header*)data;
         if (ntohs(eth.ethernetHeader->ether_type) == ETHERTYPE_IP) {
             eth.ipHeader = (struct ip*)(data + sizeof(struct ether_header));
 

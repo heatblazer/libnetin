@@ -14,7 +14,7 @@
 template<typename T>
 struct is_validator
 {
-    static const bool value = false;
+    static constexpr bool value = false;
 };
 
 namespace libnetin {
