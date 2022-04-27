@@ -26,11 +26,12 @@ please read the license agreement of `PCAP`.
 2. `RTP` 
 3. `RTCP`
 4. `UDPTL` - `t38` (not fully implemented, artifacts)
+5. `MQTT` - support for facebook [pending].
 
 #### App recognition (not 100% accurate):
 1. `Whatsapp`
 2. `Telegram`
-3. `Facebook`
+3. `Facebook` (chat & VoIP)
 4. `Skype`
 
 #### Live support
