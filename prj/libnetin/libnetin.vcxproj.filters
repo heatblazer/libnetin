@@ -19,6 +19,7 @@
     <ClInclude Include="..\..\stun_t.h" />
     <ClInclude Include="..\..\tjson.hpp" />
     <ClInclude Include="..\..\turn_t.h" />
+    <ClInclude Include="..\..\mqtt_t.h" />
     <ClInclude Include="..\..\types.h" />
     <ClInclude Include="..\..\utils.h" />
     <ClInclude Include="..\..\winpcap_t.h" />
@@ -45,6 +46,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\turn_t.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\mqtt_t.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\utils.cpp">
