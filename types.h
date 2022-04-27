@@ -59,6 +59,7 @@ struct Result_t
         RTSP,
         TURN,
         T38,
+        MQTT,
         UNKNOWN
     };
 

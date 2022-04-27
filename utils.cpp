@@ -28,7 +28,6 @@ namespace utils {
         eth.ethernetHeader = (struct ether_header*)data;
         if (ntohs(eth.ethernetHeader->ether_type) == ETHERTYPE_IP) {
             eth.ipHeader = (struct ip*)(data + sizeof(struct ether_header));
-
             inet_ntop(AF_INET, &(eth.ipHeader->ip_src), eth.sourceIP, INET_ADDRSTRLEN);
             inet_ntop(AF_INET, &(eth.ipHeader->ip_dst), eth.destIP, INET_ADDRSTRLEN);
             if (eth.ipHeader->ip_p == IPPROTO_UDP) {
@@ -36,6 +35,7 @@ namespace utils {
                 eth.type = EthL4::UDP;
             } else if (eth.ipHeader->ip_p == IPPROTO_TCP) {
                 //TODO: resolve the tcp parsing also
+                eth.tcpHeader = (struct tcphdr*)(data + sizeof(struct ether_header) + sizeof(struct ip));
                 eth.type = EthL4::TCP;
             } else {
                 //

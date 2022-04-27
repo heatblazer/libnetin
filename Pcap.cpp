@@ -5,6 +5,7 @@
 #include "turn_t.h"
 #include "nill_t.h" // test variardity
 #include "t38_t.h"
+#include "mqtt_t.h"
 #include <string.h>
 #include <map>
 #include <string>
@@ -18,6 +19,7 @@ using namespace rtp;
 using namespace rtcp;
 using namespace turn;
 using namespace t38;
+using namespace mqtt;
 
 
 
@@ -53,6 +55,13 @@ struct is_validator<RtpRFC>
 {
     static constexpr bool value = true;
 };
+
+template<>
+struct is_validator<MqttRFC>
+{
+    static constexpr bool value = true;
+};
+
 
 namespace libnetin {
 void Pcap::showAll()
@@ -140,7 +149,8 @@ void Pcap::loop()
                                               RtcpRFC{res},
                                               TurnRFC{res},
                                               StunRFC{res},
-                                              RtpRFC{res});
+                                              RtpRFC{res},
+                                              MqttRFC{res});
                     (void)resultNwork;//do something if needed
 
                 }
@@ -160,11 +170,13 @@ void Pcap::loop()
     } else {
         for(Result_t& res =  next(); hasNext(); operator++())
         {
-            auto resultNwork = VParse(T38Rfc{res},
+            auto resultNwork = VParse(MqttRFC{res},
+                                      T38Rfc{res},
                                       RtcpRFC{res},
                                       TurnRFC{res},
                                       StunRFC{res},
-                                      RtpRFC{res});
+                                      RtpRFC{res}
+                                      );
             (void)resultNwork;//do something if needed
         }
     //TODO: either finalize here or move to other place

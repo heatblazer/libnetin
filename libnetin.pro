@@ -29,6 +29,7 @@ SOURCES += \
         Pcap.cpp \
         defs.cpp \
         main.cpp \
+        mqtt_t.cpp \
         nill_t.cpp \
         rtcp_t.cpp \
         rtp_t.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
     App.h \
     Pcap.h \
     defs.h \
+    mqtt_t.h \
     nill_t.h \
     rtcp_t.h \
     rtp_t.h \

@@ -92,10 +92,12 @@ namespace stun {
                 break;
             }
             default: {
-                jsonb.add(tjson::JsonField{"app", "Unknown"});
+                jsonb.add(tjson::JsonField{"app", "Unknown"});                
                 break;
                 }
-            }            
+            }
+            //record the rpoerties too
+            jsonb.add(tjson::JsonField{"pri", m_properties.priority});
         }
         return n;
     }
