@@ -30,9 +30,9 @@ struct IParseable
 
     bool Valid;
 
-    IParseable() : Valid{false} {};
+    IParseable() = delete;
 
-    IParseable(const T& ref) : value{ref}, Valid{false} { }
+    explicit IParseable(const T& ref) : value{ref}, Valid{false} { }
 
     CrtpBase& impl()
     {

@@ -34,7 +34,7 @@ namespace rtp {
     struct RtpRFC : public IParseable<Result_t, RtpRFC>
     {
     public:
-        RtpRFC() = default;
+        RtpRFC() = delete;
 
         RtpRFC(const IParseable::type& res);
 

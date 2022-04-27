@@ -9,10 +9,6 @@ using namespace rtp;
 
 namespace turn {
 
-    TurnRFC::TurnRFC()
-    {
-
-    }
 
     TurnRFC::TurnRFC(const IParseable::type &ref)
         : IParseable<Result_t,TurnRFC>{ref}

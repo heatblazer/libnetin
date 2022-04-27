@@ -55,9 +55,12 @@ block  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     {
     public:
 
-        ~RtcpRFC() = default;
+        RtcpRFC() = delete;
 
         RtcpRFC(const IParseable::type& res);
+
+        ~RtcpRFC() = default;
+
 
         RtcpRFC& operator()(const IParseable::type &res);
 

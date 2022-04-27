@@ -116,7 +116,7 @@ namespace stun {
      */
     struct StunRFC: public IParseable<Result_t,StunRFC>
     {
-        StunRFC();
+        StunRFC() = delete;
 
         StunRFC(const IParseable::type& ref);
 

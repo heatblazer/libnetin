@@ -16,7 +16,7 @@ struct NullRFC : public IParseable<Result_t, NullRFC>
 
     Result_t::TypeRFC type() const { return Result_t::TypeRFC::UNKNOWN;}
 
-    NullRFC() : IParseable<Result_t, NullRFC>{}
+    NullRFC(const IParseable::type& res MAYBEUNUSED) : IParseable<Result_t, NullRFC>{res}
     {
         //tst
     }

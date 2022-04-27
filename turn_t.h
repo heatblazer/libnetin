@@ -9,7 +9,7 @@ namespace turn {
 
     struct TurnRFC: public IParseable<Result_t,TurnRFC>
     {
-        TurnRFC();
+        TurnRFC() = delete;
 
         TurnRFC(const IParseable::type& ref);
 

@@ -23,7 +23,7 @@ namespace t38
 
 
     public:
-        T38Rfc() = default;
+        T38Rfc() = delete;
 
         T38Rfc(const IParseable::type& res);
 

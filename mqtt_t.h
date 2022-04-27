@@ -21,9 +21,9 @@ struct MqttRFC: public IParseable<Result_t, MqttRFC>
     } m_header;
 
 public:
-    MqttRFC() = default;
+    MqttRFC() = delete;
 
-    MqttRFC(const IParseable::type& res);
+    explicit MqttRFC(const IParseable::type& res);
 
     MqttRFC &operator()(const IParseable::type &res);
 

@@ -7,7 +7,7 @@
 namespace mqtt {
 
 MqttRFC::MqttRFC(const IParseable::type &res)
-:IParseable<Result_t,MqttRFC>{res}
+        :IParseable<Result_t,MqttRFC>{res}
 {
     memset(&m_header, 0, sizeof(m_header));
 }
@@ -27,13 +27,11 @@ MqttRFC &MqttRFC ::operator()(const IParseable::type &res)
     case EthL4::UDP: {
         offset = (sizeof(struct ether_header) + sizeof(struct ip) + sizeof(udphdr));
         memcpy(data, res.data+offset,total-offset);
-        std::cout << "UDP MQTT\r\n";
         break;
     }
     case EthL4::TCP: {
         offset = (sizeof(struct ether_header) + sizeof(struct ip) + sizeof(tcphdr));
         memcpy(data, res.data+offset,total-offset);
-        std::cout << "TCP MQTT\r\n";
         break;
     }
     case EthL4::UNKNOWN: //fall trough
