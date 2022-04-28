@@ -20,18 +20,23 @@ MqttRFC &MqttRFC::operator()()
 MqttRFC &MqttRFC ::operator()(const IParseable::type &res)
 {
     struct EthL4 eth = utils::GetEthL4(res.data);
-    size_t offset MAYBEUNUSED = 0;
-    size_t total = res.out.len;
-    unsigned char data[14] = {0};
+    MAYBEUNUSED  size_t offset = 0;
+    MAYBEUNUSED  size_t total = res.out.len;
+    MAYBEUNUSED unsigned char data[14]  = {0};
     switch (eth.type) {
     case EthL4::UDP: {
         offset = (sizeof(struct ether_header) + sizeof(struct ip) + sizeof(udphdr));
-        memcpy(data, res.data+offset,total-offset);
         break;
     }
     case EthL4::TCP: {
         offset = (sizeof(struct ether_header) + sizeof(struct ip) + sizeof(tcphdr));
-        memcpy(data, res.data+offset,total-offset);
+        offset+=12;
+        char pdata[100] = {0};
+        memcpy(pdata, res.data+offset, total-offset);
+        m_header.header = pdata[0];
+        m_header.remainingLen= pdata[1];
+        m_header.length = ((pdata[2] << 8 ) | (pdata[3]));
+        memcpy(m_header.nameVer, pdata+4, 5);
         break;
     }
     case EthL4::UNKNOWN: //fall trough

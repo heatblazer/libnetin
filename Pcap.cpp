@@ -145,14 +145,13 @@ void Pcap::loop()
 
                 for(Result_t& res =  next(); m_stop.load(); operator++())
                 {
-                    auto resultNwork = VParse(T38Rfc{res},
-                                              RtcpRFC{res},
-                                              TurnRFC{res},
-                                              StunRFC{res},
-                                              RtpRFC{res},
-                                              MqttRFC{res});
-                    (void)resultNwork;//do something if needed
-
+                    MAYBEUNUSED auto resultNwork =
+                                    VParse(T38Rfc{res},
+                                          RtcpRFC{res},
+                                          TurnRFC{res},
+                                          StunRFC{res},
+                                          RtpRFC{res},
+                                          MqttRFC{res});
                 }
             }
         };
@@ -170,14 +169,13 @@ void Pcap::loop()
     } else {
         for(Result_t& res =  next(); hasNext(); operator++())
         {
-            auto resultNwork = VParse(MqttRFC{res},
-                                      T38Rfc{res},
-                                      RtcpRFC{res},
-                                      TurnRFC{res},
-                                      StunRFC{res},
-                                      RtpRFC{res}
-                                      );
-            (void)resultNwork;//do something if needed
+            MAYBEUNUSED auto resultNwork =
+                VParse(MqttRFC{res},
+                      T38Rfc{res},
+                      RtcpRFC{res},
+                      TurnRFC{res},
+                      StunRFC{res},
+                      RtpRFC{res});
         }
     //TODO: either finalize here or move to other place
     }
