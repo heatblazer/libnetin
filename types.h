@@ -16,6 +16,8 @@ struct EthL4
     const struct ip* ipHeader;
     const struct udphdr* udpHeader;
     const struct tcphdr* tcpHeader;
+    unsigned char* options;
+    unsigned int options_len;
     char sourceIP[INET_ADDRSTRLEN];
     char destIP[INET_ADDRSTRLEN];
 };
