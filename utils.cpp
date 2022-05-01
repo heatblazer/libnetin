@@ -45,14 +45,14 @@ namespace utils {
             } else if (eth.ipHeader->ip_p == IPPROTO_TCP) {
                 size_t total = sizeof(struct ether_header) + sizeof(struct ip);
                 eth.tcpHeader = (struct tcphdr*)(data + total);
-                if (DATAOFFSET > 5) { //todo - windows header is different
+                if (DATAOFFSET > 5) {
                     total += sizeof(struct tcphdr);
                     eth.options = (unsigned char*) (data + total);
                     if (eth.options) {
                         eth.options_len = 2 + (unsigned int)eth.options[3];
                     }
                 }
-
+                eth.payload_len = eth.options_len + total;
                 eth.type = EthL4::TCP;
             } else {
                 //

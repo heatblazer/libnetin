@@ -143,19 +143,17 @@ void Pcap::loop()
     if (m_options.live) {
         std::thread t{[&]() {
 
-                for(Result_t& res =  next(); m_stop.load(); operator++())
-                {
-                    MAYBEUNUSED auto resultNwork =
-                                    VParse(
-                                          MqttRFC{res},
-                                          T38Rfc{res},
-                                          RtcpRFC{res},
-                                          TurnRFC{res},
-                                          StunRFC{res},
-                                          RtpRFC{res});
-                }
+            for(Result_t& res =  next(); m_stop.load(); operator++())
+            {
+                MAYBEUNUSED auto resultNwork =
+                                VParse(MqttRFC{res},
+                                      T38Rfc{res},
+                                      RtcpRFC{res},
+                                      TurnRFC{res},
+                                      StunRFC{res},
+                                      RtpRFC{res});
             }
-        };
+        }};
         t.detach();
         std::cout << "Press Q or q to stop..." << std::endl;
         char q='a';

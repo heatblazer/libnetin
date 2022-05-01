@@ -8,8 +8,6 @@
     #include <alloca.h>
 #endif
 
-//json usage: jsonb.add(tjson::JsonField{"protocol", "TURN"});
-
 namespace mqtt {
 
 MqttRFC::MqttRFC(const IParseable::type &res)
@@ -37,18 +35,26 @@ MqttRFC &MqttRFC ::operator()(const IParseable::type &res)
     MAYBEUNUSED  size_t offset = 0;
     MAYBEUNUSED  size_t total = res.out.len;
     MAYBEUNUSED unsigned char data[14]  = {0};
+    MAYBEUNUSED unsigned int payload_len = res.out.caplen - eth.payload_len;
+
     switch (eth.type) {
     case EthL4::UDP: {
         offset = (sizeof(struct ether_header) + sizeof(struct ip) + sizeof(udphdr));
         break;
-    }
+    }      
     case EthL4::TCP: {
         offset = eth.options_len + (sizeof(struct ether_header) + sizeof(struct ip) + sizeof(tcphdr));
         const char *pdata = (const char*)res.data+offset;
+        //always add connections
+        jsonb.add(tjson::JsonField{"srcip", eth.sourceIP});
+        jsonb.add(tjson::JsonField{"dstip", eth.destIP});
+
         m_header.header = pdata == nullptr ? 0x00 : pdata[0];
-        if (m_header.header == 0x10 ) {
+        if (m_header.header == 0x10 && payload_len > 16) {
             m_header.nameLen = ((pdata[2] << 8) | pdata[3]);
-            ::strncpy(m_header.protocolName, pdata + 4, m_header.nameLen);
+            if (m_header.nameLen > 6)
+                return *this;
+            ::memcpy(m_header.protocolName, pdata + 4, m_header.nameLen);
             m_header.protocolVersion = (unsigned char) *(pdata+4+m_header.nameLen);
             m_header.uConnectFlags.value = *(pdata+4+m_header.nameLen+1);
             m_header.cilentIDLen = ((pdata[14] << 8) | pdata[15]);
