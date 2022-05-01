@@ -146,12 +146,13 @@ void Pcap::loop()
                 for(Result_t& res =  next(); m_stop.load(); operator++())
                 {
                     MAYBEUNUSED auto resultNwork =
-                                    VParse(T38Rfc{res},
+                                    VParse(
+                                          MqttRFC{res},
+                                          T38Rfc{res},
                                           RtcpRFC{res},
                                           TurnRFC{res},
                                           StunRFC{res},
-                                          RtpRFC{res},
-                                          MqttRFC{res});
+                                          RtpRFC{res});
                 }
             }
         };
@@ -177,7 +178,6 @@ void Pcap::loop()
                       StunRFC{res},
                       RtpRFC{res});
         }
-    //TODO: either finalize here or move to other place
     }
     std::cout << "Finished capturing... writing out...\r\n";
     std::ofstream jsonfile;

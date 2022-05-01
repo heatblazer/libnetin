@@ -37,7 +37,7 @@ namespace utils {
             } else if (eth.ipHeader->ip_p == IPPROTO_TCP) {
                 size_t total = sizeof(struct ether_header) + sizeof(struct ip);
                 eth.tcpHeader = (struct tcphdr*)(data + total);
-                if (eth.tcpHeader->doff > 5) {
+                if (eth.tcpHeader->doff > 5) { //todo - windows header is different
                     total += sizeof(struct tcphdr);
                     eth.options = (unsigned char*) (data + total);
                     if (eth.options) {

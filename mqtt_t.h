@@ -13,7 +13,7 @@ struct MqttRFC: public IParseable<Result_t, MqttRFC>
         unsigned char header;
         unsigned short msgLen;
         unsigned short nameLen;
-        unsigned char* protocolName;
+        char protocolName[16];
         unsigned char protocolVersion;
         union {
             struct {
@@ -29,11 +29,13 @@ struct MqttRFC: public IParseable<Result_t, MqttRFC>
         } uConnectFlags;
         unsigned short keepAlive;
         unsigned short cilentIDLen;
-        unsigned char* payload;
+        char payload[1024];
     } m_header;
 
 public:
     MqttRFC() = delete;
+
+    ~MqttRFC() noexcept ;
 
     explicit MqttRFC(const IParseable::type& res);
 
