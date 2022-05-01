@@ -1,6 +1,7 @@
 #include "utils.h"
 #include <string.h>
 
+
 namespace utils {
 
     void split(const char *str, const char *delim, std::vector<std::string>& out)
@@ -21,6 +22,13 @@ namespace utils {
 
     struct EthL4 GetEthL4(const u_char* data)
     {
+
+        #ifdef __unix__
+        #define DATAOFFSET eth.tcpHeader->doff
+        #else
+        #define DATAOFFSET eth.tcpHeader->data_offset
+        #endif
+
         struct EthL4 eth;
         eth.type = EthL4::UNKNOWN; // default
         if (!data)
@@ -37,7 +45,7 @@ namespace utils {
             } else if (eth.ipHeader->ip_p == IPPROTO_TCP) {
                 size_t total = sizeof(struct ether_header) + sizeof(struct ip);
                 eth.tcpHeader = (struct tcphdr*)(data + total);
-                if (eth.tcpHeader->doff > 5) { //todo - windows header is different
+                if (DATAOFFSET > 5) { //todo - windows header is different
                     total += sizeof(struct tcphdr);
                     eth.options = (unsigned char*) (data + total);
                     if (eth.options) {
@@ -51,6 +59,7 @@ namespace utils {
                 eth.type = EthL4::UNKNOWN;
             }
         }
+        #undef DATAOFFSET
         return eth;
     }
 }
