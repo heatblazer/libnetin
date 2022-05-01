@@ -3,6 +3,7 @@
 *.autosave
 *.pro.user
 *.qmake.stash
+Data/*.pcap
 !Dest/.gitkeep
 !obj/.gitkeep
 obj/*.o
