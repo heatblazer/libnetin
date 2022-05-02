@@ -15,6 +15,7 @@ WebSocketRFC::WebSocketRFC(const IParseable::type &res)
 
 WebSocketRFC &WebSocketRFC::operator()(const IParseable::type &res MAYBEUNUSED)
 {
+
     struct EthL4 eth = utils::GetEthL4(res.data);
     MAYBEUNUSED  size_t offset = 0;
     MAYBEUNUSED  size_t total = res.out.len;
@@ -32,9 +33,18 @@ WebSocketRFC &WebSocketRFC::operator()(const IParseable::type &res MAYBEUNUSED)
             if (mqtt.WebSocketOffset > 2) {
                 mqtt.WebSocketMask.value = utils::tobin<unsigned int>(pdata+2);
                 jsonb.add(tjson::JsonField{"mask", mqtt.WebSocketMask.value});
-                Valid = true;
             }
             mqtt();
+
+            //in case we have mqtt serialized - add it here
+            if (mqtt.WebSocketMask.value && mqtt.WebSocketOffset) {
+                jsonb.add(tjson::JsonField{"WebSocket->MQTT", true});
+                for (auto json : mqtt.jsonb.fields) {
+                    jsonb.add(json);
+                }
+            }
+            Valid = true;
+
         }
         break;
     }

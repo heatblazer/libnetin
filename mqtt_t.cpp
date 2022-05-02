@@ -47,8 +47,9 @@ MqttRFC &MqttRFC ::operator()(const IParseable::type &res)
     }      
     case EthL4::TCP: {
         offset = WebSocketOffset + eth.options_len + (sizeof(struct ether_header) + sizeof(struct ip) + sizeof(tcphdr));
-
         const char *pdata = (const char*)res.data+offset;
+        if (!payload_len)
+            return *this;
         if (WebSocketMask.value) {
             char* masked = (char*)res.data+offset;
             char* begin = masked;
@@ -61,8 +62,8 @@ MqttRFC &MqttRFC ::operator()(const IParseable::type &res)
         //always add connections
         jsonb.add(tjson::JsonField{"srcip", eth.sourceIP});
         jsonb.add(tjson::JsonField{"dstip", eth.destIP});
-
         m_header.header = (pdata == nullptr) ? 0x00 : pdata[0];
+
         if (m_header.header == 0x10 && payload_len > 16) {
             m_header.nameLen = ((pdata[2] << 8) | pdata[3]);
             if (m_header.nameLen > 10)
@@ -77,13 +78,11 @@ MqttRFC &MqttRFC ::operator()(const IParseable::type &res)
             if (m_header.cilentIDLen) {
                 memcpy(m_header.payload, pdata+16, m_header.cilentIDLen);
                 jsonb.add(tjson::JsonField{"payload", m_header.payload});
-            }
-            //it came from websocket...
-            if (WebSocketMask.value && WebSocketOffset) {
-                libnetin::Pcap::getSerializer().Add(jsonb);
+
             }
             Valid = true;
         }
+
         break;
     }
     case EthL4::UNKNOWN: //fall trough

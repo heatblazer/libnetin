@@ -94,7 +94,7 @@ struct JsonBuilder
 {
     std::vector<JsonField> fields;
 
-    JsonBuilder(){};
+    JsonBuilder() = default;
 
     JsonBuilder& add(const JsonField& f)
     {

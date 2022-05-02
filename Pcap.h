@@ -39,10 +39,6 @@ struct Pcap
 
     static void showAll();
 
-    static tjson::JsonSerializer& getSerializer()
-    {
-        return serializer;
-    }
 
 private:
 
@@ -59,7 +55,7 @@ private:
 
     Result_t m_nextRes;
 
-    static tjson::JsonSerializer serializer; //make static to access in private scenarios
+    tjson::JsonSerializer serializer; //make static to access in private scenarios
 
     /**
      * @brief VParse - variardic terminator

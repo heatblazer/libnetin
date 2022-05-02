@@ -74,9 +74,6 @@ struct is_validator<WebSocketRFC>
 
 namespace libnetin {
 
-
-tjson::JsonSerializer Pcap::serializer;
-
 void Pcap::showAll()
 {
     static char errbuf[PCAP_ERRBUF_SIZE];
