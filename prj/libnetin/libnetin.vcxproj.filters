@@ -24,6 +24,7 @@
     <ClInclude Include="..\..\utils.h" />
     <ClInclude Include="..\..\winpcap_t.h" />
     <ClInclude Include="..\..\t38_t.h" />
+    <ClInclude Include="..\..\websocket_t.h" />
     <ClInclude Include="..\..\App.h" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +59,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\t38_t.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\websocket_t.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\App.cpp">

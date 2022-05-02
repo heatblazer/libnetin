@@ -29,6 +29,7 @@
     <ClInclude Include="..\..\tjson.hpp" />
     <ClInclude Include="..\..\turn_t.h" />
     <ClInclude Include="..\..\mqtt_t.h" />
+    <ClInclude Include="..\..\websocket_t.h" />
     <ClInclude Include="..\..\types.h" />
     <ClInclude Include="..\..\utils.h" />
     <ClInclude Include="..\..\winpcap_t.h" />
@@ -44,6 +45,7 @@
     <ClCompile Include="..\..\t38_t.cpp" />
     <ClCompile Include="..\..\turn_t.cpp" />
     <ClCompile Include="..\..\mqtt_t.cpp" />
+    <ClCompile Include="..\..\websocket_t.cpp" />
     <ClCompile Include="..\..\utils.cpp" />
     <ClCompile Include="..\..\winpcap_t.cpp" />
     <ClCompile Include="..\..\App.cpp" />
