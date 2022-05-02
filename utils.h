@@ -22,7 +22,7 @@ namespace utils {
     {
         T val=0;
         for(size_t i=0; i < sizeof(T); i++) {
-            val |= (data[i]) << (i * 8);
+            val |= ((unsigned char)data[i]) << (i * 8);
         }
         if (BE) {
             val = SWAP4(val);

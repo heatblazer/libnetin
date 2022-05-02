@@ -8,6 +8,8 @@ namespace websocket {
 
     struct WebSocketRFC: public IParseable<Result_t, WebSocketRFC>
     {
+
+        unsigned char m_maskKey[4];
     public:
         WebSocketRFC() = delete;
 
@@ -20,7 +22,6 @@ namespace websocket {
         WebSocketRFC& operator()();
 
         inline Result_t::TypeRFC type() const { return Result_t::TypeRFC::WebSocket;}
-
     };
 
 } //ns websocket

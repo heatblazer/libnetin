@@ -6,6 +6,7 @@
 #include "nill_t.h" // test variardity
 #include "t38_t.h"
 #include "mqtt_t.h"
+#include "websocket_t.h"
 #include <string.h>
 #include <map>
 #include <string>
@@ -20,18 +21,20 @@ using namespace rtcp;
 using namespace turn;
 using namespace t38;
 using namespace mqtt;
+using namespace websocket;
 
 
 
+/**
+ * @brief if you need your class to be parsed by VParse,
+ * please specialize it below
+ */
 template<>
 struct is_validator<T38Rfc>
 {
     static constexpr bool value = true;
 };
-/**
- * @brief if you need your class to be parsed by VParse,
- * please specialize it below
- */
+
 template<>
 struct is_validator<RtcpRFC>
 {
@@ -62,8 +65,18 @@ struct is_validator<MqttRFC>
     static constexpr bool value = true;
 };
 
+template<>
+struct is_validator<WebSocketRFC>
+{
+    static constexpr bool value = true;
+};
+
 
 namespace libnetin {
+
+
+tjson::JsonSerializer Pcap::serializer;
+
 void Pcap::showAll()
 {
     static char errbuf[PCAP_ERRBUF_SIZE];
@@ -145,8 +158,9 @@ void Pcap::loop()
 
             for(Result_t& res =  next(); m_stop.load(); operator++())
             {
-                MAYBEUNUSED auto resultNwork =
-                                VParse(MqttRFC{res},
+                MAYBEUNUSED auto resultNwork =                    
+                                VParse(WebSocketRFC{res},
+                                      MqttRFC{res},
                                       T38Rfc{res},
                                       RtcpRFC{res},
                                       TurnRFC{res},
@@ -169,7 +183,8 @@ void Pcap::loop()
         for(Result_t& res =  next(); hasNext(); operator++())
         {
             MAYBEUNUSED auto resultNwork =
-                VParse(MqttRFC{res},
+                VParse(WebSocketRFC{res},
+                      MqttRFC{res},
                       T38Rfc{res},
                       RtcpRFC{res},
                       TurnRFC{res},

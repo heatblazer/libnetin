@@ -1,5 +1,6 @@
 #include "mqtt_t.h"
 #include "utils.h"
+#include "Pcap.h"
 #include <cstring>
 
 #ifndef __unix__
@@ -11,7 +12,9 @@
 namespace mqtt {
 
 MqttRFC::MqttRFC(const IParseable::type &res)
-        :IParseable<Result_t,MqttRFC>{res}
+    :IParseable<Result_t,MqttRFC>{res},
+    WebSocketOffset{0},
+    WebSocketMask{0}
 {
     memset(&m_header, 0, sizeof(m_header));
 }
@@ -43,8 +46,19 @@ MqttRFC &MqttRFC ::operator()(const IParseable::type &res)
         break;
     }      
     case EthL4::TCP: {
-        offset = eth.options_len + (sizeof(struct ether_header) + sizeof(struct ip) + sizeof(tcphdr));
+        offset = WebSocketOffset + eth.options_len + (sizeof(struct ether_header) + sizeof(struct ip) + sizeof(tcphdr));
+
         const char *pdata = (const char*)res.data+offset;
+        if (WebSocketMask.value) {
+            char* masked = (char*)res.data+offset;
+            char* begin = masked;
+            WebSocketMask.value = SWAP4(WebSocketMask.value);
+            for(unsigned int i = 0; i < payload_len; i++) {
+                unsigned char mid = WebSocketMask.data[i % 4];
+                *(masked++) ^= mid;
+            }
+            pdata = begin;
+        }
         //always add connections
         jsonb.add(tjson::JsonField{"srcip", eth.sourceIP});
         jsonb.add(tjson::JsonField{"dstip", eth.destIP});
@@ -64,6 +78,10 @@ MqttRFC &MqttRFC ::operator()(const IParseable::type &res)
             if (m_header.cilentIDLen) {
                 memcpy(m_header.payload, pdata+16, m_header.cilentIDLen);
                 jsonb.add(tjson::JsonField{"payload", m_header.payload});
+            }
+            //it came from websocket...
+            if (WebSocketMask.value && WebSocketOffset) {
+                libnetin::Pcap::getSerializer().Add(jsonb);
             }
             Valid = true;
         }
