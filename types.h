@@ -20,7 +20,7 @@ struct EthL4
     unsigned int options_len;
     unsigned int payload_len;
     char sourceIP[INET_ADDRSTRLEN];
-    char destIP[INET_ADDRSTRLEN];
+    char destIP[INET_ADDRSTRLEN];    
 };
 
 
@@ -35,19 +35,16 @@ struct IParseable
 
     IParseable() = delete;
 
+    IParseable(const IParseable& other) = delete;
+
+    IParseable(IParseable&& other) = delete;
+
     explicit IParseable(const T& ref) : value{ref}, Valid{false} { }
 
     CrtpBase& impl()
     {
         return static_cast<CrtpBase&>(*this);
     }
-
-    /**
-    template<typename U>
-    bool Parse(U&& uref)
-    {
-        impl().parse(uref);
-    }*/
 
     tjson::JsonBuilder jsonb;
 };
@@ -63,6 +60,7 @@ struct Result_t
         TURN,
         T38,
         MQTT,
+        WebSocket,
         UNKNOWN
     };
 

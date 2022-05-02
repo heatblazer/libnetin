@@ -41,12 +41,6 @@ struct Pcap
 
 private:
 
-    template<typename T>
-    T packetHandlerT(T protocol)
-    {
-        return protocol();
-    }
-
     struct {
         bool live;
         bool running;
@@ -72,10 +66,10 @@ private:
     }
 
     template <typename T, class...Args>
-    auto VParse(T value, Args&&...FArgs)
+    auto VParse(T&& value, Args&&...FArgs)
     {
         if constexpr (is_validator<T>::value){
-            T resultready = packetHandlerT(value);
+            T& resultready = value();
             if (resultready.Valid) {
                 value.value.type = resultready.type();
                 serializer.Add(resultready.jsonb);
