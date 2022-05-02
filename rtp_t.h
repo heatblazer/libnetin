@@ -29,7 +29,7 @@ namespace rtp {
         unsigned int timestamp;
         unsigned int SSRC;
         unsigned int CSRC;
-    };
+    } ;
 
     struct RtpRFC : public IParseable<Result_t, RtpRFC>
     {
@@ -42,7 +42,7 @@ namespace rtp {
 
         RtpRFC& operator()();
 
-        Result_t::TypeRFC type() const { return Result_t::TypeRFC::RTP;}
+        inline Result_t::TypeRFC type() const { return Result_t::TypeRFC::RTP;}
 
 
     private:

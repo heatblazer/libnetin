@@ -31,7 +31,7 @@ namespace t38
 
         T38Rfc& operator()();
 
-        Result_t::TypeRFC type() const { return Result_t::TypeRFC::T38;}
+        inline Result_t::TypeRFC type() const { return Result_t::TypeRFC::T38;}
 
 
         static void dbg();

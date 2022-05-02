@@ -30,6 +30,7 @@ namespace utils {
         #endif
 
         struct EthL4 eth;
+        memset(&eth, 0, sizeof(struct EthL4));
         eth.type = EthL4::UNKNOWN; // default
         if (!data)
             return eth;

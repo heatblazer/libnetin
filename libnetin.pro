@@ -36,7 +36,8 @@ SOURCES += \
         stun_t.cpp \
         t38_t.cpp \
         turn_t.cpp \
-        utils.cpp
+        utils.cpp \
+        websocket_t.cpp
 
 HEADERS += \
     App.h \
@@ -51,7 +52,8 @@ HEADERS += \
     tjson.hpp \
     turn_t.h \
     types.h \
-    utils.h
+    utils.h \
+    websocket_t.h
 
 DISTFILES += \
     Data/out.txt \

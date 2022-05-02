@@ -24,13 +24,13 @@ struct MqttRFC: public IParseable<Result_t, MqttRFC>
                 uint8_t WillFlag : 1;
                 uint8_t CleanSession : 1;
                 uint8_t Reserved : 1;
-            } s_field;
+            } s_field PACKED;
             uint8_t value;
         } uConnectFlags;
         unsigned short keepAlive;
         unsigned short cilentIDLen;
         char payload[1024];
-    } m_header;
+    } m_header PACKED;
 
 public:
     MqttRFC() = delete;
@@ -43,8 +43,7 @@ public:
 
     MqttRFC& operator()();
 
-    Result_t::TypeRFC type() const { return Result_t::TypeRFC::MQTT;}
-
+    inline Result_t::TypeRFC type() const { return Result_t::TypeRFC::MQTT;}
 
 };
 

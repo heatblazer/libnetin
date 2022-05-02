@@ -49,7 +49,7 @@ block  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
         uint32_t RTP_TS;
         uint32_t senders_packet_count;
         uint32_t senders_octec_count;
-    };
+    } ;
 
     struct RtcpRFC : public IParseable<Result_t, RtcpRFC>
     {
@@ -66,7 +66,7 @@ block  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
         RtcpRFC& operator()();
 
-        Result_t::TypeRFC type() const { return Result_t::TypeRFC::RTCP;}
+        inline Result_t::TypeRFC type() const { return Result_t::TypeRFC::RTCP;}
 
     private:
 

@@ -82,13 +82,15 @@ namespace stun {
      * @brief The stun_t struct
      * descirbes the well known STUN header
      */
+
+
     struct stun_t
     {
         unsigned short message_type;
         unsigned short message_len;
         unsigned int magic_cookie;
         unsigned char transaction_id[12];
-    };
+    } ;
 
     /**
      * @brief The AttribDataPair aggregates the attribute data from the stun header
@@ -124,7 +126,7 @@ namespace stun {
 
         StunRFC& operator()();
 
-        Result_t::TypeRFC type() const { return Result_t::TypeRFC::STUN;}
+        inline Result_t::TypeRFC type() const { return Result_t::TypeRFC::STUN;}
 
         size_t count() const;
 

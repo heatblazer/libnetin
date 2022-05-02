@@ -49,10 +49,10 @@ MqttRFC &MqttRFC ::operator()(const IParseable::type &res)
         jsonb.add(tjson::JsonField{"srcip", eth.sourceIP});
         jsonb.add(tjson::JsonField{"dstip", eth.destIP});
 
-        m_header.header = pdata == nullptr ? 0x00 : pdata[0];
+        m_header.header = (pdata == nullptr) ? 0x00 : pdata[0];
         if (m_header.header == 0x10 && payload_len > 16) {
             m_header.nameLen = ((pdata[2] << 8) | pdata[3]);
-            if (m_header.nameLen > 6)
+            if (m_header.nameLen > 10)
                 return *this;
             ::memcpy(m_header.protocolName, pdata + 4, m_header.nameLen);
             m_header.protocolVersion = (unsigned char) *(pdata+4+m_header.nameLen);

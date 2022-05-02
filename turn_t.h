@@ -17,7 +17,7 @@ namespace turn {
 
         TurnRFC& operator()();
 
-        Result_t::TypeRFC type() const { return Result_t::TypeRFC::TURN;}
+        inline Result_t::TypeRFC type() const { return Result_t::TypeRFC::TURN;}
 
 
     };
