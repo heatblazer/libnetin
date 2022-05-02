@@ -27,6 +27,7 @@ please read the license agreement of `PCAP`.
 3. `RTCP`
 4. `UDPTL` - `t38` (not fully implemented, artifacts)
 5. `MQTT` - support for facebook [pending].
+6. `WebSocket` - support and demasking (needed for `MQTT` )
 
 #### App recognition (not 100% accurate):
 1. `Whatsapp`
@@ -42,7 +43,8 @@ please read the license agreement of `PCAP`.
 ~~1.Win32 build can't resolve StunRFC, possible `pragma pack(x)` needed.~~ 
 
 #### TODO:
-1. Resolve `TCP` parsing
+1. ~~Resolve `TCP` parsing~~
+2. Create an appendable `json` builder
 
 
 #### PVS-STUDIO report:
