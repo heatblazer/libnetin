@@ -56,7 +56,6 @@ namespace utils {
                 eth.payload_len = eth.options_len + total;
                 eth.type = EthL4::TCP;
             } else {
-                //
                 eth.type = EthL4::UNKNOWN;
             }
         }

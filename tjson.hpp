@@ -89,7 +89,7 @@ public:
 };
 
 
-
+//todo - create a copy ctor and appender
 struct JsonBuilder
 {
     std::vector<JsonField> fields;

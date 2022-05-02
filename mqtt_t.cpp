@@ -54,8 +54,7 @@ MqttRFC &MqttRFC ::operator()(const IParseable::type &res)
             char* begin = masked;
             WebSocketMask.value = SWAP4(WebSocketMask.value);
             for(unsigned int i = 0; i < payload_len; i++) {
-                unsigned char mid = WebSocketMask.data[i % 4];
-                *(masked++) ^= mid;
+                *(masked++) ^= WebSocketMask.data[i % 4];;
             }
             pdata = begin;
         }
