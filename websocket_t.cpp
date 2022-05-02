@@ -34,13 +34,14 @@ WebSocketRFC &WebSocketRFC::operator()(const IParseable::type &res MAYBEUNUSED)
                 mqtt.WebSocketMask.value = utils::tobin<unsigned int>(pdata+2);
                 jsonb.add(tjson::JsonField{"mask", mqtt.WebSocketMask.value});
             }
-            mqtt();
-
-            //in case we have mqtt serialized - add it here
-            if (mqtt.WebSocketMask.value && mqtt.WebSocketOffset) {
-                jsonb.add(tjson::JsonField{"WebSocket->MQTT", true});
-                for (auto json : mqtt.jsonb.fields) {
-                    jsonb.add(json);
+            //call to test if MQTT is inside
+            if (mqtt().Valid) {
+                //in case we have mqtt serialized - add it here
+                if (mqtt.WebSocketMask.value && mqtt.WebSocketOffset) {
+                    jsonb.add(tjson::JsonField{"WebSocket->MQTT", true});
+                    for (const auto &json : mqtt.jsonb.fields) {
+                        jsonb.add(json);
+                    }
                 }
             }
             Valid = true;
