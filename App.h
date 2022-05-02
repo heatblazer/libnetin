@@ -18,10 +18,7 @@ public:
 
     explicit App(int &argc,  char** argv);
 
-    ~App() noexcept
-    {
-
-    }
+    ~App() noexcept { }
 
     int exec();
 };

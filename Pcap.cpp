@@ -149,6 +149,8 @@ bool Pcap::hasNext() const
  */
 void Pcap::loop()
 {
+    std::ofstream jsonfile;
+    jsonfile.open ("out.json");
 
     if (m_options.live) {
         std::thread t{[&]() {
@@ -166,6 +168,7 @@ void Pcap::loop()
             }
         }};
         t.detach();
+//        jsonfile<< serializer.serializeNow();
         std::cout << "Press Q or q to stop..." << std::endl;
         char q='a';
         std::cin >> q;
@@ -190,11 +193,10 @@ void Pcap::loop()
         }
     }
     std::cout << "Finished capturing... writing out...\r\n";
-    std::ofstream jsonfile;
-    jsonfile.open ("out.json");
     jsonfile<< serializer.serialize();
     jsonfile.close();
-    T38Rfc::dbg();
+
+//    T38Rfc::dbg();
 }
 
 }//libnetin

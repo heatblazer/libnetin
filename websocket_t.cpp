@@ -13,7 +13,7 @@ WebSocketRFC::WebSocketRFC(const IParseable::type &res)
 {}
 
 
-WebSocketRFC &WebSocketRFC::operator()(const IParseable::type &res MAYBEUNUSED)
+WebSocketRFC &WebSocketRFC::operator()(const IParseable::type &res)
 {
 
     struct EthL4 eth = utils::GetEthL4(res.data);

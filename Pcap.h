@@ -72,7 +72,7 @@ private:
         if constexpr (is_validator<T>::value){
             T& resultready = value();
             if (resultready.Valid) {
-                value.value.type = resultready.type();
+                value.value.type = resultready.type(); //add live option writer
                 serializer.Add(resultready.jsonb);
                 return value.value;
             }

@@ -1,5 +1,6 @@
 #ifndef TJSON_H
 #define TJSON_H
+#include <array>
 #include <string>
 #include <vector>
 #include <iostream>
@@ -122,8 +123,11 @@ struct JsonBuilder
 
 struct JsonSerializer
 {
+
     std::string arrname;
+
     std::vector<JsonBuilder> builders;
+
 
     JsonSerializer() : arrname{"{" NL "\"default\":"}{}
     JsonSerializer(const std::string& arr) : arrname{"{\""+arr+"\":"} {}

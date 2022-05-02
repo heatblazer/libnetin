@@ -22,13 +22,11 @@ namespace utils {
 
     struct EthL4 GetEthL4(const u_char* data)
     {
-
         #ifdef __unix__
         #define DATAOFFSET eth.tcpHeader->doff
         #else
         #define DATAOFFSET eth.tcpHeader->data_offset
         #endif
-
         struct EthL4 eth;
         memset(&eth, 0, sizeof(struct EthL4));
         eth.type = EthL4::UNKNOWN; // default
