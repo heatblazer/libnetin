@@ -12,7 +12,9 @@
 This program is made with the help of `libpcap` https://github.com/the-tcpdump-group/libpcap
 please read the license agreement of `PCAP`.
 
-3.For `Win32` install follow the guide to install `NCAP` from here: https://nmap.org/npcap/#download
+3. If you get linker errors, install `libDbus` for your distro and add `LIBS+= -lpthread -ldbus-1` to `.pro` file.
+
+4. For `Win32` install follow the guide to install `NCAP` from here: https://nmap.org/npcap/#download
 
 #### Usage:
 1. Show devices: `libnetin -l`

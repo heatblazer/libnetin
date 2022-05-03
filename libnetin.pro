@@ -17,6 +17,7 @@ win32 {
     message("Unix")
     INCLUDEPATH += $$PWD/External/include
     LIBS += -L$$PWD/External/lib/libpcap.a -lpcap
+#    LIBS += -lpthread -ldbus-1
 }
 
 #DESTDIR = $$PWD/Dest
