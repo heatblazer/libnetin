@@ -47,9 +47,12 @@ namespace utils {
                 if (DATAOFFSET > 5) {
                     total += sizeof(struct tcphdr);
                     eth.options = (unsigned char*) (data + total);
+                    auto test = total + DATAOFFSET*4 -sizeof(struct tcphdr);
+                    unsigned char* endPtr = (unsigned char*)&data[test];
+
                     if (eth.options)
                     {
-                        for(unsigned char* o = eth.options; *o != EthL4::EOL; o++){
+                        for(unsigned char* o = eth.options; o != endPtr; o++){
                             if (*o > EthL4::NOP && *o <= EthL4::TIMESTAMP) {
                                 o++;
                                 eth.options_len += *o;
@@ -58,7 +61,6 @@ namespace utils {
                                 eth.options_len++;
                             }
                         }
-                        eth.options_len++;
                     }
                 }
                 eth.payload_len = eth.options_len + total;

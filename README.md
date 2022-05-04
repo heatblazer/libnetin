@@ -48,6 +48,7 @@ please read the license agreement of `PCAP`.
 1. ~~Resolve `TCP` parsing~~
 2. ~~Create an appendable `json` builder~~
 3. Resolve `TCP` options 
+4. `MQTT` is buggy, some offset is not good or the crash comes from `WebSocket`
 
 #### PVS-STUDIO report:
 ```

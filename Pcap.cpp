@@ -62,7 +62,7 @@ struct is_validator<RtpRFC>
 template<>
 struct is_validator<MqttRFC>
 {
-    static constexpr bool value = true;
+    static constexpr bool value = false;
 };
 
 template<>

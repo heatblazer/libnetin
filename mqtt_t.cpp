@@ -21,10 +21,6 @@ MqttRFC::MqttRFC(const IParseable::type &res)
 
 MqttRFC::~MqttRFC() noexcept
 {
-    if (m_header.cilentIDLen ) {
-        //free(m_header.payload);
-        //m_header.payload = nullptr;
-    }
 }
 
 MqttRFC &MqttRFC::operator()()
