@@ -12,6 +12,15 @@ struct EthL4
         UNKNOWN
     } type;
 
+    enum {
+        NOP = 0x1,
+        MAX_SEG_SIZE = 0x2,
+        WINDOW_SCALE = 0x3,
+        SACK = 0x4,
+        TIMESTAMP = 0x8,
+        EOL = 0x00
+    } tcp_opt_kind;
+
     const   struct ether_header* ethernetHeader;
     const struct ip* ipHeader;
     const struct udphdr* udpHeader;

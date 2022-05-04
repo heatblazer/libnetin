@@ -13,9 +13,9 @@ namespace mqtt {
 
 MqttRFC::MqttRFC(const IParseable::type &res)
     :IParseable<Result_t,MqttRFC>{res},
-    WebSocketOffset{0},
-    WebSocketMask{0}
+    WebSocketOffset{0}
 {
+    WebSocketMask.value = 0;
     memset(&m_header, 0, sizeof(m_header));
 }
 
@@ -37,7 +37,6 @@ MqttRFC &MqttRFC ::operator()(const IParseable::type &res)
     struct EthL4 eth = utils::GetEthL4(res.data);
     MAYBEUNUSED  size_t offset = 0;
     MAYBEUNUSED  size_t total = res.out.len;
-    MAYBEUNUSED unsigned char data[14]  = {0};
     MAYBEUNUSED unsigned int payload_len = res.out.caplen - eth.payload_len;
 
     switch (eth.type) {

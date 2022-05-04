@@ -47,7 +47,7 @@ please read the license agreement of `PCAP`.
 #### TODO:
 1. ~~Resolve `TCP` parsing~~
 2. ~~Create an appendable `json` builder~~
-
+3. Resolve `TCP` options 
 
 #### PVS-STUDIO report:
 ```
