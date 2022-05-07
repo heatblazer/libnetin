@@ -62,7 +62,7 @@ struct is_validator<RtpRFC>
 template<>
 struct is_validator<MqttRFC>
 {
-    static constexpr bool value = false;
+    static constexpr bool value = true;
 };
 
 template<>
@@ -77,18 +77,28 @@ namespace libnetin {
 void Pcap::showAll()
 {
     static char errbuf[PCAP_ERRBUF_SIZE];
-    pcap_if_t* ifaces;
+    pcap_if_t* ifaces=NULL;
     int n MAYBEUNUSED = pcap_findalldevs(&ifaces, errbuf);
-    for(pcap_if_t* curr = ifaces; curr != nullptr; curr = curr->next) {
+    for(pcap_if_t* curr = ifaces; curr ; curr = curr->next) {
         std::cout << curr->name << "\r\n";
-        curr = curr->next;
     }
-    for(pcap_if_t* curr = ifaces; curr != nullptr; curr = curr->next) {
+
+
+//TODO: check how to free the devices 
+#if 0 //leak for now
+//    pcap_freealldevs(ifaces);
+
+
+    for(pcap_if_t* curr = ifaces; curr ; ) {
         pcap_if_t* t = curr;
         curr = curr->next;
-        free(t);
+        if (t) {
+            free(t);
+        }
+
     }
     // loop to all devs or capture on a specific one
+#endif
 }
 
 
@@ -113,7 +123,7 @@ bool Pcap::offline(const char *fname)
 
     return true;
 }
-
+// \Device\NPF_{8C83AA62-C8C8-42C4-9302-1EDA68EA3F5B}
 bool Pcap::live(const char *dev)
 {
     p_Cap = pcap_open_live(dev,PCAP_BUF_SIZE,0,-1,errbuf);
@@ -155,6 +165,7 @@ void Pcap::loop()
     if (m_options.live) {
         std::thread t{[&]() {
 
+            jsonfile << serializer.beginSerialize();
             for(Result_t& res =  next(); m_stop.load(); operator++())
             {
                 MAYBEUNUSED auto resultNwork =                    
@@ -165,19 +176,25 @@ void Pcap::loop()
                                       TurnRFC{res},
                                       StunRFC{res},
                                       RtpRFC{res});
+                jsonfile << serializer.serialzeNow();
             }
         }};
         t.detach();
-//        jsonfile<< serializer.serializeNow();
+        
         std::cout << "Press Q or q to stop..." << std::endl;
         char q='a';
         std::cin >> q;
         switch (q) {
         case 'q':
-        case 'Q':
+        case 'Q': {
+            //win test - \Device\NPF_{8C83AA62-C8C8-42C4-9302-1EDA68EA3F5B}
             m_stop.store(0);
+            jsonfile << serializer.endSerialize();
+            jsonfile.close();
+        }
         default:
             break;
+
         }
     } else {
         for(Result_t& res =  next(); hasNext(); operator++())
@@ -191,12 +208,11 @@ void Pcap::loop()
                       StunRFC{res},
                       RtpRFC{res});
         }
+        jsonfile << serializer.serialize();
+        jsonfile.close();
     }
     std::cout << "Finished capturing... writing out...\r\n";
-    jsonfile<< serializer.serialize();
-    jsonfile.close();
 
-//    T38Rfc::dbg();
 }
 
 }//libnetin

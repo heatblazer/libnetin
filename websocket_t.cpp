@@ -19,23 +19,21 @@ WebSocketRFC &WebSocketRFC::operator()(const IParseable::type &res)
     struct EthL4 eth = utils::GetEthL4(res.data);
     MAYBEUNUSED  size_t offset = 0;
     MAYBEUNUSED  size_t total = res.out.len;
-    MAYBEUNUSED unsigned int payload_len = res.out.caplen - eth.payload_len;
     switch (eth.type) {
     case EthL4::TCP: {
         // peel off
         offset = eth.options_len + (sizeof(struct ether_header) + sizeof(struct ip) + sizeof(tcphdr));
         const char *pdata = (const char*)res.data+offset;
-        if (pdata && (unsigned char)pdata[0] == 0x82) {
-            unsigned int weblen = (unsigned char)(pdata[1] & 0x7F);
+        if (pdata && (unsigned char)pdata[0] == WebSocketRFC::StartHeader)
+        {
+            unsigned int weblen = (unsigned char)(pdata[1] & WebSocketRFC::PayloadLenMask);
             auto mqtt = mqtt::MqttRFC{res};
-            mqtt.WebSocketOffset = (payload_len - weblen);
+            mqtt.WebSocketOffset = weblen; 
             jsonb.add(tjson::JsonField{"protocol", "WebSocket"});
-            if (mqtt.WebSocketOffset > 2) {
-                mqtt.WebSocketMask.value = utils::tobin<unsigned int>(pdata+2);
+            if (mqtt.WebSocketOffset > WebSocketRFC::MaskOffset) {
+                mqtt.WebSocketMask.value = utils::tobin<unsigned int>(pdata+WebSocketRFC::MaskOffset);
                 jsonb.add(tjson::JsonField{"mask", mqtt.WebSocketMask.value});
             }
-#if 0 //TODO
-            //call to test if MQTT is inside
             if (mqtt().Valid) {
                 //in case we have mqtt serialized - add it here
                 if (mqtt.WebSocketMask.value && mqtt.WebSocketOffset) {
@@ -45,7 +43,6 @@ WebSocketRFC &WebSocketRFC::operator()(const IParseable::type &res)
                     }
                 }
             }
-#endif
             Valid = true;
 
         }

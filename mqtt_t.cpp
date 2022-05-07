@@ -1,6 +1,8 @@
 #include "mqtt_t.h"
+#include "websocket_t.h"
 #include "utils.h"
 #include "Pcap.h"
+
 #include <cstring>
 
 #ifndef __unix__
@@ -30,10 +32,11 @@ MqttRFC &MqttRFC::operator()()
 
 MqttRFC &MqttRFC ::operator()(const IParseable::type &res)
 {
+
     struct EthL4 eth = utils::GetEthL4(res.data);
     MAYBEUNUSED  size_t offset = 0;
     MAYBEUNUSED  size_t total = res.out.len;
-    MAYBEUNUSED unsigned int payload_len = res.out.caplen - eth.payload_len;
+    MAYBEUNUSED unsigned int payload_len = 0;
 
     switch (eth.type) {
     case EthL4::UDP: {
@@ -41,16 +44,16 @@ MqttRFC &MqttRFC ::operator()(const IParseable::type &res)
         break;
     }      
     case EthL4::TCP: {
-        offset = WebSocketOffset + eth.options_len + (sizeof(struct ether_header) + sizeof(struct ip) + sizeof(tcphdr));
+        offset = eth.options_len + (sizeof(struct ether_header) + sizeof(struct ip) + sizeof(tcphdr));
         const char *pdata = (const char*)res.data+offset;
-        if (!payload_len)
-            return *this;
+
         if (WebSocketMask.value) {
-            char* masked = (char*)res.data+offset;
+            payload_len = WebSocketOffset;
+            char* masked = (char*)pdata+websocket::WebSocketRFC::PayloadOffset;
             char* begin = masked;
             WebSocketMask.value = SWAP4(WebSocketMask.value);
             for(unsigned int i = 0; i < payload_len; i++) {
-                *(masked++) ^= WebSocketMask.data[i % 4];;
+                *(masked++) ^= WebSocketMask.data[i % 4];
             }
             pdata = begin;
         }
@@ -59,7 +62,7 @@ MqttRFC &MqttRFC ::operator()(const IParseable::type &res)
         jsonb.add(tjson::JsonField{"dstip", eth.destIP});
         m_header.header = (pdata == nullptr) ? 0x00 : pdata[0];
 
-        if (m_header.header == 0x10 && payload_len > 16) {
+        if (m_header.header == 0x10  && payload_len > 16 ) {
             m_header.nameLen = ((pdata[2] << 8) | pdata[3]);
             if (m_header.nameLen > 10)
                 return *this;

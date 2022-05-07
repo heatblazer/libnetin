@@ -8,6 +8,22 @@ namespace websocket {
 
     struct WebSocketRFC: public IParseable<Result_t, WebSocketRFC>
     {
+        enum
+        {
+            StartHeader = 0x82U,
+
+            PayloadLenMask = 0x7FU,
+
+            MaskOffset = 2U,
+
+            PayloadOffset = 6U,
+
+            MaskByteSize = 4U,
+            
+            Unknown = 0// convinience
+
+        } eWebSocketConsts;
+
 
         unsigned char m_maskKey[4];
     public:

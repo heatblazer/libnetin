@@ -137,6 +137,31 @@ struct JsonSerializer
         builders.push_back(bld);
     }
 
+    std::string beginSerialize()
+    {
+        static const std::string begin{ arrname + "[" NL};
+        return begin;
+    }
+
+    std::string serialzeNow()
+    {
+        std::string final;
+        if (!builders.size()) return {};
+
+        while (!builders.empty())
+        {
+            final += builders.front().build();
+            builders.erase(builders.begin());
+        }
+        return final;
+    }
+
+
+    std::string endSerialize()
+    {
+        static const std::string end{ NL "]}" };
+        return end;
+    }
 
     std::string serialize()
     {

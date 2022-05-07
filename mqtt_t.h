@@ -46,6 +46,7 @@ public:
     inline Result_t::TypeRFC type() const { return Result_t::TypeRFC::MQTT;}
 
     unsigned int WebSocketOffset;
+
     union {
         unsigned int value;
         unsigned char data[sizeof(unsigned int)];

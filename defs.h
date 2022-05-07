@@ -1,16 +1,26 @@
 #ifndef DEFS_H
 #define DEFS_H
 
+
+
+#ifdef __unix__
     #if __cplusplus >= 201402L
         #define MAYBEUNUSED [[maybe_unused]]
     #else
         #define MAYBEUNUSED
     #endif
+#elif _WIN32
+    #if _MSC_FULL_VER  >= 191025017
+        #define MAYBEUNUSED [[maybe_unused]]
+    #else
+        #define MAYBEUNUSED
+    #endif
+#endif
 
     #ifdef __unix__
-    #define PACKED __attribute__ ((__packed__))
+        #define PACKED __attribute__ ((__packed__))
     #else
-    #define PACKED
+        #define PACKED
     #endif
 
     #define PCAP_BUF_SIZE	1024
@@ -33,4 +43,4 @@
         #include <pcap/pcap.h>
     #endif
 
-#endif
+#endif //defs.h

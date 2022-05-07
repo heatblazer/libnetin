@@ -26,8 +26,8 @@ struct EthL4
     const struct udphdr* udpHeader;
     const struct tcphdr* tcpHeader;
     unsigned char* options;
-    unsigned int options_len;
-    unsigned int payload_len;
+    size_t options_len;
+    size_t payload_len;
     char sourceIP[INET_ADDRSTRLEN];
     char destIP[INET_ADDRSTRLEN];    
 };
