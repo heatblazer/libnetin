@@ -27,10 +27,7 @@ RtpRFC::RtpRFC(const IParseable::type &res) : IParseable<Result_t,RtpRFC>{res}
                 int offset = sizeof(struct ether_header) + sizeof(struct ip)+ sizeof(udphdr);
                 memcpy(m_Payload, res.data+offset,total-offset);
                 struct rtp_t* rtp = (struct rtp_t*)(res.data + offset);
-                jsonb.add(tjson::JsonField{"protocol", "RTP"});
-                jsonb.add(tjson::JsonField{"srcip", eth.sourceIP});
-                jsonb.add(tjson::JsonField{"dstip", eth.destIP});
-                parse(*rtp);
+                parse(*rtp, eth);
             }
             default:
                 break;
@@ -39,7 +36,7 @@ RtpRFC::RtpRFC(const IParseable::type &res) : IParseable<Result_t,RtpRFC>{res}
     }
 
 
-    void RtpRFC::parse(rtp_t data)
+    void RtpRFC::parse(rtp_t data, const EthL4& res)
     {
         Valid = true;
         m_fields.cc = (data.meta[0] << 4) & 0xf0;
@@ -55,13 +52,17 @@ RtpRFC::RtpRFC(const IParseable::type &res) : IParseable<Result_t,RtpRFC>{res}
             Valid |= false;
         if (m_fields.pt < 0 || m_fields.pt > 126)
             Valid |= false;
-        jsonb.add(tjson::JsonField{"PT", m_fields.pt});
-        jsonb.add(tjson::JsonField{"CC", m_fields.cc});
-        jsonb.add(tjson::JsonField{"ssrc", m_fields.ssrc});
-        jsonb.add(tjson::JsonField{"csrc", m_fields.csrc});
-        jsonb.add(tjson::JsonField{"TS", m_fields.timestamp});
-        jsonb.add(tjson::JsonField{"EX", m_fields.x});
-
+        if (Valid) {
+            jsonb.add(tjson::JsonField{ "protocol", "RTP" });
+            jsonb.add(tjson::JsonField{ "srcip", res.sourceIP });
+            jsonb.add(tjson::JsonField{ "dstip", res.destIP });
+            jsonb.add(tjson::JsonField{ "PT", m_fields.pt });
+            jsonb.add(tjson::JsonField{ "CC", m_fields.cc });
+            jsonb.add(tjson::JsonField{ "ssrc", m_fields.ssrc });
+            jsonb.add(tjson::JsonField{ "csrc", m_fields.csrc });
+            jsonb.add(tjson::JsonField{ "TS", m_fields.timestamp });
+            jsonb.add(tjson::JsonField{ "EX", m_fields.x });
+        }
         return; //just brek here
     }
 

@@ -2,6 +2,7 @@
 #define RTP_T_H
 #include "defs.h"
 #include "types.h"
+#include "utils.h"
 #include "tjson.hpp"
 #include <pcap/pcap.h>
 
@@ -38,7 +39,7 @@ namespace rtp {
 
         RtpRFC(const IParseable::type& res);
 
-        RtpRFC& operator()(const IParseable::type &res);
+        RtpRFC& operator()(const IParseable::type&);
 
         RtpRFC& operator()();
 
@@ -47,7 +48,7 @@ namespace rtp {
 
     private:
 
-        void parse(rtp_t data);
+        void parse(rtp_t data,const EthL4&);
 
         struct {
             unsigned int cc;

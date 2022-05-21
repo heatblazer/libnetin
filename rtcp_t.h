@@ -49,7 +49,13 @@ block  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
         uint32_t RTP_TS;
         uint32_t senders_packet_count;
         uint32_t senders_octec_count;
-    } ;
+        struct {
+            uint32_t SSRC;
+        } report_blocks[2];
+        uint32_t profile_extensions;
+
+    } PACKED ;
+
 
     struct RtcpRFC : public IParseable<Result_t, RtcpRFC>
     {

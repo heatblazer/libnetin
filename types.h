@@ -4,6 +4,14 @@
 #include "tjson.hpp"
 
 
+
+#define WRITE_BASE_INFO(X)                                                                              \
+                                    jsonb.add(tjson::JsonField{ "srcip", eth.sourceIP});                  \
+                                   jsonb.add(tjson::JsonField{ "dstip", eth.destIP });                  \
+                                   jsonb.add(tjson::JsonField{ "srcPort", ntohs((X)->source); \
+                                   jsonb.add(tjson::JsonField{ "dstPort", ntohs((X)->dest);
+
+
 struct EthL4
 {
     enum {
@@ -29,7 +37,9 @@ struct EthL4
     size_t options_len;
     size_t payload_len;
     char sourceIP[INET_ADDRSTRLEN];
-    char destIP[INET_ADDRSTRLEN];    
+    char destIP[INET_ADDRSTRLEN];
+    uint16_t sourcePort;
+    uint16_t destPort;
 };
 
 
