@@ -44,7 +44,6 @@ WebSocketRFC &WebSocketRFC::operator()(const IParseable::type &res)
                 }
             }
             Valid = true;
-
         }
         break;
     }

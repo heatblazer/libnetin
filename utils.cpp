@@ -49,7 +49,6 @@ namespace utils {
                     eth.options = (unsigned char*) (data + total);
                     auto test = total + DATAOFFSET*4 -sizeof(struct tcphdr);
                     unsigned char* endPtr = (unsigned char*)&data[test];
-
                     if (eth.options)
                     {
                         for(unsigned char* o = eth.options; o != endPtr; o++){

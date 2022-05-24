@@ -14,6 +14,9 @@ struct NullRFC : public IParseable<Result_t, NullRFC>
 
     NullRFC& operator()();
 
+    NullRFC& operator()(const IParseable::type&);
+
+
     Result_t::TypeRFC type() const { return Result_t::TypeRFC::UNKNOWN;}
 
     NullRFC(const IParseable::type& res MAYBEUNUSED) : IParseable<Result_t, NullRFC>{res}

@@ -20,6 +20,7 @@ int App::exec()
         return -1;
     } else {
         for(size_t i=0; i < m_args.size(); i++) {
+
             if (m_args[i] == "-l") {
                 Pcap::showAll();
                 return 0;
@@ -30,6 +31,7 @@ int App::exec()
             } else if (m_args[i] == "-i") {
                 res = m_pcap.live(m_args[i+1].c_str());
             } else {
+
             }
         }
     }

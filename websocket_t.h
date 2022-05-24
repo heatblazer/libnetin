@@ -11,17 +11,11 @@ namespace websocket {
         enum
         {
             StartHeader = 0x82U,
-
             PayloadLenMask = 0x7FU,
-
             MaskOffset = 2U,
-
             PayloadOffset = 6U,
-
-            MaskByteSize = 4U,
-            
+            MaskByteSize = 4U,            
             Unknown = 0// convinience
-
         } eWebSocketConsts;
 
 

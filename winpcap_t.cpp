@@ -1,5 +1,11 @@
 #include "winpcap_t.h"
+
+
 #ifndef __unix__
+#ifdef __cplusplus
+extern "C" {
+#endif
+}
 const char *inet_ntop(int af, const void *a0, char *s, socklen_t l)
 {
     const unsigned char *a = (const unsigned char*)a0;
@@ -48,4 +54,9 @@ const char *inet_ntop(int af, const void *a0, char *s, socklen_t l)
     errno = ENOSPC;
     return 0;
 }
+#ifdef __cplusplus
+}
+#endif
+}
+
 #endif

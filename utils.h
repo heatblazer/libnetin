@@ -3,7 +3,6 @@
 #include "defs.h"
 #include "types.h"
 
-
 namespace utils {
 
     void split(const char *str, const char *delim, std::vector<std::string>& out);
@@ -20,6 +19,7 @@ namespace utils {
     template <typename T, bool BE=true>
     T tobin(const char* data)
     {
+        MAYBEUNUSED char STATIC_ASSERT_ON_SIZE_GT_4[sizeof(T) > 4 ? -1 : 1];
         T val=0;
         for(size_t i=0; i < sizeof(T); i++) {
             val |= ((unsigned char)data[i]) << (i * 8);

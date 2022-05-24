@@ -33,6 +33,7 @@ namespace turn {
 
                     RtpRFC rtp{res} ;
                     StunRFC stun{res};
+
                     if (stun().Valid) {
                         jsonb.add(tjson::JsonField{"nested-protocol", "STUN in TURN"});
                     }

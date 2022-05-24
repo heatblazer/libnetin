@@ -5,12 +5,6 @@
 
 
 
-#define WRITE_BASE_INFO(X)                                                                              \
-                                    jsonb.add(tjson::JsonField{ "srcip", eth.sourceIP});                  \
-                                   jsonb.add(tjson::JsonField{ "dstip", eth.destIP });                  \
-                                   jsonb.add(tjson::JsonField{ "srcPort", ntohs((X)->source); \
-                                   jsonb.add(tjson::JsonField{ "dstPort", ntohs((X)->dest);
-
 
 struct EthL4
 {
@@ -40,6 +34,11 @@ struct EthL4
     char destIP[INET_ADDRSTRLEN];
     uint16_t sourcePort;
     uint16_t destPort;
+
+    void writeBase(tjson::JsonBuilder& bld)
+    {
+        bld.add(tjson::JsonField{"TODO", "TODO"});
+    }
 };
 
 

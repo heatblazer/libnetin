@@ -60,9 +60,9 @@ namespace stun {
         AppName n = Unknown;
         if (m_properties.tokens >= 2) {
             n = AppName::WhatsApp;
-            jsonb.add(tjson::JsonField{"app", "WhatsApp"});
-            return n;
+            jsonb.add(tjson::JsonField{"Tokens", m_properties.tokens});
         } else {
+#if 0 //note - priorites changed as 2022 - omit and do a post processing
             switch (m_properties.priority) {
             case 1862269950:
             case 1862269438:
@@ -91,8 +91,9 @@ namespace stun {
                 break;
                 }
             }
+#endif
             //record the rpoerties too
-            jsonb.add(tjson::JsonField{"pri", m_properties.priority});
+            jsonb.add(tjson::JsonField{"priority", m_properties.priority});
         }
         return n;
     }
@@ -156,7 +157,8 @@ namespace stun {
                     ip_xtype = [(ip_orig >> 24) & 0xFF, (ip_orig >> 16) & 0xFF, (ip_orig >> 8) & 0xFF, ip_orig & 0xFF]
                      * */
                     //0000   00 12 00 08 00 01 d4 d8 2b da c8 b6               ........+...
-                    unsigned long long  xorpeer MAYBEUNUSED = utils::tobin<unsigned long long>((const char*)(&data[i]));
+                    unsigned long long  xorpeer MAYBEUNUSED = utils::tobin<unsigned int>((const char*)(&data[i]));
+
                     break;
                 }
                 case SOFTWARE:

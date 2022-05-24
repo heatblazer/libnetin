@@ -51,33 +51,32 @@ block  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     {
 
         struct EthL4 eth = utils::GetEthL4(res.data);
-        size_t total = res.out.len;
-
         switch (eth.type) {
         case EthL4::UDP: {
+            MAYBEUNUSED uint16_t updDataLen = SWAP2(eth.udpHeader->len);
+
             int offset = sizeof(struct ether_header) + sizeof(struct ip) + sizeof(udphdr);
- //           memcpy(m_Payload, res.data + offset, total - offset);
             struct rtcp_t* rtcp = (struct rtcp_t*)(res.data + offset);
-            
-            
+                        
             uint8_t ver = rtcp->meta[0] >> 6;
-            uint8_t p =  rtcp->meta[0] & 0x20;
+            MAYBEUNUSED uint8_t p =  rtcp->meta[0] & 0x20;
             uint8_t rc = ((rtcp->meta[0] << 3) & 0xFF) >> 3;
             uint8_t pt = rtcp->meta[1] & 0xFF;
             uint16_t len = (rtcp->meta[2] << 8) | (rtcp->meta[3]);
             uint32_t ssrc = rtcp->SSRC_or_sender;
 
-            if (ver == 2 && !p) {
+            if (ver == 2 && (pt >=  200 && pt <= 204 )) {
+                jsonb.add(tjson::JsonField{ "protocol", "RTCP" });
+                jsonb.add(tjson::JsonField{ "srcip", eth.sourceIP });
+                jsonb.add(tjson::JsonField{ "dstip", eth.destIP });
+                jsonb.add(tjson::JsonField{ "V", ver });
+                jsonb.add(tjson::JsonField{ "PT", pt });
+                jsonb.add(tjson::JsonField{ "ssrc", ssrc });
+                jsonb.add(tjson::JsonField{ "Length", len});
+                jsonb.add(tjson::JsonField{ "RC", rc});
                 Valid = true;
             }
-            jsonb.add(tjson::JsonField{ "protocol", "RTCP" });
-            jsonb.add(tjson::JsonField{ "srcip", eth.sourceIP });
-            jsonb.add(tjson::JsonField{ "dstip", eth.destIP });
-            jsonb.add(tjson::JsonField{ "V", ver });
-            jsonb.add(tjson::JsonField{ "PT", pt });
-            jsonb.add(tjson::JsonField{ "ssrc", ssrc });
             //extend if needed 
-
         }
         default:
             break;
