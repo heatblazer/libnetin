@@ -119,15 +119,9 @@ struct icmp_hdr
 };
 // Restore the byte boundary back to the previous value
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 const char *inet_ntop(int af, const void *a0, char *s, socklen_t l);
 
-#ifdef __cplusplus
-}
-#endif
 
 #endif
 
