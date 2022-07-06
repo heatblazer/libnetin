@@ -1,5 +1,5 @@
 #include "App.h"
-
+#include <stdlib.h>
 
 namespace libnetin
 {
@@ -30,8 +30,15 @@ int App::exec()
                 }
             } else if (m_args[i] == "-i") {
                 res = m_pcap.live(m_args[i+1].c_str());
+            } else if (m_args[i] == "--help"){
+                std::cout << "Use libnetin -<option> for the following:\r\n"
+                          << "libnetin -l (List all devices)\r\n"
+                          << "libnetin -p pcapfile.pcal (Read and analyse pcap contents)\r\n"
+                          << "libnetin -i <NIC DEVICE> (Open live mode on network card)\r\n"
+                          <<"=============================================================\r\n";
+                return 0;
             } else {
-
+                return 0;
             }
         }
     }
