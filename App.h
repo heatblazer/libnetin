@@ -20,6 +20,10 @@ public:
 
     ~App() noexcept { }
 
+    void test_offline();
+
+    void test_online();
+
     int exec();
 };
 

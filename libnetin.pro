@@ -18,9 +18,10 @@ win32 {
     LIBS += -L$$PWD/External/win32/Lib/ -lwpcap -lws2_32
 } else {
     message("Unix")
-    INCLUDEPATH += $$PWD/External/include
-    LIBS += -L$$PWD/External/lib/libpcap.a -lpcap
-#    LIBS += -lpthread -ldbus-1
+#    INCLUDEPATH += $$PWD/External/include
+#    LIBS += -L$$PWD/External/lib/libpcap.a -lpcap
+    LIBS += -lpthread -ldbus-1
+    message($$PWD)
 }
 
 #DESTDIR = $$PWD/Dest
@@ -65,3 +66,16 @@ DISTFILES += \
     prj/libnetin.sln \
     prj/libnetin/libnetin.vcxproj \
     prj/libnetin/libnetin.vcxproj.filters
+#####################################################################################
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/External/lib/release/ -lpcap
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/External/lib/debug/ -lpcap
+else:unix: LIBS += -L$$PWD/External/lib/ -lpcap
+
+INCLUDEPATH += $$PWD/External/include
+DEPENDPATH += $$PWD/External/include
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/External/lib/release/libpcap.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/External/lib/debug/libpcap.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/External/lib/release/pcap.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/External/lib/debug/pcap.lib
+else:unix: PRE_TARGETDEPS += $$PWD/External/lib/libpcap.a

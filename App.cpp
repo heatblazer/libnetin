@@ -11,6 +11,20 @@ App::App(int& argc, char **argv)
     }
 }
 
+void App::test_offline()
+{
+    Pcap::showAll();
+    m_pcap.offline("/home/ilian/gitprojects/libnetin/Data/mqtt4.pcap");
+    m_pcap.loop();
+
+
+}
+
+void App::test_online()
+{
+
+}
+
 int App::exec()
 {
 
@@ -33,6 +47,7 @@ int App::exec()
             } else if (m_args[i] == "--help"){
                 std::cout << "Use libnetin -<option> for the following:\r\n"
                           << "libnetin -l (List all devices)\r\n"
+                          <<"\t while in live mode press 'q' or 'Q' to stop\r\n"
                           << "libnetin -p pcapfile.pcal (Read and analyse pcap contents)\r\n"
                           << "libnetin -i <NIC DEVICE> (Open live mode on network card)\r\n"
                           <<"=============================================================\r\n";

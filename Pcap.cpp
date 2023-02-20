@@ -3,7 +3,6 @@
 #include "rtp_t.h"
 #include "rtcp_t.h"
 #include "turn_t.h"
-#include "nill_t.h" // test variardity
 #include "t38_t.h"
 #include "mqtt_t.h"
 #include "websocket_t.h"
@@ -14,6 +13,7 @@
 #include <fstream>
 #include <thread>
 #include <atomic>
+#include <dlfcn.h>
 
 using namespace stun;
 using namespace rtp;
@@ -104,8 +104,12 @@ void Pcap::showAll()
 
 Pcap::Pcap() : m_stop{1}, p_Cap{nullptr},errbuf{0}/* default mode is offline */
 {
+
     memset(&m_options, 0, sizeof(m_options));
     memset(&m_nextRes, 0, sizeof(m_nextRes));
+
+//    if (!Pcap::m_pcapLoader.LoadAPcap("/home/ilian/storage/Builds/build-libnetin-Desktop_Qt_6_3_0_GCC_64bit-Debug/libpcap.a"))
+//        throw std::exception{};
 }
 
 Pcap::~Pcap()
