@@ -13,8 +13,10 @@
 #include <fstream>
 #include <thread>
 #include <atomic>
-#include <dlfcn.h>
-
+#ifdef WIN32
+#else
+    #include <dlfcn.h>
+#endif
 using namespace stun;
 using namespace rtp;
 using namespace rtcp;

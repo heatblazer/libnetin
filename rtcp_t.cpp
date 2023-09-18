@@ -76,6 +76,7 @@ block  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
                 jsonb.add(tjson::JsonField{ "RC", rc});
                 Valid = true;
             }
+            break;
             //extend if needed 
         }
         default:

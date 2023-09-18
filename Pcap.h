@@ -38,6 +38,8 @@ struct LinuxLoadPcap
 
 
     bool LoadAPcap(const char* fname) {
+#ifdef WIN32
+#else
         m_Handle = dlopen(fname, RTLD_LAZY);
         if (m_Handle) {
 
@@ -51,6 +53,7 @@ struct LinuxLoadPcap
         } else {
             return false;
         }
+#endif
         return true;
     }
 
