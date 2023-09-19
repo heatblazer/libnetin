@@ -48,9 +48,9 @@ RtpRFC::RtpRFC(const IParseable::type &res) : IParseable<Result_t,RtpRFC>{res}
         m_fields.timestamp = SWAP4(data.timestamp);
         m_fields.ssrc= SWAP4(data.SSRC);
         m_fields.csrc= SWAP4(data.CSRC);
-        if (m_fields.v < 0 || m_fields.v > 2)
+        if (m_fields.v <= 0 || m_fields.v > 2)
             Valid |= false;
-        if (m_fields.pt < 0 || m_fields.pt > 126)
+        if (m_fields.pt <= 0 || m_fields.pt > 126)
             Valid |= false;
         if (Valid) {
             jsonb.add(tjson::JsonField{ "protocol", "RTP" });

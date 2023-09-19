@@ -4,7 +4,7 @@
 
 int main(int argc, char** argv)
 {
-#if 0
+#if 1
     libnetin::App app{argc, argv};
     return app.exec();
 #else
