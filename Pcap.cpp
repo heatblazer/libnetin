@@ -170,7 +170,6 @@ void Pcap::loop()
 
     if (m_options.live) {
         std::thread t{[&]() {
-
             jsonfile << serializer.beginSerialize();
             for(Result_t& res =  next(); m_stop.load(); operator++())
             {
@@ -197,6 +196,7 @@ void Pcap::loop()
             m_stop.store(0);
             jsonfile << serializer.endSerialize();
             jsonfile.close();
+            break;
         }
         default:
             break;
