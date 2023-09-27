@@ -2,7 +2,6 @@
 #define MQTT_T_H
 #include "defs.h"
 #include "types.h"
-#include "tjson.hpp"
 
 namespace mqtt {
 
