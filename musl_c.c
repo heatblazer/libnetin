@@ -1,3 +1,4 @@
+#if 0
 const char *inet_ntop(int af, const void *__restrict a0, char *__restrict s, socklen_t l)
 {
     const unsigned char *a = a0;
@@ -46,3 +47,4 @@ const char *inet_ntop(int af, const void *__restrict a0, char *__restrict s, soc
     errno = ENOSPC;
     return 0;
 }
+#endif

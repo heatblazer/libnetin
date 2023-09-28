@@ -1,0 +1,324 @@
+# depslib dependency file v1.0
+1676823193 source:/home/ilian/gitprojects/libnetincmake2/mqtt_t.cpp
+	"mqtt_t.h"
+	"websocket_t.h"
+	"utils.h"
+	<cstring>
+	<malloc.h>
+	<alloca.h>
+
+1695128081 /home/ilian/gitprojects/libnetincmake2/mqtt_t.h
+	"defs.h"
+	"types.h"
+
+1653155290 /home/ilian/gitprojects/libnetincmake2/defs.h
+	<pcap/pcap.h>
+	<netinet/in.h>
+	<netinet/ip.h>
+	<net/if.h>
+	<netinet/if_ether.h>
+	<net/ethernet.h>
+	<netinet/tcp.h>
+	<netinet/udp.h>
+	<arpa/inet.h>
+	"winpcap_t.h"
+	<pcap/pcap.h>
+
+1653590660 /home/ilian/gitprojects/libnetincmake2/winpcap_t.h
+	<winsock2.h>
+	<ws2ipdef.h>
+	<ws2tcpip.h>
+	<mstcpip.h>
+	<errno.h>
+	<cstdio>
+	<cstring>
+	<cstdint>
+
+1653320813 /home/ilian/gitprojects/libnetincmake2/types.h
+	"defs.h"
+	"tjson.hpp"
+
+1653155290 /home/ilian/gitprojects/libnetincmake2/tjson.hpp
+	<array>
+	<string>
+	<vector>
+	<iostream>
+
+1653158308 /home/ilian/gitprojects/libnetincmake2/websocket_t.h
+	"defs.h"
+	"types.h"
+	"tjson.hpp"
+
+1653320555 /home/ilian/gitprojects/libnetincmake2/utils.h
+	"defs.h"
+	"types.h"
+
+1695027521 source:/home/ilian/gitprojects/libnetincmake2/App.cpp
+	"App.h"
+	<stdlib.h>
+
+1676886968 /home/ilian/gitprojects/libnetincmake2/App.h
+	"Pcap.h"
+	<thread>
+	<vector>
+
+1695027525 /home/ilian/gitprojects/libnetincmake2/Pcap.h
+	"defs.h"
+	"types.h"
+	"tjson.hpp"
+	<memory>
+	<pcap/pcap.h>
+	<atomic>
+	<dlfcn.h>
+
+1616655179 source:/home/ilian/gitprojects/libnetincmake2/defs.cpp
+	"defs.h"
+
+1695128175 source:/home/ilian/gitprojects/libnetincmake2/main.cpp
+	"App.h"
+	<iostream>
+	<pcap/pcap.h>
+
+1653300008 source:/home/ilian/gitprojects/libnetincmake2/nill_t.cpp
+	"nill_t.h"
+
+1653300170 /home/ilian/gitprojects/libnetincmake2/nill_t.h
+	"types.h"
+	"tjson.hpp"
+
+1695027525 source:/home/ilian/gitprojects/libnetincmake2/Pcap.cpp
+	"Pcap.h"
+	"stun_t.h"
+	"rtp_t.h"
+	"rtcp_t.h"
+	"turn_t.h"
+	"t38_t.h"
+	"mqtt_t.h"
+	"websocket_t.h"
+	<string.h>
+	<map>
+	<string>
+	<iostream>
+	<fstream>
+	<thread>
+	<atomic>
+	<dlfcn.h>
+
+1651478972 /home/ilian/gitprojects/libnetincmake2/stun_t.h
+	"defs.h"
+	"Pcap.h"
+	<pcap/pcap.h>
+	<vector>
+
+1653155290 /home/ilian/gitprojects/libnetincmake2/rtp_t.h
+	"defs.h"
+	"types.h"
+	"utils.h"
+	"tjson.hpp"
+	<pcap/pcap.h>
+
+1653414152 /home/ilian/gitprojects/libnetincmake2/rtcp_t.h
+	"defs.h"
+	"types.h"
+	"tjson.hpp"
+	<pcap/pcap.h>
+
+1651478972 /home/ilian/gitprojects/libnetincmake2/turn_t.h
+	"types.h"
+	"tjson.hpp"
+
+1651478972 /home/ilian/gitprojects/libnetincmake2/t38_t.h
+	"defs.h"
+	"types.h"
+	"tjson.hpp"
+	<pcap/pcap.h>
+
+1695027525 source:/home/ilian/gitprojects/libnetincmake2/rtcp_t.cpp
+	"rtcp_t.h"
+	"utils.h"
+	<string.h>
+
+1695128050 source:/home/ilian/gitprojects/libnetincmake2/rtp_t.cpp
+	"rtp_t.h"
+	"utils.h"
+	<string.h>
+	<iostream>
+
+1653320316 source:/home/ilian/gitprojects/libnetincmake2/stun_t.cpp
+	"defs.h"
+	"stun_t.h"
+	"utils.h"
+	<string.h>
+	<iostream>
+	<alloca.h>
+	<malloc.h>
+
+1636033525 source:/home/ilian/gitprojects/libnetincmake2/t38_t.cpp
+	"defs.h"
+	"t38_t.h"
+	"utils.h"
+	<cstring>
+	<vector>
+	<unordered_map>
+	<cstdio>
+
+1653315984 source:/home/ilian/gitprojects/libnetincmake2/turn_t.cpp
+	"turn_t.h"
+	"stun_t.h"
+	"rtp_t.h"
+	"utils.h"
+
+1653320281 source:/home/ilian/gitprojects/libnetincmake2/utils.cpp
+	"utils.h"
+	<string.h>
+
+1653316111 source:/home/ilian/gitprojects/libnetincmake2/websocket_t.cpp
+	"websocket_t.h"
+	"mqtt_t.h"
+	"utils.h"
+	<cstring>
+
+1653590660 source:/home/ilian/gitprojects/libnetincmake2/winpcap_t.cpp
+	"winpcap_t.h"
+
+1695895250 source:/home/ilian/gitprojects/libnetincmake2/musl_c.c
+
+1695027521 source:/home/ilian/gitprojects/libnetin/App.cpp
+	"App.h"
+	<stdlib.h>
+
+1676886968 /home/ilian/gitprojects/libnetin/App.h
+	"Pcap.h"
+	<thread>
+	<vector>
+
+1695027525 /home/ilian/gitprojects/libnetin/Pcap.h
+	"defs.h"
+	"types.h"
+	"tjson.hpp"
+	<memory>
+	<pcap/pcap.h>
+	<atomic>
+	<dlfcn.h>
+
+1653155290 /home/ilian/gitprojects/libnetin/defs.h
+	<pcap/pcap.h>
+	<netinet/in.h>
+	<netinet/ip.h>
+	<net/if.h>
+	<netinet/if_ether.h>
+	<net/ethernet.h>
+	<netinet/tcp.h>
+	<netinet/udp.h>
+	<arpa/inet.h>
+	"winpcap_t.h"
+	<pcap/pcap.h>
+
+1653590660 /home/ilian/gitprojects/libnetin/winpcap_t.h
+	<winsock2.h>
+	<ws2ipdef.h>
+	<ws2tcpip.h>
+	<mstcpip.h>
+	<errno.h>
+	<cstdio>
+	<cstring>
+	<cstdint>
+
+1653320813 /home/ilian/gitprojects/libnetin/types.h
+	"defs.h"
+	"tjson.hpp"
+
+1653155290 /home/ilian/gitprojects/libnetin/tjson.hpp
+	<array>
+	<string>
+	<vector>
+	<iostream>
+
+1616655179 source:/home/ilian/gitprojects/libnetin/defs.cpp
+	"defs.h"
+
+1695128175 source:/home/ilian/gitprojects/libnetin/main.cpp
+	"App.h"
+	<iostream>
+	<pcap/pcap.h>
+
+1676823193 source:/home/ilian/gitprojects/libnetin/mqtt_t.cpp
+	"mqtt_t.h"
+	"websocket_t.h"
+	"utils.h"
+	<cstring>
+	<malloc.h>
+	<alloca.h>
+
+1695128081 /home/ilian/gitprojects/libnetin/mqtt_t.h
+	"defs.h"
+	"types.h"
+
+1653158308 /home/ilian/gitprojects/libnetin/websocket_t.h
+	"defs.h"
+	"types.h"
+	"tjson.hpp"
+
+1653320555 /home/ilian/gitprojects/libnetin/utils.h
+	"defs.h"
+	"types.h"
+
+1653300008 source:/home/ilian/gitprojects/libnetin/nill_t.cpp
+	"nill_t.h"
+
+1653300170 /home/ilian/gitprojects/libnetin/nill_t.h
+	"types.h"
+	"tjson.hpp"
+
+1695027525 source:/home/ilian/gitprojects/libnetin/Pcap.cpp
+	"Pcap.h"
+	"stun_t.h"
+	"rtp_t.h"
+	"rtcp_t.h"
+	"turn_t.h"
+	"t38_t.h"
+	"mqtt_t.h"
+	"websocket_t.h"
+	<string.h>
+	<map>
+	<string>
+	<iostream>
+	<fstream>
+	<thread>
+	<atomic>
+	<dlfcn.h>
+
+1651478972 /home/ilian/gitprojects/libnetin/stun_t.h
+	"defs.h"
+	"Pcap.h"
+	<pcap/pcap.h>
+	<vector>
+
+1653155290 /home/ilian/gitprojects/libnetin/rtp_t.h
+	"defs.h"
+	"types.h"
+	"utils.h"
+	"tjson.hpp"
+	<pcap/pcap.h>
+
+1653414152 /home/ilian/gitprojects/libnetin/rtcp_t.h
+	"defs.h"
+	"types.h"
+	"tjson.hpp"
+	<pcap/pcap.h>
+
+1651478972 /home/ilian/gitprojects/libnetin/turn_t.h
+	"types.h"
+	"tjson.hpp"
+
+1651478972 /home/ilian/gitprojects/libnetin/t38_t.h
+	"defs.h"
+	"types.h"
+	"tjson.hpp"
+	<pcap/pcap.h>
+
+1695027525 source:/home/ilian/gitprojects/libnetin/rtcp_t.cpp
+	"rtcp_t.h"
+	"utils.h"
+	<string.h>
+
