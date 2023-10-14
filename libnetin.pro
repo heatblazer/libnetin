@@ -20,7 +20,7 @@ win32 {
     message("Unix")
 #    INCLUDEPATH += $$PWD/External/include
 #    LIBS += -L$$PWD/External/lib/libpcap.a -lpcap
-    LIBS += -lpthread -ldbus-1
+    LIBS += -lpthread
     message($$PWD)
 }
 
@@ -69,7 +69,7 @@ DISTFILES += \
 #####################################################################################
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/External/lib/release/ -lpcap
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/External/lib/debug/ -lpcap
-else:unix: LIBS += -L$$PWD/External/lib/ -lpcap
+else:unix: LIBS += -L$$PWD/External/lib -lpcap -ldbus-1
 
 INCLUDEPATH += $$PWD/External/include
 DEPENDPATH += $$PWD/External/include
