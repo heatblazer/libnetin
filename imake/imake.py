@@ -1,3 +1,7 @@
+'''
+this file is the workbench for the imake, please use the one in the root folder
+'''
+
 
 compile_files = ['main.cpp', 'mqtt_t.cpp', 'nill_t.cpp', 'Pcap.cpp', 't38_t.cpp', 'rtcp_t.cpp', 'rtp_t.cpp',
                  'stun_t.cpp', 'turn_t.cpp','utils.cpp', 'websocket_t.cpp', 'App.cpp']
@@ -12,6 +16,15 @@ class CompileBld:
     def addExeName(self, name):
         s = str("-o " + name)
         self._compileropt.append(s)
+        return self
+
+    def addDefines(self, d):
+        s = str("-D"+d)
+        self._compileropt.append(s)
+        return self
+
+    def addCXXFlags(self, f):
+        self._compileropt.append(f)
         return self
 
     def addLinkerOpt(self,l):
@@ -43,7 +56,10 @@ class CompileBld:
 def main():
 
     cb = CompileBld()
-    prn  = cb.addExeName("libnetin").addCFiles(compile_files).addIncludePath("/home/ilian/dev/libnetin/External/include").addLinkerPath("/home/ilian/dev/libnetin/External/lib").addLinkerOpt('pthread').addLinkerOpt('pcap').addLinkerOpt('dbus-1').build()
+    prn  = cb.addExeName("libnetin").addCFiles(compile_files).addCXXFlags('-Wall').addDefines('ANYWAY') \
+    .addIncludePath("/home/ilian/dev/libnetin/External/include").addLinkerPath("/home/ilian/dev/libnetin/External/lib") \
+    .addLinkerOpt('pthread') \
+    .addLinkerOpt('pcap').addLinkerOpt('dbus-1').build() 
     print(prn)
     pass
 
