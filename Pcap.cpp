@@ -5,6 +5,7 @@
 #include "turn_t.h"
 #include "t38_t.h"
 #include "mqtt_t.h"
+#include "rtsp_t.h"
 #include "websocket_t.h"
 #include <string.h>
 #include <map>
@@ -24,6 +25,7 @@ using namespace turn;
 using namespace t38;
 using namespace mqtt;
 using namespace websocket;
+using namespace rtsp;
 
 
 
@@ -73,6 +75,11 @@ struct is_validator<WebSocketRFC>
     static constexpr bool value = true;
 };
 
+template<>
+struct is_validator<RtspRFC>
+{
+    static constexpr bool value = true;
+};
 
 namespace libnetin {
 
@@ -124,8 +131,10 @@ Pcap::~Pcap()
 bool Pcap::offline(const char *fname)
 {
     p_Cap = pcap_open_offline(fname, errbuf);
-    if (!p_Cap)
+    if (!p_Cap) {
+        fprintf(stderr, "[ERROR]%s", errbuf);
         return false;
+    }
 
     return true;
 }
@@ -174,13 +183,14 @@ void Pcap::loop()
             for(Result_t& res =  next(); m_stop.load(); operator++())
             {
                 MAYBEUNUSED auto resultNwork =                    
-                                VParse(WebSocketRFC{res},
+                                VParse(RtspRFC{res},
                                       MqttRFC{res},
                                       T38Rfc{res},
                                       RtcpRFC{res},
                                       TurnRFC{res},
                                       StunRFC{res},
-                                      RtpRFC{res});
+                                      RtpRFC{res},
+                                      WebSocketRFC{res});
                 jsonfile << serializer.serialzeNow();
             }
         }};
@@ -212,7 +222,8 @@ void Pcap::loop()
                       RtcpRFC{res},
                       TurnRFC{res},
                       StunRFC{res},
-                      RtpRFC{res});
+                      RtpRFC{res},
+                    RtspRFC{res});
         }
         jsonfile << serializer.serialize();
         jsonfile.close();

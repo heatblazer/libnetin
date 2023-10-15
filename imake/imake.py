@@ -1,6 +1,3 @@
-'''
-this file is the workbench for the imake, please use the one in the root folder
-'''
 
 
 compile_files = ['main.cpp', 'mqtt_t.cpp', 'nill_t.cpp', 'Pcap.cpp', 't38_t.cpp', 'rtcp_t.cpp', 'rtp_t.cpp',
@@ -56,7 +53,7 @@ class CompileBld:
 def main():
 
     cb = CompileBld()
-    prn  = cb.addExeName("libnetin").addCFiles(compile_files).addCXXFlags('-Wall').addDefines('ANYWAY') \
+    prn  = cb.addExeName("libnetin").addCFiles(compile_files).addCXXFlags('-O2').addCXXFlags('-s').addDefines('NDEBUG').addCXXFlags('-std=c++17')\
     .addIncludePath("/home/ilian/dev/libnetin/External/include").addLinkerPath("/home/ilian/dev/libnetin/External/lib") \
     .addLinkerOpt('pthread') \
     .addLinkerOpt('pcap').addLinkerOpt('dbus-1').build() 

@@ -38,6 +38,7 @@ SOURCES += \
         nill_t.cpp \
         rtcp_t.cpp \
         rtp_t.cpp \
+        rtsp_t.cpp \
         stun_t.cpp \
         t38_t.cpp \
         turn_t.cpp \
@@ -52,6 +53,7 @@ HEADERS += \
     nill_t.h \
     rtcp_t.h \
     rtp_t.h \
+    rtsp_t.h \
     stun_t.h \
     t38_t.h \
     tjson.hpp \
