@@ -63,6 +63,7 @@ HEADERS += \
 DISTFILES += \
     Data/out.txt \
     README.md \
+    imake.py \
     prj/libnetin.sln \
     prj/libnetin/libnetin.vcxproj \
     prj/libnetin/libnetin.vcxproj.filters

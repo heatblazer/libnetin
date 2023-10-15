@@ -16,6 +16,8 @@ please read the license agreement of `PCAP`.
 
 4. For `Win32` install follow the guide to install `NCAP` from here: https://nmap.org/npcap/#download
 
+5. There is a custom script `imake.py` that can build the project without qtcreator or cmake.
+ Call `python3 imake.py` in a console then copy / paste the output and call `g++` or `clang` with the pasted output. It will output the `libnetin` exe. 
 #### Usage:
 1. Show devices: `libnetin -l`
 2. Analyze a capture `libnetin -p mycapture.pcap`
