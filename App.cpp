@@ -44,6 +44,10 @@ int App::exec()
                 }
             } else if (m_args[i] == "-i") {
                 res = m_pcap.live(m_args[i+1].c_str());
+            } else if (m_args[i] == "--no-stun") {
+
+            } else if (m_args[i] == "--no-rtp") {
+
             } else if (m_args[i] == "--help"){
                 std::cout << "Use libnetin -<option> for the following:\r\n"
                           << "libnetin -l (List all devices)\r\n"

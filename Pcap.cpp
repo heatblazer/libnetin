@@ -181,7 +181,7 @@ void Pcap::loop()
         std::thread t{[&]() {
             jsonfile << serializer.beginSerialize();
             for(Result_t& res =  next(); m_stop.load(); operator++())
-            {
+            {                
                 MAYBEUNUSED auto resultNwork =                    
                                 VParse(RtspRFC{res},
                                       MqttRFC{res},

@@ -28,6 +28,7 @@ RtspRFC &RtspRFC::operator()(const IParseable::type& res)
                 Valid = true;
             }
         }
+        FALLTROUGH;
         case EthL4::UDP:
         case EthL4::UNKNOWN:
         default:

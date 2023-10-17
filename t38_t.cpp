@@ -61,6 +61,7 @@ int T38Rfc::state(MAYBEUNUSED const struct EthL4 &e4hdr, size_t len)
             //sig end
             break;
         }
+        FALLTROUGH;
         case 0x0ed0:
         case 0x4dd0: { // data trans
             for(size_t i=4; i < len; i++) {
@@ -68,6 +69,7 @@ int T38Rfc::state(MAYBEUNUSED const struct EthL4 &e4hdr, size_t len)
             }
             break;
         }
+        FALLTROUGH;
         case 0x00:
         default: {
             break;

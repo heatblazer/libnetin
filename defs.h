@@ -6,14 +6,18 @@
 #ifdef __unix__
     #if __cplusplus >= 201402L
         #define MAYBEUNUSED [[maybe_unused]]
+        #define FALLTROUGH [[fallthrough]]
     #else
         #define MAYBEUNUSED
+        #define FALLTROUGH
     #endif
 #elif _WIN32
     #if _MSC_FULL_VER  >= 191025017
         #define MAYBEUNUSED [[maybe_unused]]
+        #define FALLTROUGH [[fallthrough]]
     #else
         #define MAYBEUNUSED
+        #define FALLTROUGH
     #endif
 #endif
 

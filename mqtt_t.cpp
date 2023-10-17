@@ -82,6 +82,7 @@ MqttRFC &MqttRFC ::operator()(const IParseable::type &res)
 
         break;
     }
+    FALLTROUGH;
     case EthL4::UNKNOWN: //fall trough
     default:
         break;
