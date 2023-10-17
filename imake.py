@@ -12,7 +12,6 @@ class CompileBld:
 
     def __init__(self) -> None:
         self._compileropt = []
-        self._this = self
 
     def addExeName(self, name):
         s = str("-o " + name)
@@ -31,7 +30,7 @@ class CompileBld:
     def addLinkerOpt(self,l):
         s = str("-l"+l)
         self._compileropt.append(s)
-        return self._this
+        return self
     
     def addLinkerPath(self, p):
         s = str("-L"+p)
@@ -47,7 +46,6 @@ class CompileBld:
         for f in files:
             self._compileropt.append(f)
         return self
-
 
     def build(self):
         s = ' '.join(self._compileropt)
