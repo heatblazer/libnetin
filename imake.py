@@ -1,3 +1,7 @@
+#this script is to be handled manually not automated - it's a replacement for a complex qmake and cmake builds being a python3 only dependat
+# just add to the array the compile files then follow the example in main() how to build a compile string to pass to g++ or clang++
+# NOTE: keep in mind it's used for UNIX builds only for windows please use the PRJ folder
+
 import sys
 
 compile_files = ['main.cpp', 'mqtt_t.cpp', 'nill_t.cpp', 'Pcap.cpp', 't38_t.cpp', 'rtsp_t.cpp','rtcp_t.cpp', 'rtp_t.cpp',
@@ -66,9 +70,6 @@ def main():
             .addLinkerOpt('pcap').addLinkerOpt('dbus-1').build() 
         print(prn)
     
-
-#this script is to be handled manually not automated - it's a replacement for a complex qmake and cmake builds being a python3 only dependat
-# just add to the array the compile files then follow the example in main() how to build a compile string to pass to g++ or clang++
 
 if __name__ == "__main__":
     main()
