@@ -1,4 +1,7 @@
 #### RFC STUN and RTP VoIP analyser
+An interactive or offline packet analyzer with `libpcap` for `Windows` and `Linux`.
+Analysys if rtp, stun, rtsp, mqtt, websocket, stun, rtp, rtcp and more to come.
+Writes out to a json as a format. 
 
 #### Build:
 ~~1.Using make:~~
@@ -33,6 +36,7 @@ please read the license agreement of `PCAP`.
 4. `UDPTL` - `t38` (not fully implemented, artifacts)
 5. `MQTT` - support for facebook [pending].
 6. `WebSocket` - support and demasking (needed for `MQTT` )
+7. `RTSP` - partial
 
 #### App recognition (not 100% accurate):
 1. `Whatsapp`
