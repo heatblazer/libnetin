@@ -23,13 +23,13 @@ struct MqttRFC: public IParseable<Result_t, MqttRFC>
                 uint8_t WillFlag : 1;
                 uint8_t CleanSession : 1;
                 uint8_t Reserved : 1;
-            } s_field PACKED;
+            } PACKED s_field ;
             uint8_t value;
         } uConnectFlags;
         unsigned short keepAlive;
         unsigned short cilentIDLen;
         char payload[1024];
-    } m_header PACKED;
+    } PACKED m_header ;
 
 public:
     MqttRFC() = delete;

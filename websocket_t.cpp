@@ -47,6 +47,7 @@ WebSocketRFC &WebSocketRFC::operator()(const IParseable::type &res)
         }
         break;
     }
+    FALLTROUGH;
     case EthL4::UDP: //Websocket can't go over udp - fall trough default
     case EthL4::UNKNOWN:
     default:

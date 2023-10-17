@@ -3,7 +3,7 @@ CONFIG += console c++17
 CONFIG -= app_bundle
 CONFIG -= qt
 
-QMAKE_CXXFLAGS += -save-temps
+#QMAKE_CXXFLAGS += -save-temps
 #QMAKE_CXXFLAGS +=  --std=c++17 -stdlib=libstdc++  -static -lstdc++
 
 #DEFINES += MINJSON
