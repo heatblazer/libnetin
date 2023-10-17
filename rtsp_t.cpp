@@ -29,8 +29,8 @@ RtspRFC &RtspRFC::operator()(const IParseable::type& res)
             }
         }
         case EthL4::UDP: { //RTSP can go over UDP - TODO:// handle this
-            int offset = sizeof(struct ether_header) + sizeof(struct ip)+ sizeof(udphdr);
-            memcpy(m_Payload, res.data+offset,total-offset);
+//            int offset = sizeof(struct ether_header) + sizeof(struct ip)+ sizeof(udphdr);
+//            memcpy(m_Payload, res.data+offset,total-offset);
             jsonb.add(tjson::JsonField{"protocol", "RTSP"});
             jsonb.add(tjson::JsonField{"TODO", "NOT HANDLED OVER UDP"});
             Valid = true;
