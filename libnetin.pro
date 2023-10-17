@@ -32,6 +32,7 @@ win32 {
 SOURCES += \
         App.cpp \
         Pcap.cpp \
+        custom_t.cpp \
         defs.cpp \
         main.cpp \
         mqtt_t.cpp \
@@ -48,6 +49,7 @@ SOURCES += \
 HEADERS += \
     App.h \
     Pcap.h \
+    custom_t.h \
     defs.h \
     mqtt_t.h \
     nill_t.h \

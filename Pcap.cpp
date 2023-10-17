@@ -7,6 +7,8 @@
 #include "mqtt_t.h"
 #include "rtsp_t.h"
 #include "websocket_t.h"
+#include "custom_t.h"
+
 #include <string.h>
 #include <map>
 #include <string>
@@ -26,6 +28,7 @@ using namespace t38;
 using namespace mqtt;
 using namespace websocket;
 using namespace rtsp;
+using namespace custom;
 
 
 
@@ -80,6 +83,14 @@ struct is_validator<RtspRFC>
 {
     static constexpr bool value = true;
 };
+
+template<>
+struct is_validator<CustomRFC>
+{
+    static constexpr bool value = true;
+};
+
+
 
 namespace libnetin {
 
@@ -190,7 +201,8 @@ void Pcap::loop()
                                       TurnRFC{res},
                                       StunRFC{res},
                                       RtpRFC{res},
-                                      WebSocketRFC{res});
+                                      WebSocketRFC{res},
+                                     CustomRFC{res});
                 jsonfile << serializer.serialzeNow();
             }
         }};
@@ -223,7 +235,8 @@ void Pcap::loop()
                       TurnRFC{res},
                       StunRFC{res},
                       RtpRFC{res},
-                    RtspRFC{res});
+                    RtspRFC{res},
+                    CustomRFC{res});
         }
         jsonfile << serializer.serialize();
         jsonfile.close();

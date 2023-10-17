@@ -79,7 +79,9 @@ struct Result_t
         T38,
         MQTT,
         WebSocket,
-        UNKNOWN
+        CUSTOM,
+        UNKNOWN,
+        SIZE = UNKNOWN // convinience
     };
 
     const u_char* data;
