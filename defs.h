@@ -1,8 +1,6 @@
 #ifndef DEFS_H
 #define DEFS_H
 
-
-
 #ifdef __unix__
     #if __cplusplus >= 201402L
         #define MAYBEUNUSED [[maybe_unused]]

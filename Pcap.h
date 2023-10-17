@@ -22,7 +22,6 @@ struct is_validator
 
 namespace libnetin {
 
-
 struct LinuxLoadPcap
 {
     void* m_Handle;

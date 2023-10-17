@@ -6,7 +6,6 @@
 using namespace stun;
 using namespace rtp;
 
-
 namespace turn {
 
 
@@ -30,10 +29,8 @@ namespace turn {
                     jsonb.add(tjson::JsonField{"dstip", eth.destIP});
                     jsonb.add(tjson::JsonField{"chan", chann});
                     jsonb.add(tjson::JsonField{"length", len});
-
                     RtpRFC rtp{res} ;
                     StunRFC stun{res};
-
                     if (stun().Valid) {
                         jsonb.add(tjson::JsonField{"nested-protocol", "STUN in TURN"});
                     }

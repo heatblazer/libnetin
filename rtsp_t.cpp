@@ -28,14 +28,18 @@ RtspRFC &RtspRFC::operator()(const IParseable::type& res)
                 Valid = true;
             }
         }
+        case EthL4::UDP: //RTSP can go over UDP - TODO:// handle this
+            jsonb.add(tjson::JsonField{"protocol", "RTSP"});
+            jsonb.add(tjson::JsonField{"TODO", "NOT HANDLED OVER UDP"});
+            Valid = true;
+            break;
         FALLTROUGH;
-        case EthL4::UDP:
         case EthL4::UNKNOWN:
         default:
             break;
     }
 
-        return *this;
+    return *this;
 }
 
 RtspRFC::eRtspCommands RtspRFC::get_command(const char *pdata, std::string_view& out)
