@@ -58,16 +58,18 @@ def main():
     cb = CompileBld()
     
     if len(sys.argv) > 1 and  sys.argv[1] == '-d':
-        prn  = cb.addExeName("libnetin").addCFiles(compile_files).addCXXFlags('-Wall').addCXXFlags('-g').addCXXFlags('-std=c++17')\
-            .addIncludePath("/home/ilian/dev/libnetin/External/include").addLinkerPath("/home/ilian/dev/libnetin/External/lib") \
-            .addLinkerOpt('pthread') \
-            .addLinkerOpt('pcap').addLinkerOpt('dbus-1').build() 
+        prn  = cb.addExeName("libnetin")\
+            .addCFiles(compile_files).addCXXFlags('-Wall').addCXXFlags('-g').addCXXFlags('-std=c++17')\
+            .addIncludePath("/home/ilian/dev/libnetin/External/include") \
+            .addLinkerPath("/home/ilian/dev/libnetin/External/lib").addLinkerOpt('pthread').addLinkerOpt('pcap').addLinkerOpt('dbus-1')\
+            .build()
         print(prn)
     else:
-        prn  = cb.addExeName("libnetin").addCFiles(compile_files).addCXXFlags('-O2').addCXXFlags('-s').addDefines('NDEBUG').addCXXFlags('-std=c++17')\
-            .addIncludePath("/home/ilian/dev/libnetin/External/include").addLinkerPath("/home/ilian/dev/libnetin/External/lib") \
-            .addLinkerOpt('pthread') \
-            .addLinkerOpt('pcap').addLinkerOpt('dbus-1').build() 
+        prn  = cb.addExeName("libnetin")\
+            .addCFiles(compile_files).addCXXFlags('-O2').addCXXFlags('-s').addDefines('NDEBUG').addCXXFlags('-std=c++17')\
+            .addIncludePath("/home/ilian/dev/libnetin/External/include")\
+            .addLinkerPath("/home/ilian/dev/libnetin/External/lib").addLinkerOpt('pthread').addLinkerOpt('pcap').addLinkerOpt('dbus-1')\
+            .build()
         print(prn)
     
 
