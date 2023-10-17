@@ -1,4 +1,4 @@
-#### RFC STUN and RTP VoIP analyser
+#### RFC STUN and RTP VoIP analyzer
 An interactive or offline packet analyzer with `libpcap` for `Windows` and `Linux`.
 Analysys if rtp, stun, rtsp, mqtt, websocket, stun, rtp, rtcp and more to come.
 Writes out to a json as a format. 
