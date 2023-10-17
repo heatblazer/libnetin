@@ -1,4 +1,6 @@
 #include "rtsp_t.h"
+#include "utils.h"
+#include <cstring>
 
 namespace rtsp
 {
@@ -18,7 +20,13 @@ RtspRFC &RtspRFC::operator()(const IParseable::type& res)
         case EthL4::TCP: {
             offset = eth.options_len + (sizeof(struct ether_header) + sizeof(struct ip) + sizeof(tcphdr));
             const char *pdata = (const char*)res.data+offset;
-            //handle json data here TODO
+            if (std::strstr(pdata, "RTSP") || std::strstr(pdata, "rtsp")) {
+                std::string_view cmd;
+                MAYBEUNUSED RtspRFC::eRtspCommands r = get_command(pdata, cmd);
+                jsonb.add(tjson::JsonField{"protocol", "RTSP"});
+                jsonb.add(tjson::JsonField{"command", cmd.data()}); //tjson does not support toString for string_veiw so use a cdata
+                Valid = true;
+            }
         }
         case EthL4::UDP:
         case EthL4::UNKNOWN:
@@ -26,7 +34,32 @@ RtspRFC &RtspRFC::operator()(const IParseable::type& res)
             break;
     }
 
-    return *this;
+        return *this;
+}
+
+RtspRFC::eRtspCommands RtspRFC::get_command(const char *pdata, std::string_view& out)
+{
+    RtspRFC::eRtspCommands result;
+    if (std::strstr(pdata, "OPTIONS")) {
+        result = RtspRFC::OPTIONS;
+        out = "OPTIONS";
+    } else if (std::strstr(pdata, "SETUP")) {
+        result = RtspRFC::SETUP;
+        out = "SETUP";
+    } else if (std::strstr(pdata, "PLAY")) {
+        result = RtspRFC::PLAY;
+        out = "PLAY";
+    } else if (std::strstr(pdata, "TEARDOWN")) {
+        result = RtspRFC::TEARDOWN;
+        out = "TEARDOWN";
+    } else if (std::strstr(pdata, "DESCRIBE")) {
+        result = RtspRFC::DESCRIBE;
+        out = "DESCRIBE";
+    } else {
+        result = RtspRFC::UNKNOWN;
+        out = "UNKNOWN";
+    }
+    return result;
 }
 
 RtspRFC &RtspRFC::operator()()

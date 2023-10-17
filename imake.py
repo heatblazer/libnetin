@@ -1,4 +1,4 @@
-
+import sys
 
 compile_files = ['main.cpp', 'mqtt_t.cpp', 'nill_t.cpp', 'Pcap.cpp', 't38_t.cpp', 'rtsp_t.cpp','rtcp_t.cpp', 'rtp_t.cpp',
                  'stun_t.cpp', 'turn_t.cpp','utils.cpp', 'websocket_t.cpp', 'App.cpp']
@@ -51,15 +51,24 @@ class CompileBld:
 
 
 def main():
-
     cb = CompileBld()
-    prn  = cb.addExeName("libnetin").addCFiles(compile_files).addCXXFlags('-O2').addCXXFlags('-s').addDefines('NDEBUG').addCXXFlags('-std=c++17')\
-    .addIncludePath("/home/ilian/dev/libnetin/External/include").addLinkerPath("/home/ilian/dev/libnetin/External/lib") \
-    .addLinkerOpt('pthread') \
-    .addLinkerOpt('pcap').addLinkerOpt('dbus-1').build() 
-    print(prn)
-    pass
+    
+    if len(sys.argv) > 1 and  sys.argv[1] == '-d':
+        prn  = cb.addExeName("libnetin").addCFiles(compile_files).addCXXFlags('-Wall').addCXXFlags('-g').addCXXFlags('-std=c++17')\
+            .addIncludePath("/home/ilian/dev/libnetin/External/include").addLinkerPath("/home/ilian/dev/libnetin/External/lib") \
+            .addLinkerOpt('pthread') \
+            .addLinkerOpt('pcap').addLinkerOpt('dbus-1').build() 
+        print(prn)
+    else:
+        prn  = cb.addExeName("libnetin").addCFiles(compile_files).addCXXFlags('-O2').addCXXFlags('-s').addDefines('NDEBUG').addCXXFlags('-std=c++17')\
+            .addIncludePath("/home/ilian/dev/libnetin/External/include").addLinkerPath("/home/ilian/dev/libnetin/External/lib") \
+            .addLinkerOpt('pthread') \
+            .addLinkerOpt('pcap').addLinkerOpt('dbus-1').build() 
+        print(prn)
+    
 
+#this script is to be handled manually not automated - it's a replacement for a complex qmake and cmake builds being a python3 only dependat
+# just add to the array the compile files then follow the example in main() how to build a compile string to pass to g++ or clang++
 
 if __name__ == "__main__":
     main()
