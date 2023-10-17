@@ -57,6 +57,12 @@ private:
     {
         return std::string{"\""+ ref + "\""};
     }
+    [[deprecated("Do not use that function")]]
+    static std::string toString(const char* ref)
+    {
+        //ugly and inefficient
+        return std::string {"\"" + std::string{ref} + "\""};
+    }
 
 public:
     std::string K, V;

@@ -38,6 +38,8 @@ namespace rtsp
         eRtspCommands get_command(const char* pdata, std::string_view& out);
     private:
         std::vector<std::string> m_fields;
+        uint8_t m_Payload[1500]; //mtu
+
 
     };
 

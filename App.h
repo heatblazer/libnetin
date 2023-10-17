@@ -9,11 +9,8 @@ namespace libnetin
 
 class App
 {
-
     Pcap m_pcap;
-
     std::vector<std::string> m_args;
-
 public:
 
     explicit App(int &argc,  char** argv);
