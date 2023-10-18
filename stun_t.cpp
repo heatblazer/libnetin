@@ -30,6 +30,8 @@ namespace stun {
 
     StunRFC &StunRFC::operator ()(const IParseable::type & res)
     {
+        PRINTDBG("stun_t.cpp");
+
         struct EthL4 eth = utils::GetEthL4(res.data);
         switch (eth.type) {
         case EthL4::UDP: {

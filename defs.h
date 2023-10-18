@@ -1,6 +1,12 @@
 #ifndef DEFS_H
 #define DEFS_H
 
+#ifndef NDEBUG
+#define PRINTDBG(THIS_FILE) fprintf(stdout, "Enter module: [%s]\r\n", (THIS_FILE))
+#else
+#define PRINTDBG(THIS_FILE)
+#endif
+
 #ifdef __unix__
     #if __cplusplus >= 201402L
         #define MAYBEUNUSED [[maybe_unused]]
