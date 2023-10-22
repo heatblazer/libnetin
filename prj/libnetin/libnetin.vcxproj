@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\custom_t.h" />
     <ClInclude Include="..\..\defs.h" />
     <ClInclude Include="..\..\nill_t.h" />
     <ClInclude Include="..\..\Pcap.h" />
@@ -36,6 +37,7 @@
     <ClInclude Include="..\..\App.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\custom_t.cpp" />
     <ClCompile Include="..\..\main.cpp" />
     <ClCompile Include="..\..\nill_t.cpp" />
     <ClCompile Include="..\..\Pcap.cpp" />
@@ -49,6 +51,17 @@
     <ClCompile Include="..\..\utils.cpp" />
     <ClCompile Include="..\..\winpcap_t.cpp" />
     <ClCompile Include="..\..\App.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Data\1920x1080_H.265.pcapng" />
+    <None Include="..\..\Data\bigtest2.pcap" />
+    <None Include="..\..\Data\fax38.pcap" />
+    <None Include="..\..\Data\mqtt_packets_tcpdump.pcap" />
+    <None Include="..\..\Data\Onssi live rtsp.pcapng" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Data\out.txt" />
+    <Text Include="..\..\Data\outwin.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

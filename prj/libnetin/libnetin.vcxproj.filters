@@ -26,6 +26,7 @@
     <ClInclude Include="..\..\t38_t.h" />
     <ClInclude Include="..\..\websocket_t.h" />
     <ClInclude Include="..\..\App.h" />
+    <ClInclude Include="..\..\custom_t.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\main.cpp">
@@ -67,5 +68,33 @@
     <ClCompile Include="..\..\App.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\custom_t.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Data\1920x1080_H.265.pcapng">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Data\bigtest2.pcap">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Data\fax38.pcap">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Data\mqtt_packets_tcpdump.pcap">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Data\Onssi live rtsp.pcapng">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Data\out.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="..\..\Data\outwin.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
