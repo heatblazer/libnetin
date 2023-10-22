@@ -18,7 +18,7 @@ CustomRFC &CustomRFC::operator()(const IParseable::type& res)
     switch (eth.type) {
     FALLTROUGH;
     case EthL4::TCP:
-    case EthL4::UDP:  //RTSP can go over UDP - TODO:// handle this
+    case EthL4::UDP:
     case EthL4::UNKNOWN:
     default:
         break;
@@ -33,3 +33,10 @@ CustomRFC &CustomRFC::operator()()
 
 
 } // custom
+
+//hint
+#if 0
+        offset = eth.options_len + (sizeof(struct ether_header) + sizeof(struct ip) + sizeof(tcphdr));
+        MAYBEUNUSED const char *pdata = (const char*)res.data+offset;
+        break;
+#endif
