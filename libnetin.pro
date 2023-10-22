@@ -65,7 +65,14 @@ HEADERS += \
     websocket_t.h
 
 DISTFILES += \
+    Data/1920x1080_H.265.pcapng \
+    Data/Onssi live rtsp.pcapng \
+    Data/bigtest2.pcap \
+    Data/fax38.pcap \
+    Data/mqtt_packets_tcpdump.pcap \
     Data/out.txt \
+    Data/outwin.txt \
+    Data/rtsp_with_data_over_tcp.pcap \
     README.md \
     imake.py \
     prj/libnetin.sln \

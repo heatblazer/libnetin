@@ -6,6 +6,7 @@ import sys
 compile_files = ['main.cpp', 'mqtt_t.cpp', 'nill_t.cpp', 'Pcap.cpp', 't38_t.cpp', 'rtsp_t.cpp','rtcp_t.cpp', 'rtp_t.cpp',
                  'stun_t.cpp', 'turn_t.cpp','utils.cpp', 'websocket_t.cpp', 'custom_t.cpp', 'App.cpp']
 
+GCOMPILER = "g++"
 
 class CompileBld:
 
@@ -14,6 +15,11 @@ class CompileBld:
 
     def addExeName(self, name):
         s = str("-o " + name)
+        self._compileropt.append(s)
+        return self
+
+    def addCompiler(self, name):
+        s = str(name)
         self._compileropt.append(s)
         return self
 
@@ -54,14 +60,14 @@ def main():
     cb = CompileBld()
     
     if len(sys.argv) > 1 and  sys.argv[1] == '-d':
-        prn  = cb.addExeName("libnetin")\
+        prn  = cb.addCompiler(GCOMPILER).addExeName("libnetin")\
             .addCFiles(compile_files).addCXXFlags('-Wall').addCXXFlags('-g').addCXXFlags('-std=c++17')\
             .addIncludePath("/home/ilian/dev/libnetin/External/include") \
             .addLinkerPath("/home/ilian/dev/libnetin/External/lib").addLinkerOpt('pthread').addLinkerOpt('pcap').addLinkerOpt('dbus-1')\
             .build()
         print(prn)
     else:
-        prn  = cb.addExeName("libnetin")\
+        prn  = cb.addCompiler(GCOMPILER).addExeName("libnetin")\
             .addCFiles(compile_files).addCXXFlags('-O2').addCXXFlags('-s').addDefines('NDEBUG').addCXXFlags('-std=c++17')\
             .addIncludePath("/home/ilian/dev/libnetin/External/include")\
             .addLinkerPath("/home/ilian/dev/libnetin/External/lib").addLinkerOpt('pthread').addLinkerOpt('pcap').addLinkerOpt('dbus-1')\
