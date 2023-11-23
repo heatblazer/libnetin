@@ -70,8 +70,6 @@ struct Pcap
 
     bool live(const char* dev);
 
-    void operator++();
-
     Result_t& next();
 
     bool hasNext() const;

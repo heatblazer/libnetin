@@ -163,14 +163,10 @@ bool Pcap::live(const char *dev)
     }
 }
 
-void Pcap::operator ++()
-{
-    m_nextRes.data = pcap_next(p_Cap, &m_nextRes.out);
-}
 
 Result_t& Pcap::next()
 {
-    operator++();
+    m_nextRes.data = pcap_next(p_Cap, &m_nextRes.out);
     return m_nextRes;
 }
 
@@ -191,7 +187,7 @@ void Pcap::loop()
     if (m_options.live) {
         std::thread t{[&]() {
             jsonfile << serializer.beginSerialize();
-            for(Result_t& res =  next(); m_stop.load(); operator++())
+            for(Result_t& res =  next(); m_stop.load(); res = next())
             {                
                 MAYBEUNUSED auto resultNwork =                    
                                 VParse(RtspRFC{res},
@@ -225,7 +221,7 @@ void Pcap::loop()
 
         }
     } else {
-        for(Result_t& res =  next(); hasNext(); operator++())
+        for(Result_t& res =  next(); hasNext(); res = next() )
         {
             MAYBEUNUSED auto resultNwork =
                 VParse(WebSocketRFC{res},
